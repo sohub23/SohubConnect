@@ -70,9 +70,18 @@ export default function FeaturesSection() {
               </div>
 
               <div className="pt-4">
-                <p className="font-inter text-xl text-[#111111] dark:text-white font-semibold">
+                <p className="font-inter text-xl text-[#111111] dark:text-white font-semibold mb-4">
                   One click turns interest into conversation.
                 </p>
+                <a
+                  href="/click-to-connect"
+                  className="inline-flex items-center space-x-2 text-[#22C55E] hover:text-[#16A34A] font-inter font-semibold text-base transition-colors duration-200"
+                >
+                  <span>Learn more</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -91,11 +100,12 @@ export default function FeaturesSection() {
                   <div className="relative aspect-video bg-gray-100 dark:bg-[#262626] rounded-lg overflow-hidden">
                     <video 
                       className="w-full h-full object-cover"
-                      controls
-                      poster="/images/video-thumbnail.jpg"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
                     >
-                      <source src="/videos/click-to-call-demo.mp4" type="video/mp4" />
-                      <source src="/videos/click-to-call-demo.webm" type="video/webm" />
+                      <source src="/videos/click_to_connect.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
@@ -124,8 +134,8 @@ export default function FeaturesSection() {
               <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-xl">
                 {/* Video Demo */}
                 <div className="space-y-6">
-                  <div className="text-center">
-                    <h4 className="font-inter font-bold text-lg text-[#111111] dark:text-white mb-4">
+                  <div>
+                    <h4 className="font-inter font-bold text-lg text-[#111111] dark:text-white mb-4 text-right">
                       HotScan Demo
                     </h4>
 
@@ -133,19 +143,20 @@ export default function FeaturesSection() {
                     <div className="relative aspect-video bg-gray-100 dark:bg-[#262626] rounded-lg overflow-hidden">
                       <video 
                         className="w-full h-full object-cover"
-                        controls
-                        poster="/images/hotscan-thumbnail.jpg"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
                       >
-                        <source src="/videos/hotscan-demo.mp4" type="video/mp4" />
-                        <source src="/videos/hotscan-demo.webm" type="video/webm" />
+                        <source src="/videos/hotscan.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
                     </div>
 
-                    <p className="mt-4 font-inter text-sm font-semibold text-[#111111] dark:text-white">
+                    <p className="mt-4 font-inter text-sm font-semibold text-[#111111] dark:text-white text-center">
                       Scan to Connect
                     </p>
-                    <p className="font-inter text-xs text-[#6B7280] dark:text-white dark:text-opacity-60">
+                    <p className="font-inter text-xs text-[#6B7280] dark:text-white dark:text-opacity-60 text-center">
                       Instant voice support
                     </p>
                   </div>
@@ -214,7 +225,7 @@ export default function FeaturesSection() {
         </div>
 
         {/* Bottom statement */}
-        <div className="mt-20 text-center bg-gradient-to-r from-[#22C55E]/10 to-[#16A34A]/10 dark:from-[#22C55E]/20 dark:to-[#16A34A]/20 rounded-2xl p-12 border border-[#22C55E]/30">
+        <div className="mt-20 text-center bg-gradient-to-r from-[#22C55E]/10 to-[#16A34A]/10 dark:from-[#22C55E]/20 dark:to-[#16A34A]/20 rounded-2xl p-12 border border-[#22C55E]/30 feature-bottom">
           <h3 className="font-plus-jakarta-sans font-bold text-2xl md:text-3xl text-[#111111] dark:text-white mb-4">
             This Is Not a Phone System
           </h3>

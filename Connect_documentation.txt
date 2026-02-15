@@ -1,0 +1,1525 @@
+📊 Dashboard
+Single Module
+🎙️ Voice
+🔹 PBX (Group)
+Operator Panel
+Extensions
+Inbound Route
+Outbound Route
+Ring Group
+Closed User Group
+Approved Trunks
+
+
+🔹 Voice – Single Modules
+Caller ID’s
+Sound Files
+Text To Speech
+Quick Call
+Call Flow
+🔗 Click To Connect
+Single Module
+📱 HotScan
+Single Module
+📑 Reports
+🔹 Reports (Group)
+Call Reports
+Transaction History
+🎫 Tickets
+Single Module
+💰 Wallet
+Single Module
+📦 Packages
+Single Module
+📞 Get SoftPhone
+Single Module
+
+
+Dashboard
+The Dashboard provides a centralized overview of your Sohub Connect account. It displays key usage statistics, active profiles, and quick access to essential features, allowing users to monitor and manage their communication setup efficiently.
+
+Dashboard Overview Cards
+At the top of the dashboard, summary cards display important system metrics:
+Click-to-Call Buttons
+Shows the total number of Click-to-Call buttons created.
+
+
+Displays current status (e.g., All Active).
+
+
+Click View Details to see and manage all Click-to-Call configurations.
+
+
+
+HotScan Profiles
+Displays the total number of HotScan profiles.
+
+
+Shows whether profiles are Active.
+
+
+Click View Details to manage QR-based HotScan profiles.
+
+
+
+Extension Users
+Shows the total number of extension users.
+
+
+Indicates free or assigned extensions (e.g., 5 Free).
+
+
+Click Manage Extension Users to add, edit, or remove extensions.
+
+
+
+Click-to-Connect Profiles
+This section lists all active Click-to-Connect profiles.
+For each profile, the following information is shown:
+Profile Name
+
+
+Call Flow (linked to the configured call routing)
+
+
+Owner of the profile
+
+
+Script Button to copy or view the embeddable Click-to-Call script
+
+
+Actions
+Click Add New Profile to create a new Click-to-Connect profile.
+
+
+Use the script to embed click-to-call functionality on websites or applications.
+
+
+
+HotScan Profiles
+This section displays all configured HotScan (QR Code) profiles.
+Each profile shows:
+Profile Name
+
+
+Profile Type (e.g., vCard, URL, Contact)
+
+
+Owner
+
+
+QR Button to view or download the QR code
+
+
+Actions
+Click Create New Profile to generate a new HotScan profile.
+
+
+Use QR codes for quick access to business cards, contact details, or URLs.
+
+
+
+Quick Access & Navigation
+From the Dashboard, users can quickly navigate to:
+Tickets
+
+
+SoftPhone
+
+
+Extensions
+
+
+Buy Numbers
+
+
+Wallet Top-Up
+
+
+Subscription Plan status
+
+
+Current wallet balance
+
+
+
+Purpose of the Dashboard
+The Dashboard is designed to:
+Provide a real-time overview of account activity
+
+
+Enable quick access to frequently used features
+
+
+Simplify management of calling, QR profiles, and extensions
+
+
+Improve productivity by reducing navigation time
+
+
+
+Manage live calls with Operator Panel
+What you’re trying to do
+See who is available to receive calls and monitor live calling status in real time.
+The Operator Panel shows all your extensions and their current state.
+
+When to use Operator Panel
+Use the Operator Panel when you want to:
+Check who is online or idle
+Know who is unavailable
+Monitor call readiness before routing calls
+You don’t configure anything here. This page is for visibility only.
+
+What you’ll see on the screen
+Search bar
+At the top, you’ll see a search box.
+Use it to:
+Find a specific extension
+Search by user or room name
+
+Status filters
+Below the search bar, you’ll see three filters:
+Available – Extensions ready to receive calls
+Unavailable – Extensions that cannot receive calls
+All Extensions – Every extension in your system
+Click any filter to quickly change the view.
+
+Auto Refresh
+On the top-right, Auto Refresh is enabled by default.
+This means:
+Extension status updates automatically
+You don’t need to reload the page
+👉 Keep this on for accurate live status.
+
+Extension cards
+Each extension is shown as a card.
+An extension card shows:
+Extension number
+User or room name
+Current status (Idle, Available, etc.)
+Extension code
+Status indicator
+Green (IDLE) means the user is ready to take a call
+Other states mean the user is busy or unavailable
+
+Grouped by organization
+If your account has multiple organizations or teams:
+Extensions are grouped visually
+Each group shows how many extensions it contains
+This helps large teams monitor availability easily.
+
+What you don’t do here
+The Operator Panel is not used to:
+Create extensions
+Assign call flows
+Change routing rules
+Those actions are done in other Voice sections.
+
+Quick checklist
+If calls aren’t connecting as expected:
+Open Operator Panel
+Check if extensions show IDLE
+Make sure users are online and SoftPhone is running
+If extensions are unavailable, calls cannot be received.
+
+Next:
+👉 Extensions – Create users who receive calls
+
+Extensions
+Create users who can make and receive calls
+Extensions are the core user accounts in Sohub Connect. Each extension typically represents a person, a softphone, or a desk phone that can make and receive calls.
+
+What you can do here
+Create new extensions
+View all existing extensions
+Assign caller IDs to extensions
+Activate or deactivate extensions
+Manage or delete extensions
+
+Open Extensions
+Navigate to:
+Voice → PBX → Extensions
+You will see two tabs:
+Extensions – View and manage existing extensions
+Add Extension – Create a new extension
+
+View all Extensions
+In the Extensions tab, you can see a list of all created extensions.
+Columns explained
+Extension Type
+Indicates the account type (usually "Extension").
+Display Name
+The name of the user or the extension. This appears in Operator Panel and reports.
+Caller ID
+The phone number that will be shown to recipients during outgoing calls.
+Assigned User
+The Sohub account or company the extension is assigned to.
+Status
+Active – The extension can make and receive calls
+Inactive – Calls will not work
+Manage (⚙️ icon)
+Edit extension settings.
+Delete (🗑 icon)
+Permanently remove the extension.
+
+Add a new Extension
+To create a new extension, go to the Add Extension tab.
+Required fields
+Extension No *
+A unique internal number for the extension.
+Examples:
+101
+105
+2112
+Extension numbers must be unique.
+
+Display Name *
+The name of the user or extension.
+Examples:
+Support Agent
+Marketing Agent
+Sales Desk
+This name will appear in the Operator Panel and call reports.
+
+Caller ID
+Select an approved caller ID from the dropdown list.
+This number will be displayed on outgoing calls
+Outgoing calls may fail if no caller ID is assigned
+
+Extension Password *
+The login password used to register the extension on a softphone or IP phone.
+The system automatically generates a password
+You can manually edit the password if needed
+Click the refresh (🔄) icon to regenerate a new password
+Save this password securely. It is required for softphone or device configuration.
+
+Create Extension
+After filling in all required fields, click Create Extension.
+The extension will be created and activated immediately.
+
+After creating an Extension
+Common next steps after creating an extension:
+Configure the extension in a softphone or IP phone
+Assign the extension to an inbound route or ring group
+Verify the extension status in the Operator Panel
+
+Common mistakes and tips
+Duplicate extension numbers are not allowed
+Outgoing calls may not work without a caller ID
+Inactive extensions cannot receive calls
+Incorrect passwords will prevent softphone registration
+
+What you don’t do here
+The following configurations are not handled in the Extensions section:
+Call routing and IVR setup
+Inbound call flow design
+Billing and usage configuration
+These are managed from other sections such as Inbound Route, Call Flow, and Reports.
+
+Extensions section complete.
+
+
+bound Route
+What is an Inbound Route?
+An Inbound Route defines how incoming calls are handled when someone dials one of your numbers. It connects an incoming Caller ID (DID) to a specific Call Flow, such as ringing extensions, playing an IVR, or forwarding calls.
+Inbound Routes are essential to receive calls correctly.
+
+Create an Inbound Route
+Go to Voice → PBX → Inbound Route
+Click Add Inbound Route
+Fill in the following fields:
+Inbound Route Name (Required)
+Enter a descriptive name for the route
+Example: Main Office, Support Line, Sales Number
+Select Caller ID (Required)
+Choose the phone number that will receive incoming calls
+This is usually a purchased or approved DID
+Select Call Flow (Required)
+Choose how the incoming call should be handled
+Example: IVR, Ring Group, Extension, Time-based flow
+Route Status (Required)
+Active: Route will receive calls
+Inactive: Calls will not be received
+Click Save
+Once saved, the inbound number becomes live immediately if the route is active.
+
+Inbound Route List
+The Inbound Route list shows all configured inbound routes with the following details:
+Created Time – Date the route was created
+Inbound Name – Route name
+Caller ID – Incoming phone number
+Call Flow – Assigned call handling logic
+Assigned To – Customer or company
+Status – Active or Inactive
+Action – Edit or Delete the route
+
+Common Use Cases
+Route a main business number to an IVR
+Send support calls to a Ring Group
+Forward calls to different flows based on time
+Assign different numbers to different departments
+
+Important Notes
+An inbound route must have a Call Flow to work
+If the route is inactive, calls will fail or disconnect
+Caller ID must be approved and active
+
+Troubleshooting
+If incoming calls are not working:
+Check that the route status is Active
+Confirm the correct Caller ID is selected
+Ensure the assigned Call Flow is published and active
+Verify the number is not used in another inbound route
+
+5. Outbound Routes
+Outbound Routes control how extensions make outgoing calls.
+5.1 Create an Outbound Route
+Go to: Voice → PBX → Outbound Route → Add Outbound Route
+Fill in:
+Outbound Route Name (Required)
+Route Destination (Required)
+Example: BD Route – Bangladesh Destination
+Caller ID (Required)
+Number shown on outgoing calls
+Allowed Extensions (Required)
+Select which extensions can use this route
+Route Status
+Active: Available for outbound calls
+Inactive: Disabled
+Click Save to apply.
+5.2 Outbound Route List
+Shows:
+Created Time
+Route Name
+Destination
+Caller ID
+Allowed Extensions
+Assigned Organization
+Status
+Actions:
+✏️ Edit route
+🗑️ Delete route
+
+Notes & Best Practices
+Always create Extensions before configuring routes
+Ensure Caller IDs are approved before use
+Test inbound and outbound routes after setup
+Use meaningful names for easy management
+Ring Group
+Ring Groups allow you to route incoming calls to multiple extensions at the same time or in a defined order. This ensures that calls are answered quickly by available team members.
+
+Access Ring Group
+Log in to the Sohub Connect admin panel.
+Navigate to Call Management > Ring Group.
+You will see two tabs:
+Ring Groups – View and manage existing ring groups.
+Add Ring Group – Create a new ring group.
+
+Create a Ring Group
+To create a new ring group:
+Click Add Ring Group.
+Fill in the required fields:
+Group Description
+Enter a descriptive name for the ring group (e.g., Sales Team, Support Desk).
+Extension List
+Select the extensions that should receive calls.
+Use Quick Select Extension to add extensions.
+Selected extensions will appear in the list.
+Click Clear to remove all selected extensions.
+Ring Strategy
+Choose how calls are distributed:
+Ring All – All selected extensions ring simultaneously.
+Ring Time
+Set how long the extensions will ring before the call is forwarded or disconnected.
+Minimum: 5 seconds
+Maximum: 300 seconds
+Music on Hold
+Select what the caller hears while waiting:
+Ring – Plays the standard ringing tone.
+Ring Group Status
+Enable or disable the ring group:
+Active – Ring group can receive calls.
+Inactive – Ring group will not receive calls.
+Click Create Ring Group to save.
+Click Cancel to discard changes.
+
+Ring Group List View
+The Ring Groups page displays all configured ring groups with the following details:
+Created Time – Date the ring group was created.
+Group Number – System-generated ring group ID.
+Group Description – Name of the ring group.
+Extension List – Extensions included in the ring group.
+Ring Strategy – Call distribution method.
+Ring Time – Duration the extensions ring.
+Play Music – Selected hold music or ring tone.
+Assigned To – Client or account owner.
+Status – Active or inactive state.
+Action – Edit or delete the ring group.
+Use the Search box to quickly find a ring group. You can also control how many rows are displayed per page.
+
+Edit or Delete a Ring Group
+Click the Edit icon to update ring group settings.
+Click the Delete icon to permanently remove a ring group.
+Deleting a ring group may affect inbound call routing. Proceed with caution.
+
+Best Practices
+Use clear and meaningful group descriptions.
+Avoid adding too many extensions to a single ring group.
+Regularly review inactive or unused ring groups.
+
+Ring Groups help ensure no call goes unanswered and improve team responsiveness.
+
+
+Closed User Group (CUG)
+Overview
+Closed User Group (CUG) allows you to create a private list of approved contact numbers. Only these contacts can be used or recognized within specific calling rules, ensuring controlled and secure communication.
+CUG is commonly used to:
+Restrict calling access to approved numbers only
+Manage internal or trusted external contacts
+Apply special call rules for a specific group of users
+
+Accessing Closed User Group
+Log in to Sohub Connect.
+Navigate to Voice → PBX → Closed User Group (CUG).
+You will see three main tabs:
+Closed User Groups
+Add Contact
+Upload Contacts
+
+Add Contact (Manual Entry)
+Use this option to add a single contact manually.
+Steps:
+Click on the Add Contact tab.
+Enter the following required information:
+Contact Name: Enter a recognizable name for the contact.
+Contact Number: Enter the full phone number without spaces or special characters.
+Click Add Contact to save.
+Notes:
+Phone numbers must be entered in complete format.
+Duplicate numbers are not allowed.
+
+Upload Contacts (Bulk Upload)
+Use this option to upload multiple contacts at once using a CSV file.
+Steps:
+Go to the Upload Contacts tab.
+Click Download Sample to get the CSV format.
+Fill in the CSV file with contact details as per the sample.
+Click or drag the completed CSV file into the upload area.
+Click Upload to import the contacts.
+Tips:
+Ensure the CSV file follows the exact sample format.
+Invalid or duplicate numbers may be skipped during upload.
+
+Closed User Group List
+The Closed User Groups tab displays all added contacts.
+Columns Explained:
+Created On: Date when the contact was added.
+Contact Name: Name of the contact.
+Contact Number: Phone number associated with the contact.
+Assigned User: Account or user the contact belongs to.
+Action:
+✏️ Edit contact details
+🗑️ Delete contact
+You can:
+Search contacts using the search bar
+Navigate pages using pagination controls
+
+Best Practices
+Regularly review and remove unused contacts.
+Use bulk upload for large contact lists.
+Ensure numbers are accurate to avoid call failures.
+
+
+Approved Trunks
+Overview
+Approved Trunks show the list of SIP / PSTN trunks that are requested by the customer and approved by Sohub or the telecom provider. Trunks are required to make outbound and inbound calls from Sohub Connect.
+Each trunk goes through an approval process. Until approval, the trunk remains inactive and cannot be used for calling.
+
+Accessing Approved Trunks
+Navigate to: Voice → Approved Trunks
+This page displays all trunk requests along with their current status.
+
+Column Description
+Requested Time: Date when the trunk was requested by the customer.
+Approved Time: Date when the trunk was approved by Sohub / provider. Shows Not Approved Yet if pending.
+Merchant No: The customer or company name under which the trunk is assigned.
+Provider: Telecom or SIP provider name.
+Trunk Number: The main trunk DID or number assigned by the provider.
+Trunk Username: SIP username (if applicable).
+Trunk Password: SIP password (hidden for security reasons).
+Trunk Host: SIP server or host address provided by the carrier.
+Status:
+Pending: Trunk is requested but not yet approved.
+Active: Trunk is approved and ready for use.
+Action:
+Delete: Remove the trunk request (only applicable if allowed).
+
+Trunk Status Flow
+Requested – Customer submits a trunk request.
+Pending – Sohub/provider reviews the request.
+Active – Trunk is approved and available for routing calls.
+Only Active trunks can be used in:
+Inbound Routes
+Outbound Routes
+Call Flow configurations
+
+Important Notes
+Pending trunks cannot place or receive calls.
+SIP credentials are shown partially or hidden for security.
+Trunk details should not be shared publicly.
+If approval is delayed, contact Sohub support.
+
+Best Practices
+Verify provider details before requesting a trunk.
+Use approved trunks only when configuring routes.
+Regularly review trunk status to avoid call failures.
+
+
+Caller IDs
+Caller IDs define the number displayed to call recipients during outbound calls.
+Caller ID List
+Shows all configured caller IDs with:
+Created Time – Date added
+
+
+Name – Caller ID display name
+
+
+Caller ID – Phone number shown to recipients
+
+
+Channels – Number of simultaneous calls allowed
+
+
+Status – Active or inactive
+
+
+Assigned User – Linked user or organization
+
+
+Action – Edit or delete caller ID
+
+
+Add Caller ID
+Register a new caller ID for outbound use.
+Fields:
+Select Trunk – Choose an approved trunk
+
+
+Name – Display name for the caller ID
+
+
+Caller ID – Phone number shown to recipients
+
+
+Channels – Maximum concurrent calls
+
+
+Status – Enable or disable caller ID
+
+
+Click Add Caller ID to save.
+
+
+
+
+Sound Files
+The Sound Files section allows you to upload, manage, and use custom audio files (such as IVR greetings, announcements, or prompts) within your call flows.
+Add a Sound File
+Navigate to Dashboard → Sound Files.
+Click Add Sound File.
+Enter a Sound Name (a descriptive name to identify the audio).
+Upload an Audio File by dragging and dropping or clicking the upload area.
+Supported formats: MP3, WAV
+Files are automatically converted to 8kHz, 16‑bit, Mono WAV for telephony compatibility.
+Click Save to upload the file.
+Sound Files List
+The Sound Files list displays all uploaded audio files with the following details:
+Created Time: Date the sound file was uploaded.
+Sound Name: Name assigned to the audio file.
+Sound File: Built‑in audio player to preview the sound.
+Assigned User: User or account associated with the sound file.
+Status: Indicates whether the sound file is active.
+Verify: Confirms the file is valid and ready for use.
+Action: Delete the sound file if it is no longer needed.
+Sound files can be used in IVR menus, call flows, ring groups, and other voice features.
+
+
+
+Text to Speech (TTS)
+The Text to Speech feature converts written text into natural‑sounding voice audio, which can be used in IVR messages, announcements, and automated call flows.
+Add a TTS
+Navigate to Dashboard → Text to Speech.
+Click Add TTS.
+Enter a Name to identify the TTS entry.
+Enter the TTS Text you want the system to convert into speech.
+Select the Language (for example, English or Bangla).
+Save the TTS entry.
+TTS List
+The TTS list shows all created TTS entries with these details:
+Created Time: Date the TTS was created.
+Name: Identifier for the TTS entry.
+TTS Text: The text that will be converted into speech.
+Language: Selected language for voice generation.
+Assigned User: User or role associated with the TTS.
+Action: Edit, lock, or delete the TTS entry (depending on permissions).
+Once created, TTS entries can be directly used in call flows and IVR configurations, eliminating the need to upload separate audio files.
+
+
+
+Quick Call
+The Quick Call feature allows users to instantly place an outbound call to any phone number using a selected Caller ID and play a predefined audio (Sound File or Text-to-Speech) to the call recipient. This is useful for testing audio, announcements, or making instant outbound calls without creating a full call flow.
+
+Accessing Quick Call
+Navigate to:
+Dashboard → Quick Call
+
+Quick Call Form Fields
+1. Call To *
+Enter the destination phone number you want to call.
+ The number must be valid and reachable according to your trunk configuration.
+2. Caller ID *
+Select the Caller ID that will be displayed to the call recipient.
+ Only active and assigned Caller IDs are available in the dropdown.
+3. Select Play Type *
+Choose the type of audio to play during the call:
+Sound File – Plays a pre-uploaded audio file
+
+
+Text to Speech (TTS) – Plays synthesized speech from saved TTS content (if enabled)
+
+
+4. Select Sound File *
+(Visible when Sound File is selected as Play Type)
+ Choose an active sound file from the list.
+ The selected audio will be played to the recipient when the call connects.
+
+Making a Quick Call
+Enter the Call To number
+
+
+Select a Caller ID
+
+
+Choose a Play Type
+
+
+Select a Sound File (or TTS content)
+
+
+Click Call Now
+
+
+The system will immediately initiate the call and play the selected audio.
+
+Quick Call History
+Below the form, the Quick Call History table displays previously made calls with the following details:
+Created Time – Date and time the call was initiated
+
+
+Call To – Destination phone number
+
+
+Caller ID – Caller ID used for the call
+
+
+Play Strategy – Sound File or TTS
+
+
+Assigned User – User who initiated the call
+
+
+Action – Delete call record (does not affect call logs)
+
+
+
+Use Cases
+Test sound files or TTS before using them in IVR or call flows
+
+
+Make quick announcement calls
+
+
+Verify Caller ID and trunk functionality
+
+
+Instant outbound communication without setup overhead
+
+
+
+Call Flow
+The Call Flow feature lets you visually design how incoming or outgoing calls are handled. Using simple building blocks (Dial, Playback, Menu, Hangup), you can create flexible IVR and routing logic without writing any code.
+Access Call Flow
+Go to Call Flow from the main menu.
+Choose one of the following tabs:
+Call Flow List – View, edit, or delete existing call flows.
+Create Call Flow – Build a new call flow from scratch.
+
+Create a New Call Flow
+Click Create Call Flow.
+In the Start Call Flow section, enter a Flow Name.
+The flow builder opens with a visual editor where steps are connected vertically.
+Click Save at any time to store your progress.
+
+Call Flow Components
+You can add multiple steps to a call flow. Each step defines what happens next in the call.
+Dial
+Use Dial to connect a call to users or groups.
+Select a Ring Group to route the call
+You can add multiple Dial steps in sequence
+Commonly used for inbound call routing
+Example: Ring the Sales team first, then Support if unanswered.
+
+Playback
+Use Playback to play a pre-recorded sound file.
+Select a sound file uploaded in Sound Files
+Ideal for greetings, announce
+Click to Connect
+Click to Connect allows your website visitors to instantly connect with your team through a customizable call widget. With just one click, users can initiate a call that follows a predefined call flow, ensuring fast and efficient communication.
+
+Overview
+The Click to Connect feature helps you:
+Add a call button to your website
+Route calls using predefined call flows
+Customize the look and feel of the call widget
+Track and manage all Click to Connect widgets from a single dashboard
+
+How to Create a Click to Connect Widget
+Navigate to Dashboard → Click to Connect → Create Click to Connect.
+The setup process is completed in three simple steps.
+
+Step 1: Basic Information
+In this step, you define the core configuration of your widget.
+Widget Name
+Enter a recognizable name for the widget (for example: Support Widget).
+This name is used for internal identification.
+Call Flow
+Select an existing call flow from the dropdown list.
+The selected call flow determines how incoming calls will be routed (IVR, agent, queue, etc.).
+Once completed, click Next to proceed.
+
+Step 2: Widget Styling & Preview
+Customize how your Click to Connect button appears on your website.
+Widget States
+You can style the widget for different call states:
+Initial – Default state before interaction
+Dialing – When the call is being initiated
+Calling – When the call is connected
+End Call – When the call ends
+For each state, you can customize:
+Icon – Button icon
+Background Color – Button background
+Frame Color – Outer border color
+Revert to Default
+Click Revert to Default to restore the system’s default design settings.
+Widget Preview
+The preview panel shows how the widget looks in different states.
+This helps you verify the design before publishing.
+Click Next to continue.
+
+Step 3: Widget Preview & Submit
+Live Preview
+View a live, interactive preview of your Click to Connect button.
+Hover over the button to see interactive effects.
+Submit
+Click Submit to create the Click to Connect widget.
+The widget will now be available in your Click to Connect list.
+
+Click to Connect List
+All created widgets are displayed in the Click to Connect List.
+Available Information
+For each widget, you can see:
+Created Time – When the widget was created
+Connect Name – Widget name
+Extension Number – Assigned extension
+Call Flow – Linked call flow
+Assigned User – User or team associated with the widget
+Embed Code
+Click View Script to copy the embed code.
+Paste this script into your website’s HTML to activate the Click to Connect button.
+Actions
+Edit – Modify widget settings
+Delete – Remove the widget permanently
+
+Use Cases
+Customer support call button on websites
+Sales inquiry instant call option
+Helpdesk or helpline integration
+
+Notes
+Ensure at least one call flow is created before setting up Click to Connect.
+Embed code must be placed before the closing <body> tag for best performance.
+
+This completes the Click to Connect documentation section.
+
+
+HotScan Documentation
+Overview
+HotScan is a lead capture and customer engagement feature that allows businesses to collect customer information through a widget and manage inquiries efficiently. It helps identify potential customers (“hot leads”) and route them to the appropriate call flow, extension, or ring group.
+
+HotScan Profiles
+HotScan Profile List
+This section displays all created HotScan profiles in a tabular format.
+Displayed Information:
+Logo – Company or widget logo
+
+
+Created On – Date the profile was created
+
+
+Widget Name – Name of the HotScan widget
+
+
+Call Flow – Assigned call flow, extension, or ring group
+
+
+Assigned To – User or admin responsible for the profile
+
+
+Action
+
+
+View QR Code
+
+
+Edit Profile
+
+
+Delete Profile
+
+
+
+Add HotScan Profile
+Widget Information
+This section defines how the HotScan widget behaves.
+Display Name*
+ Name of the widget shown to customers.
+
+
+Call Flow*
+ Select the destination for incoming calls:
+
+
+Call Flow
+
+
+Extension
+
+
+Ring Group
+
+
+(* indicates required fields)
+
+Company Information
+This section contains business details displayed to customers.
+About Us
+ Short description of the company.
+
+
+Website
+ Official company website URL.
+
+
+Email
+ Contact email address.
+
+
+Contact Number
+ Business phone number (numbers only).
+
+
+Location
+ Company address or location.
+
+
+Office Days
+ Select working days (From – To).
+
+
+Office Time
+ Select business hours (From – To).
+
+
+
+Social Media
+Optional fields to link company social platforms.
+Facebook
+
+
+Instagram
+
+
+LinkedIn
+
+
+
+Logo Upload
+Upload the company or brand logo.
+
+
+Supported via drag-and-drop or file selection.
+
+
+
+Save Profile
+Click Save to create the HotScan profile.
+ Once saved, the profile will appear in the HotScan Profiles list.
+
+Customer Inquiries
+Overview
+The Customer Inquiries tab displays all incoming leads generated from HotScan widgets.
+Information Shown:
+Created At
+
+
+Customer Name
+
+
+Phone
+
+
+Email
+
+
+Company
+
+
+Location
+
+
+Message
+
+
+Status
+
+
+Assigned To
+
+
+Profile ID
+
+
+This helps admins and agents track, follow up, and manage customer inquiries effectively.
+
+Use Case Example
+A visitor opens the HotScan widget on a website
+
+
+The visitor submits contact details or initiates a call
+
+
+The system routes the call using the assigned call flow
+
+
+The inquiry is logged under Customer Inquiries
+
+
+An agent follows up with the lead
+
+
+
+Call Detail Record (CDR) Documentation
+Overview
+The Call Detail Record (CDR) module provides detailed logs and summaries of all call activities within the system. It helps administrators and users monitor call performance, analyze call outcomes, and access call recordings.
+
+Date Range Filter
+At the top of the page, users can select a date range to filter call records.
+Date Picker – Select start and end dates
+
+
+Filter Button – Apply the selected date range to view records
+
+
+
+CDR Summary
+The CDR Summary section displays an overview of call activity for the selected date range.
+Summary Fields
+Date Time
+ Shows the start and end time of the selected period.
+
+
+Calls
+ Total number of calls made or received.
+
+
+Answer
+ Number of successfully answered calls.
+
+
+Busy
+ Calls that failed due to the destination being busy.
+
+
+Congestion
+ Calls failed due to network congestion or system overload.
+
+
+No Answer
+ Calls that were not answered by the destination.
+
+
+This summary provides a quick performance snapshot of call handling.
+
+CDR Details
+The CDR Details section lists individual call records in a tabular format.
+Table Columns
+Date Time
+ Exact date and time when the call occurred.
+
+
+Caller
+ Phone number or extension that initiated the call.
+
+
+Destination
+ Number or extension that received the call.
+
+
+Duration
+ Total duration of the call (HH:MM:SS).
+
+
+Disposition
+ Final call status:
+
+
+ANSWER
+
+
+NO ANSWER
+
+
+BUSY
+
+
+CONGESTION
+
+
+Recording
+ Play button to listen to the call recording (if recording is enabled).
+
+
+Action
+
+
+Delete individual call records
+
+
+
+Search and Filter Options
+Disposition Filter – Filter calls by status (All, Answered, No Answer, etc.)
+
+
+Search Box – Search call records by caller or destination number
+
+
+
+Use Cases
+Monitor answered vs missed calls
+
+
+Review call durations and outcomes
+
+
+Listen to call recordings for quality assurance
+
+
+Analyze call traffic and system performance
+
+Transaction History Documentation
+Overview
+The Transaction History module displays a complete record of all financial transactions performed within the system. It is divided into Internal Transactions and External Transactions, allowing users to track balance movements, payments, and system-generated credits.
+
+Internal Transactions
+The Internal Transactions section shows transactions that occur inside the system, such as wallet transfers, system credits, and service-related payments.
+Features
+Rows per page – Select how many records are shown per page
+
+
+Search box – Search transactions by ID, user, or remarks
+
+
+Pagination – Navigate through multiple pages of records
+
+
+Table Columns
+Date Time
+ The date and time when the transaction was created.
+
+
+Payment Method
+ Method used for the transaction, such as:
+
+
+Wallet Pay
+
+
+From System
+
+
+Transaction ID
+ Unique identifier for the transaction.
+
+
+From
+ Source account or user initiating the transaction
+ (e.g., Super Admin, Customer).
+
+
+To
+ Destination account or user receiving the amount.
+
+
+Amount
+ Transaction amount with currency.
+
+
+Status
+ Current transaction status:
+
+
+Success
+
+
+Failed (if applicable)
+
+
+Remarks
+ Additional notes describing the purpose of the transaction
+ (e.g., new extension creation, hotscan creation, click-to-connect setup).
+
+
+
+External Transactions
+The External Transactions section displays transactions involving external payment sources, such as mobile numbers, payment gateways, or third-party systems.
+Features
+Rows per page – Control number of visible records
+
+
+Search box – Search external transaction details
+
+
+Table Columns
+Date Time
+ Date and time of the external transaction.
+
+
+Payment Method
+ External payment method used.
+
+
+Amount
+ Amount paid or received.
+
+
+From Number
+ External number or source initiating the payment.
+
+
+Transaction ID
+ Unique external transaction reference.
+
+
+Status
+ Transaction result (Success / Failed / Pending).
+
+
+If no records are available, the system displays “No data available in table.”
+
+Use Cases
+Track wallet balance changes
+
+
+Audit system-generated credits
+
+
+Verify successful service payments
+
+
+Monitor external payment activity
+
+
+Maintain financial transparency
+
+
+
+Tickets
+The Tickets module allows users to create, view, and track support requests efficiently. It helps ensure that user issues are properly recorded and resolved within the promised support timeframe.
+
+Tickets List
+This section displays all previously created tickets.
+Columns:
+Created Time – Date when the ticket was created
+
+
+Ticket ID – Unique identification number for the ticket
+
+
+Ticket Type – Category of the issue (e.g., Bug Report, Technical Support)
+
+
+Description – Short summary of the issue
+
+
+Comment – Admin/support comments (if any)
+
+
+Assigned User – Support staff assigned to the ticket
+
+
+Status – Current ticket status (Open / Closed)
+
+
+Action – View ticket details
+
+
+Features:
+Filter tickets by Ticket ID and date range
+
+
+Search tickets using the search box
+
+
+Pagination support for easy navigation
+
+
+
+Create Ticket
+Users can create a new support ticket from the Create Ticket tab.
+Steps to Create a Ticket:
+Click on Create Ticket
+
+
+Select a Ticket Type from the dropdown:
+
+
+Bug Report
+
+
+Feature Request
+
+
+Technical Support
+
+
+Account Issue
+
+
+Billing Inquiry
+
+
+Enter the Description of the issue
+
+
+Submit the ticket
+
+
+📌 Note:
+ A confirmation message informs users that the support team will resolve the issue within 24 hours.
+
+Ticket Status
+Open – Ticket is active and under review
+
+
+Closed – Issue has been resolved
+
+
+Users can track ticket progress directly from the ticket list.
+
+
+Wallet
+The Wallet module allows users to manage their account balance, top up funds, and review payment activity.
+
+Wallet Overview
+The Wallet dashboard provides a quick summary of the user’s account balance and payment options.
+
+Remaining Balance
+Displays the current available balance in the user’s wallet.
+
+
+The balance is shown in BDT (৳).
+
+
+This amount is automatically updated after:
+
+
+Successful top-ups
+
+
+Service usage
+
+
+System adjustments
+
+
+
+Topup Now
+Clicking Topup Now allows users to add funds to their wallet.
+
+
+Users can choose available payment methods to recharge their balance.
+
+
+The wallet balance is updated after successful payment.
+
+
+
+Check Payment Logs
+Users can review their transaction history by clicking View Logs.
+
+
+This section shows:
+
+
+Previous top-up records
+
+
+System-added credits
+
+
+Wallet deductions
+
+
+
+Purpose of Wallet
+The Wallet ensures uninterrupted service usage by maintaining sufficient balance and provides transparency through detailed payment logs.
+
+
+Packages (Choose Your Plan)
+The Packages section allows users to view, compare, and manage their subscription plans based on business needs.
+
+Current Plan Overview
+At the top of the page, users can see details of their active subscription, including:
+Current Plan Name (e.g., Plus)
+
+
+Start Date of the plan
+
+
+Next Billing Date
+
+
+Days Active
+
+
+Days Remaining
+
+
+Monthly Charge
+
+
+Total Extensions & Cost Breakdown
+
+
+This section helps users track billing cycles and plan usage at a glance.
+
+Available Plans
+1. Free Plan
+Designed for small teams or basic usage.
+Price
+৳0 / User / Month
+
+
+Features
+Access up to 5 extension users & 3 channels
+
+
+Advanced Call Flow / IVR (e.g., press 1 for Sales)
+
+
+Standard calling features (Hold, Transfer, DND)
+
+
+Call Detail Reports (CDR)
+
+
+Real-time Dashboard
+
+
+Manage Sound Files (for IVR greetings, etc.)
+
+
+Manage TTS (Text-to-Speech for IVR)
+
+
+Live Call Monitoring
+
+
+Action
+Users can switch to this plan using the Switch button.
+
+
+
+2. Plus Plan (Current Plan)
+Ideal for growing teams needing more control and scalability.
+Price
+৳50 / User / Month
+
+
+Discounted pricing shown when applicable
+
+
+Includes
+Everything in Free Plan
+
+
+Unlimited user access with unlimited channels
+
+
+Connect to verified IPSTP number (Trunk)
+
+
+Support Ticket System
+
+
+AI Agent (Coming Soon)
+
+
+Status
+Marked as Current Plan when active
+
+
+Switching is disabled while active
+
+
+
+3. Pro Plan
+Best suited for call centers and enterprises with advanced requirements.
+Price
+Custom Pricing (Contact required)
+
+
+Includes
+Everything in Plus Plan
+
+
+Customized features
+
+
+API integration support
+
+
+Dedicated technical support
+
+
+Support ticket system
+
+
+On-premise setup available
+
+
+Action
+Users can click Request Now to contact sales/support for activation.
+
+
+
+Plan Management
+Users can upgrade or downgrade plans based on requirements.
+
+
+Plan changes affect billing and available features.
+
+
+Some plans may require sufficient wallet balance before activation.
+

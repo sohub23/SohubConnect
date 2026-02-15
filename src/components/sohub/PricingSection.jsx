@@ -34,7 +34,7 @@ export default function PricingSection() {
         </div>
 
         {/* Pricing Card */}
-        <div className="bg-gradient-to-br from-[#F0FDF4] to-white dark:from-[#1E1E1E] dark:to-[#1A1A1A] rounded-3xl p-8 md:p-12 border-2 border-[#22C55E] shadow-2xl shadow-[#22C55E]/20">
+        <div className="bg-gradient-to-br from-[#F0FDF4] to-white dark:from-[#1E1E1E] dark:to-[#1A1A1A] rounded-3xl p-8 md:p-12 border-2 border-[#22C55E] shadow-2xl shadow-[#22C55E]/20 pricing-card">
           {/* Free Forever Badge */}
           <div className="inline-flex items-center bg-[#22C55E] text-white rounded-full px-6 py-2 mb-8">
             <span className="font-inter font-bold text-sm">FREE FOREVER</span>
@@ -86,7 +86,9 @@ export default function PricingSection() {
           {/* CTA Button */}
           <div className="mt-10">
             <a
-              href="/dashboard"
+              href="https://connect.sohub.com.bd/authentication/register"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full bg-[#22C55E] text-white font-inter font-bold text-lg px-8 py-5 rounded-full hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 text-center shadow-xl shadow-[#22C55E]/30"
             >
               Start Free — Up to 5 Users

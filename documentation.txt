@@ -1,0 +1,116 @@
+Packages (Choose Your Plan)
+
+The Packages section allows users to view, compare, and manage subscription plans based on their business needs.
+
+Current Plan Overview
+
+At the top of the page, users can see details of their active subscription:
+
+Current Plan Name (e.g., Free, Plus)
+
+Plan Start Date
+
+Next Billing Date
+
+Days Active
+
+Days Remaining
+
+Monthly Charge
+
+Total Extensions & Cost Breakdown
+
+This overview helps users easily track billing cycles, usage, and upcoming charges.
+
+Available Plans
+1. Free Plan
+
+Best for small teams or basic usage.
+
+Price
+৳0 / User / Month
+
+Features
+
+Up to 5 extensions and 3 channels
+
+Advanced Call Flow / IVR (e.g., Press 1 for Sales)
+
+Standard calling features (Hold, Transfer, DND)
+
+Call Detail Records (CDR)
+
+Real-time Dashboard
+
+Sound File management (IVR greetings, announcements)
+
+Text-to-Speech (TTS) management
+
+Live Call Monitoring
+
+Action
+
+Click Switch to move to this plan
+
+2. Plus Plan (Current Plan)
+
+Ideal for growing teams that need scalability and more control.
+
+Price
+৳50 / User / Month
+(Discounted pricing may apply)
+
+Includes
+
+All features of the Free Plan
+
+Unlimited extensions and unlimited channels
+
+IPSTN / verified trunk connection
+
+Support Ticket system
+
+AI Agent (Coming Soon)
+
+Status
+
+Marked as Current Plan when active
+
+Switching is disabled while this plan is active
+
+3. Pro Plan
+
+Designed for enterprises and call centers with advanced requirements.
+
+Price
+Custom Pricing (Contact Sales)
+
+Includes
+
+All features of the Plus Plan
+
+Customized feature set
+
+API integration support
+
+Dedicated technical support
+
+Support Ticket system
+
+On-premise deployment option
+
+Action
+
+Click Request Now to contact sales/support
+
+Plan Management Notes
+
+Users can upgrade or downgrade plans at any time
+
+Plan changes affect:
+
+Billing amount
+
+Available features
+
+Some plans may require sufficient wallet balance before activation

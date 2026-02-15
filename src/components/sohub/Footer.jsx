@@ -1,6 +1,19 @@
 import { Mail } from "lucide-react";
 
+const HOME_PATHS = ['/', '/sohub'];
+
 export default function Footer() {
+  const handleScrollToSection = (e, sectionId) => {
+    const isHomePage = HOME_PATHS.includes(window.location.pathname);
+    
+    if (isHomePage) {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
   return (
     <footer className="w-full py-16 md:py-20 px-6 bg-[#0A0A0A] dark:bg-[#0A0A0A]">
       <div className="max-w-[1240px] mx-auto">
@@ -40,27 +53,15 @@ export default function Footer() {
             </h3>
             <div className="space-y-3">
               <a
-                href="#features"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById('features');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                href="/#features"
+                onClick={(e) => handleScrollToSection(e, 'features')}
                 className="block font-inter text-sm text-white/70 hover:text-white transition-colors cursor-pointer"
               >
                 Features
               </a>
               <a
-                href="#pricing"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById('pricing');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                href="/#pricing"
+                onClick={(e) => handleScrollToSection(e, 'pricing')}
                 className="block font-inter text-sm text-white/70 hover:text-white transition-colors cursor-pointer"
               >
                 Pricing
@@ -73,12 +74,6 @@ export default function Footer() {
               >
                 Dashboard
               </a>
-              <a
-                href="#"
-                className="block font-inter text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Documentation
-              </a>
             </div>
           </div>
 
@@ -88,15 +83,24 @@ export default function Footer() {
               Company
             </h3>
             <div className="space-y-3">
-              {["About", "Contact", "Privacy", "Terms"].map((link, index) => (
-                <a
-                  key={index}
-                  href={`#${link.toLowerCase()}`}
-                  className="block font-inter text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
+              <a
+                href="/about"
+                className="block font-inter text-sm text-white/70 hover:text-white transition-colors"
+              >
+                About
+              </a>
+              <a
+                href="/contact"
+                className="block font-inter text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Contact
+              </a>
+              <a
+                href="/terms"
+                className="block font-inter text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Terms & Conditions
+              </a>
             </div>
           </div>
         </div>

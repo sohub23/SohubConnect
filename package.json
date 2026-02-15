@@ -4,6 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "react-router dev",
+		"build": "react-router build",
+		"start": "react-router-serve ./build/server/index.js",
 		"typecheck": "react-router typegen && tsc --noEmit"
 	},
 	"dependencies": {
@@ -29,6 +31,7 @@
 		"classnames": "^2.5.1",
 		"clean-stack": "^5.2.0",
 		"cmdk": "^1.1.1",
+		"cobe": "^0.6.5",
 		"color2k": "^2.0.3",
 		"date-fns": "^4.1.0",
 		"downshift": "^9.0.9",

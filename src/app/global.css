@@ -7,3 +7,132 @@
     @apply outline-none focus:outline-none;
   }
 }
+
+/* Light Mode Override */
+.light-mode {
+  color-scheme: light;
+}
+
+.light-mode section:not(.cta-section),
+.light-mode div:not([class*="bg-[#22C55E]"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-yellow"]):not(.cta-section):not(.cta-section *):not(footer *):not([class*="bg-gradient"]):not([class*="aspect-"]):not(.dashboard-preview):not(.browser-mockup):not(.browser-mockup *):not(.feature-bottom):not(.feature-bottom *):not(.pricing-card):not(.pricing-card *),
+.light-mode header {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.light-mode footer,
+.light-mode footer div {
+  background: #f3f4f6 !important;
+}
+
+.light-mode .dark\:bg-\[\#121212\] {
+  background-color: rgb(255 255 255 / 0.95) !important;
+}
+
+.light-mode .text-white:not(.cta-section *):not(.hotscan-button):not(.hotscan-button *),
+.light-mode .dark\:text-white:not(.cta-section *):not(.hotscan-button):not(.hotscan-button *) {
+  color: #111111 !important;
+}
+
+.light-mode .text-white\/70:not(.cta-section *),
+.light-mode .text-white\/60:not(.cta-section *),
+.light-mode .text-white\/50:not(.cta-section *),
+.light-mode .text-white\/90:not(.cta-section *),
+.light-mode .text-white\/80:not(.cta-section *),
+.light-mode .dark\:text-white\/70:not(.cta-section *),
+.light-mode .dark\:text-white\/60:not(.cta-section *),
+.light-mode .dark\:text-white\/50:not(.cta-section *),
+.light-mode .dark\:text-white\/87:not(.cta-section *),
+.light-mode .dark\:text-opacity-70:not(.cta-section *),
+.light-mode .dark\:text-opacity-60:not(.cta-section *),
+.light-mode .dark\:text-opacity-87:not(.cta-section *) {
+  color: #525252 !important;
+}
+
+.light-mode a[href="#features"] span,
+.light-mode a[href="#how-it-works"] span {
+  color: #ffffff !important;
+}
+
+/* Dashboard Preview Exception */
+.light-mode .dashboard-preview {
+  background: #F3F4F6 !important;
+}
+
+.light-mode .dashboard-preview .dark\:text-white {
+  color: #111111 !important;
+}
+
+.light-mode .dashboard-preview .dark\:text-white\/70,
+.light-mode .dashboard-preview .dark\:text-opacity-70 {
+  color: #6B7280 !important;
+}
+
+.light-mode .dashboard-preview .dark\:bg-\[\#1E1E1E\] {
+  background: #ffffff !important;
+}
+
+.light-mode .dashboard-preview .dark\:border-gray-700 {
+  border-color: #e5e7eb !important;
+}
+
+.light-mode .dashboard-preview .dark\:bg-\[\#1E1E1E\]:not(.bg-white) {
+  background: #ffffff !important;
+}
+
+.light-mode .browser-mockup .dark\:bg-\[\#1E1E1E\] {
+  background: #ffffff !important;
+}
+
+.light-mode .browser-mockup .dark\:text-opacity-60 {
+  color: #737373 !important;
+}
+
+/* Feature Bottom Exception */
+.light-mode .feature-bottom {
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1)) !important;
+}
+
+.light-mode .feature-bottom * {
+  background: transparent !important;
+}
+
+/* Pricing Card Exception */
+.light-mode .pricing-card {
+  background: linear-gradient(to bottom right, #F0FDF4, #ffffff) !important;
+}
+
+.light-mode .pricing-card .dark\:text-white {
+  color: #111111 !important;
+}
+
+.light-mode .pricing-card .dark\:text-white\/70,
+.light-mode .pricing-card .dark\:text-opacity-70 {
+  color: #525252 !important;
+}
+
+.light-mode .pricing-card .dark\:text-opacity-60 {
+  color: #6B7280 !important;
+}
+
+.light-mode .pricing-card .dark\:bg-blue-900\/20 {
+  background: #dbeafe !important;
+}
+
+.light-mode .pricing-card .dark\:border-blue-800 {
+  border-color: #93c5fd !important;
+}
+
+.light-mode .pricing-card .dark\:text-blue-200 {
+  color: #1e3a8a !important;
+}
+
+/* HotScan Button Exception */
+.light-mode .hotscan-button {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.light-mode .hotscan-button span {
+  color: #ffffff !important;
+}
