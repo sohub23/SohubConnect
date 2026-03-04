@@ -2,38 +2,38 @@ import { Phone, Zap } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="w-full bg-white dark:bg-[#121212] py-12 md:py-16">
-      <div className="max-w-[1240px] mx-auto px-6 md:px-8 lg:px-12">
+    <section className="w-full bg-white dark:bg-[#121212] py-6 sm:py-10 md:py-14 lg:py-16">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         {/* Hero Content - Centered */}
-        <div className="text-center space-y-8 max-w-5xl mx-auto">
+        <div className="text-center space-y-6 sm:space-y-8 max-w-5xl mx-auto">
           {/* Eyebrow badge */}
-          <div className="inline-flex items-center space-x-2 bg-[#DCFCE7] dark:bg-[#22C55E]/20 border border-[#22C55E] rounded-full px-4 py-2">
-            <Zap size={14} className="text-[#16A34A] dark:text-[#22C55E]" />
-            <span className="font-inter font-semibold text-xs text-[#16A34A] dark:text-[#22C55E]">
+          <div className="inline-flex items-center space-x-2 bg-[#22C55E] border border-[#22C55E] rounded-full px-4 py-2">
+            <Zap size={14} className="text-[#FFFFFF]" />
+            <span className="font-inter font-semibold text-xs text-[#FFFFFF]">
               Revolutionary PBX System
             </span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-plus-jakarta-sans font-bold text-[#111111] dark:text-white leading-[1.1] text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="font-plus-jakarta-sans font-bold text-[#111111] dark:text-white leading-[1.15] text-[32px] sm:text-4xl md:text-5xl lg:text-6xl px-2">
             PBX, <span className="text-[#22C55E]">Without Boundaries.</span>
             <br />
             <span className="text-[#22C55E]">Without <span className="text-[#111111] dark:text-white">Phone</span> Numbers.</span>
           </h1>
 
           {/* Supporting Paragraph */}
-          <p className="font-inter text-[#525252] dark:text-white dark:text-opacity-70 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+          <p className="font-inter text-[#525252] dark:text-white dark:text-opacity-70 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto px-2">
             A borderless, cloud-native PBX built for real customer conversations in Bangladesh.
             One click. Instant conversation. No numbers. No waiting.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 px-4">
             <a
               href="https://connect.sohub.com.bd/authentication/register"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 bg-[#22C55E] text-white font-inter font-semibold text-base px-8 py-4 rounded-full hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-opacity-60 min-h-[52px] shadow-lg shadow-[#22C55E]/30"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#22C55E] text-white font-inter font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-opacity-60 min-h-[48px] sm:min-h-[52px] shadow-lg shadow-[#22C55E]/30"
             >
               <span>Start Now</span>
             </a>
@@ -46,14 +46,14 @@ export default function Hero() {
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="inline-flex items-center space-x-2 bg-white dark:bg-[#1E1E1E] text-[#111111] dark:text-white font-inter font-semibold text-base px-8 py-4 rounded-full border-2 border-gray-200 dark:border-gray-700 hover:border-[#22C55E] dark:hover:border-[#22C55E] active:scale-95 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-opacity-60 min-h-[52px] cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white dark:bg-[#1E1E1E] text-[#111111] dark:text-white font-inter font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-gray-200 dark:border-gray-700 hover:border-[#22C55E] dark:hover:border-[#22C55E] active:scale-95 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-opacity-60 min-h-[48px] sm:min-h-[52px] cursor-pointer"
             >
               <span>See How It Works</span>
             </a>
           </div>
 
           {/* Trust badges */}
-          <div className="pt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-[#6B7280] dark:text-white dark:text-opacity-60 font-inter">
+          <div className="pt-4 sm:pt-6 md:pt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 text-[11px] sm:text-xs md:text-sm text-[#6B7280] dark:text-white dark:text-opacity-60 font-inter px-4">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-[#22C55E] rounded-full"></div>
               <span>No credit card required</span>
@@ -70,7 +70,7 @@ export default function Hero() {
         </div>
 
         {/* Visual Demo - Browser mockup */}
-        <div className="mt-16 relative max-w-5xl mx-auto">
+        <div className="mt-8 sm:mt-10 md:mt-14 lg:mt-16 relative max-w-5xl mx-auto">
           <div className="relative bg-white dark:bg-[#1E1E1E] rounded-2xl border border-[#E5E7EB] dark:border-gray-700 shadow-2xl overflow-hidden browser-mockup">
             {/* Browser Chrome */}
             <div className="flex items-center px-4 py-3 bg-[#F9FAFB] dark:bg-[#262626] border-b border-[#E5E7EB] dark:border-gray-700">
@@ -114,7 +114,7 @@ export default function Hero() {
                     <Phone size={18} className="text-[#22C55E] sm:w-5 sm:h-5" />
                   </div>
                   <h4 className="font-inter font-semibold text-sm sm:text-base text-[#111111] dark:text-white mb-1 sm:mb-2">
-                    Click-to-Call
+                    Start talking instantly
                   </h4>
                   <p className="font-inter text-xs sm:text-sm text-[#6B7280] dark:text-white dark:text-opacity-70">
                     3 buttons active

@@ -1,9 +1,9 @@
 export default function WhatItIs() {
   return (
-    <section className="py-12 md:py-16 px-6 bg-white dark:bg-[#121212]">
+    <section className="py-10 sm:py-12 md:py-14 lg:py-16 px-4 sm:px-6 bg-white dark:bg-[#121212]">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="font-plus-jakarta-sans font-bold text-[32px] sm:text-[40px] md:text-[48px] text-[#111111] dark:text-white text-center leading-tight">
+        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
+          <h2 className="font-plus-jakarta-sans font-bold text-[24px] sm:text-[28px] md:text-[36px] lg:text-[48px] text-[#111111] dark:text-white text-center leading-tight px-2">
             What is <span className="text-[#22C55E]">Click to Connect?</span>
           </h2>
           

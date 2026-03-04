@@ -1,5 +1,6 @@
 import Header from "../../components/sohub/Header";
 import Footer from "../../components/sohub/Footer";
+import { ThemeProvider } from "../../components/sohub/ThemeProvider";
 import { FileText } from "lucide-react";
 
 export default function TermsPage() {
@@ -62,6 +63,7 @@ export default function TermsPage() {
   ];
 
   return (
+    <ThemeProvider>
     <div className="min-h-screen bg-white dark:bg-[#121212]">
       <Header />
       
@@ -117,5 +119,6 @@ export default function TermsPage() {
 
       <Footer />
     </div>
+    </ThemeProvider>
   );
 }

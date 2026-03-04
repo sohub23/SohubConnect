@@ -2,6 +2,7 @@
 
 import Header from "../../components/sohub/Header";
 import Footer from "../../components/sohub/Footer";
+import { ThemeProvider } from "../../components/sohub/ThemeProvider";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 
@@ -12,11 +13,25 @@ export default function ContactPage() {
     phone: "",
     message: ""
   });
+  const [submitStatus, setSubmitStatus] = useState({ loading: false, success: false, error: null });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    setSubmitStatus({ loading: true, success: false, error: null });
+    
+    try {
+      // Simulate API call - replace with actual endpoint
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      setSubmitStatus({ loading: false, success: true, error: null });
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      
+      setTimeout(() => {
+        setSubmitStatus({ loading: false, success: false, error: null });
+      }, 3000);
+    } catch (error) {
+      setSubmitStatus({ loading: false, success: false, error: "Failed to send message. Please try again." });
+    }
   };
 
   const handleChange = (e) => {
@@ -27,7 +42,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#121212]">
+    <ThemeProvider>
+      <div className="min-h-screen bg-white dark:bg-[#121212]">
       <Header />
       
       {/* Hero Section */}
@@ -49,6 +65,20 @@ export default function ContactPage() {
           </div>
 
           <div className="max-w-3xl mx-auto">
+            {/* Success Message */}
+            {submitStatus.success && (
+              <div className="mb-6 p-4 rounded-lg bg-[#DCFCE7] dark:bg-[#22C55E]/20 border border-[#22C55E] text-[#16A34A] dark:text-[#22C55E] font-inter text-sm">
+                ✓ Message sent successfully! We'll get back to you soon.
+              </div>
+            )}
+            
+            {/* Error Message */}
+            {submitStatus.error && (
+              <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-500 text-red-600 dark:text-red-400 font-inter text-sm">
+                ✗ {submitStatus.error}
+              </div>
+            )}
+            
             {/* Contact Form */}
             <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -68,7 +98,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Enter Your Name"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#0A0A0A] text-[#111111] dark:text-white font-inter text-base placeholder:text-[#6B7280] dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a2a2a] text-[#111111] dark:text-white font-inter text-base placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -88,7 +118,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Your Email"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#0A0A0A] text-[#111111] dark:text-white font-inter text-base placeholder:text-[#6B7280] dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a2a2a] text-[#111111] dark:text-white font-inter text-base placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -108,7 +138,7 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Your Phone Number"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#0A0A0A] text-[#111111] dark:text-white font-inter text-base placeholder:text-[#6B7280] dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a2a2a] text-[#111111] dark:text-white font-inter text-base placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -127,17 +157,30 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell us how we can help you..."
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#0A0A0A] text-[#111111] dark:text-white font-inter text-base placeholder:text-[#6B7280] dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a2a2a] text-[#111111] dark:text-white font-inter text-base placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent transition-all resize-none"
                     ></textarea>
                   </div>
 
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full bg-[#22C55E] text-white font-inter font-semibold text-base hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-offset-2"
+                    disabled={submitStatus.loading}
+                    className="w-full inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full bg-[#22C55E] text-white font-inter font-semibold text-base hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-offset-2 dark:focus:ring-offset-[#121212] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#22C55E]"
                   >
-                    <Send size={20} />
-                    <span>Send Message</span>
+                    {submitStatus.loading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={20} />
+                        <span>Send Message</span>
+                      </>
+                    )}
                   </button>
                 </form>
               </div>
@@ -146,6 +189,7 @@ export default function ContactPage() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }

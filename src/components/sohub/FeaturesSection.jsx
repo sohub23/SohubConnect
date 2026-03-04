@@ -1,18 +1,24 @@
 import { MousePointerClick, Scan } from "lucide-react";
 
+const EYEBROW_BADGE_CLASS =
+  "inline-flex items-center space-x-2 bg-[#22C55E] border border-[#22C55E] rounded-full px-4 py-2";
+const EYEBROW_ICON_CLASS = "text-[#FFFFFF]";
+const EYEBROW_TEXT_CLASS =
+  "font-inter font-semibold text-xs text-[#FFFFFF]";
+
 export default function FeaturesSection() {
   return (
     <section
       id="features"
-      className="py-20 md:py-24 px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]"
+      className="py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="font-plus-jakarta-sans font-bold text-3xl md:text-4xl lg:text-5xl text-[#111111] dark:text-white leading-tight mb-6">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="font-plus-jakarta-sans font-bold text-2xl md:text-4xl lg:text-5xl text-[#111111] dark:text-white leading-tight mb-4 md:mb-6">
             We Removed <span className="text-[#22C55E]">Phone Numbers</span>
           </h2>
-          <p className="font-inter text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed max-w-3xl mx-auto">
+          <p className="font-inter text-base md:text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed max-w-3xl mx-auto">
             Traditional PBX connects calls using phone numbers and operators. We
             asked a simple question:{" "}
             <span className="font-semibold text-[#111111] dark:text-white">
@@ -22,25 +28,25 @@ export default function FeaturesSection() {
         </div>
 
         {/* Feature 1: Client-to-Connect */}
-        <div className="mb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="mb-16 md:mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left: Content */}
-            <div className="space-y-6">
-              <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-full px-4 py-2">
+            <div className="space-y-4 md:space-y-6">
+              <div className={EYEBROW_BADGE_CLASS}>
                 <MousePointerClick
                   size={14}
-                  className="text-blue-600 dark:text-blue-400"
+                  className={EYEBROW_ICON_CLASS}
                 />
-                <span className="font-inter font-semibold text-xs text-blue-600 dark:text-blue-400">
+                <span className={EYEBROW_TEXT_CLASS}>
                   Click-to-Call
                 </span>
               </div>
 
-              <h3 className="font-plus-jakarta-sans font-bold text-3xl md:text-4xl text-[#111111] dark:text-white leading-tight">
-                Client-to-Connect
+              <h3 className="font-plus-jakarta-sans font-bold text-2xl md:text-3xl lg:text-4xl text-[#111111] dark:text-white leading-tight">
+                Click to Connect
               </h3>
 
-              <p className="font-inter text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed">
+              <p className="font-inter text-base md:text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed">
                 Instead of calling a number: Customers click a button on your
                 website or app. That's it. No dial pad. No SIM. No waiting.{" "}
                 <span className="font-semibold text-[#111111] dark:text-white">
@@ -69,25 +75,30 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              <div className="pt-4">
-                <p className="font-inter text-xl text-[#111111] dark:text-white font-semibold mb-4">
+              <div className="pt-3 md:pt-4">
+                <p className="font-inter text-lg md:text-xl text-[#111111] dark:text-white font-semibold mb-4 md:mb-6">
                   One click turns interest into conversation.
                 </p>
-                <a
-                  href="/click-to-connect"
-                  className="inline-flex items-center space-x-2 text-[#22C55E] hover:text-[#16A34A] font-inter font-semibold text-base transition-colors duration-200"
-                >
-                  <span>Learn more</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                  <a
+                    href="/click-to-connect"
+                    className="px-6 py-3 bg-[#22C55E] hover:bg-[#16A34A] !text-white font-inter font-semibold text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-center"
+                  >
+                    Learn More
+                  </a>
+                  <a
+                    href="/features"
+                    className="px-6 py-3 bg-[#111111] dark:bg-[#2a2a2a] hover:opacity-70 !text-white font-inter font-semibold text-sm rounded-lg transition-all duration-200 border border-[#111111] dark:border-gray-700 shadow-sm text-center"
+                  >
+                    Features
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Right: Visual */}
-            <div className="relative">
-              <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div className="relative mt-8 lg:mt-0">
+              <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 md:p-8 border border-gray-200 dark:border-gray-700 shadow-xl">
                 {/* Video Demo */}
                 <div className="space-y-6">
                   <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
@@ -117,8 +128,8 @@ export default function FeaturesSection() {
               </div>
 
               {/* Floating badge */}
-              <div className="absolute -right-4 -top-4 bg-blue-500 text-white rounded-full px-4 py-2 shadow-lg">
-                <span className="font-inter font-bold text-sm">
+              <div className="absolute -right-2 -top-2 md:-right-4 md:-top-4 bg-blue-500 text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
+                <span className="font-inter font-bold text-xs md:text-sm">
                   Live Demo!
                 </span>
               </div>
@@ -128,10 +139,10 @@ export default function FeaturesSection() {
 
         {/* Feature 2: HotScan */}
         <div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left: Visual (on mobile, this will appear second) */}
-            <div className="relative lg:order-1 order-2">
-              <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div className="relative lg:order-1 order-2 mt-8 lg:mt-0">
+              <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 md:p-8 border border-gray-200 dark:border-gray-700 shadow-xl">
                 {/* Video Demo */}
                 <div className="space-y-6">
                   <div>
@@ -164,28 +175,28 @@ export default function FeaturesSection() {
               </div>
 
               {/* Floating badge */}
-              <div className="absolute -left-4 -top-4 bg-[#22C55E] text-white rounded-full px-4 py-2 shadow-lg">
-                <span className="font-inter font-bold text-sm">Live Demo!</span>
+              <div className="absolute -left-2 -top-2 md:-left-4 md:-top-4 bg-[#22C55E] text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
+                <span className="font-inter font-bold text-xs md:text-sm">Live Demo!</span>
               </div>
             </div>
 
             {/* Right: Content */}
-            <div className="space-y-6 lg:order-2 order-1">
-              <div className="inline-flex items-center space-x-2 bg-[#DCFCE7] dark:bg-[#22C55E]/20 border border-[#22C55E] rounded-full px-4 py-2">
+            <div className="space-y-4 md:space-y-6 lg:order-2 order-1">
+              <div className={EYEBROW_BADGE_CLASS}>
                 <Scan
                   size={14}
-                  className="text-[#16A34A] dark:text-[#22C55E]"
+                  className={EYEBROW_ICON_CLASS}
                 />
-                <span className="font-inter font-semibold text-xs text-[#16A34A] dark:text-[#22C55E]">
+                <span className={EYEBROW_TEXT_CLASS}>
                   QR-Based Calling
                 </span>
               </div>
 
-              <h3 className="font-plus-jakarta-sans font-bold text-3xl md:text-4xl text-[#111111] dark:text-white leading-tight">
+              <h3 className="font-plus-jakarta-sans font-bold text-2xl md:text-3xl lg:text-4xl text-[#111111] dark:text-white leading-tight">
                 HotScan
               </h3>
 
-              <p className="font-inter text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed">
+              <p className="font-inter text-base md:text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed">
                 Hotlines are outdated. So we replaced them. Meet HotScan. A
                 printable, static QR code that customers scan and the call
                 starts instantly.
@@ -212,28 +223,42 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              <div className="pt-4 space-y-3">
-                <p className="font-inter text-base text-[#525252] dark:text-white dark:text-opacity-87">
+              <div className="pt-3 md:pt-4 space-y-3 md:space-y-4">
+                <p className="font-inter text-base text-[#525252] dark:text-white dark:text-opacity-80">
                   No saving numbers. No dialing mistakes.
                 </p>
-                <p className="font-inter text-xl text-[#111111] dark:text-white font-semibold">
+                <p className="font-inter text-lg md:text-xl text-[#111111] dark:text-white font-semibold mb-4 md:mb-6">
                   Just scan and speak.
                 </p>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                  <a
+                    href="/hotscan"
+                    className="px-6 py-3 bg-[#22C55E] hover:bg-[#16A34A] !text-white font-inter font-semibold text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-center"
+                  >
+                    Learn More
+                  </a>
+                  <a
+                    href="/features"
+                    className="px-6 py-3 bg-[#111111] dark:bg-[#2a2a2a] hover:opacity-70 !text-white font-inter font-semibold text-sm rounded-lg transition-all duration-200 border border-[#111111] dark:border-gray-700 shadow-sm text-center"
+                  >
+                    Features
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom statement */}
-        <div className="mt-20 text-center bg-gradient-to-r from-[#22C55E]/10 to-[#16A34A]/10 dark:from-[#22C55E]/20 dark:to-[#16A34A]/20 rounded-2xl p-12 border border-[#22C55E]/30 feature-bottom">
+        <div className="mt-12 md:mt-20 text-center bg-gradient-to-r from-[#22C55E]/10 to-[#16A34A]/10 dark:from-[#22C55E]/20 dark:to-[#16A34A]/20 rounded-2xl p-6 md:p-12 border border-[#22C55E]/30 feature-bottom">
           <h3 className="font-plus-jakarta-sans font-bold text-2xl md:text-3xl text-[#111111] dark:text-white mb-4">
             This Is Not a Phone System
           </h3>
-          <p className="font-inter text-lg text-[#525252] dark:text-white dark:text-opacity-70 max-w-2xl mx-auto">
+          <p className="font-inter text-base md:text-lg text-[#525252] dark:text-white dark:text-opacity-70 max-w-2xl mx-auto">
             Phones are about numbers. SOHUB Connect is about intent. When a
             customer wants to talk — we remove every obstacle in between.
           </p>
-          <div className="mt-6 flex items-center justify-center space-x-4 text-2xl font-bold text-[#22C55E]">
+          <div className="mt-6 flex items-center justify-center space-x-2 md:space-x-4 text-xl md:text-2xl font-bold text-[#22C55E]">
             <span>Click.</span>
             <span>Scan.</span>
             <span>Talk.</span>

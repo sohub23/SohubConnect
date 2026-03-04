@@ -1,16 +1,16 @@
 export default function CTASection() {
   return (
-    <section className="py-12 md:py-16 px-6 bg-white dark:bg-[#0A0A0A]">
-      <div className="max-w-4xl mx-auto text-center space-y-8 bg-gradient-to-br from-[#22C55E] to-[#16A34A] rounded-2xl md:rounded-3xl p-8 md:p-12 lg:p-16 cta-section">
-        <h2 className="font-plus-jakarta-sans font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+    <section className="py-10 sm:py-12 md:py-14 lg:py-16 px-4 sm:px-6 bg-white dark:bg-[#0A0A0A]">
+      <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8 bg-gradient-to-br from-[#22C55E] to-[#16A34A] rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 cta-section">
+        <h2 className="font-plus-jakarta-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-tight px-2">
           Turn offline interest into real conversations
         </h2>
         
-        <p className="font-inter text-lg sm:text-xl text-white text-opacity-90 leading-relaxed max-w-3xl mx-auto">
+        <p className="font-inter text-base sm:text-lg md:text-xl text-white text-opacity-90 leading-relaxed max-w-3xl mx-auto px-2">
           Create your HotScan and start connecting instantly.
         </p>
 
-        <div className="pt-4">
+        <div className="pt-2 sm:pt-4">
           <a
             href="https://connect.sohub.com.bd/authentication/register"
             target="_blank"

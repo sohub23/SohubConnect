@@ -4,6 +4,7 @@ import ProblemSection from "../components/sohub/ProblemSection";
 import SolutionSection from "../components/sohub/SolutionSection";
 import FeaturesSection from "../components/sohub/FeaturesSection";
 import PricingSection from "../components/sohub/PricingSection";
+import FAQSection from "../components/sohub/FAQSection";
 import CTASection from "../components/sohub/CTASection";
 import Footer from "../components/sohub/Footer";
 import { ThemeProvider } from "../components/sohub/ThemeProvider";
@@ -11,16 +12,17 @@ import { ThemeProvider } from "../components/sohub/ThemeProvider";
 export default function Page() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-[#121212]">
+      <main className="min-h-screen bg-white dark:bg-[#121212]">
         <Header />
         <Hero />
         <ProblemSection />
         <SolutionSection />
         <FeaturesSection />
         <PricingSection />
+        <FAQSection />
         <CTASection />
         <Footer />
-      </div>
+      </main>
     </ThemeProvider>
   );
 }

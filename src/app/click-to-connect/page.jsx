@@ -6,6 +6,7 @@ import PauseProblem from "../../components/click-to-connect/PauseProblem";
 import WhatItIs from "../../components/click-to-connect/WhatItIs";
 import HowItWorks from "../../components/click-to-connect/HowItWorks";
 import CalmCTA from "../../components/click-to-connect/CalmCTA";
+import FeatureSections from "../../components/sohub/FeatureSections.jsx";
 
 export default function ClickToConnectPage() {
   return (
@@ -16,6 +17,7 @@ export default function ClickToConnectPage() {
         <PauseProblem />
         <WhatItIs />
         <HowItWorks />
+        <FeatureSections />
         <CalmCTA />
         <Footer />
       </div>
