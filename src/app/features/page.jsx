@@ -3,39 +3,99 @@ import Header from '../../components/sohub/Header';
 import Footer from '../../components/sohub/Footer';
 import { ThemeProvider } from '../../components/sohub/ThemeProvider';
 
+const SWIPER_SCRIPT_SRC = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+const SWIPER_STYLE_HREF = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+const SWIPER_STYLE_ID = 'sohub-swiper-style';
+const SWIPER_SCRIPT_ID = 'sohub-swiper-script';
+let swiperLoaderPromise = null;
+
+function ensureSwiperAssets() {
+  if (typeof window === 'undefined') {
+    return Promise.resolve(null);
+  }
+
+  if (window.Swiper) {
+    return Promise.resolve(window.Swiper);
+  }
+
+  if (swiperLoaderPromise) {
+    return swiperLoaderPromise;
+  }
+
+  swiperLoaderPromise = new Promise((resolve, reject) => {
+    let styleEl = document.getElementById(SWIPER_STYLE_ID);
+    if (!styleEl) {
+      styleEl = document.createElement('link');
+      styleEl.id = SWIPER_STYLE_ID;
+      styleEl.rel = 'stylesheet';
+      styleEl.href = SWIPER_STYLE_HREF;
+      document.head.appendChild(styleEl);
+    }
+
+    const existingScript = document.getElementById(SWIPER_SCRIPT_ID);
+    if (existingScript) {
+      if (window.Swiper) {
+        resolve(window.Swiper);
+      } else {
+        existingScript.addEventListener('load', () => resolve(window.Swiper), { once: true });
+        existingScript.addEventListener('error', reject, { once: true });
+      }
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = SWIPER_SCRIPT_ID;
+    script.src = SWIPER_SCRIPT_SRC;
+    script.async = true;
+    script.onload = () => resolve(window.Swiper);
+    script.onerror = reject;
+    document.body.appendChild(script);
+  }).catch((error) => {
+    swiperLoaderPromise = null;
+    throw error;
+  });
+
+  return swiperLoaderPromise;
+}
+
+function initializeSwipers() {
+  if (typeof window === 'undefined' || !window.Swiper) {
+    return;
+  }
+
+  document.querySelectorAll('.swiper-container').forEach((container) => {
+    if (container.swiper) {
+      container.swiper.update();
+      return;
+    }
+
+    const slideCount = container.querySelectorAll('.swiper-slide').length;
+    new window.Swiper(container, {
+      loop: slideCount > 1,
+      autoplay: slideCount > 1 ? { delay: 3000, disableOnInteraction: false } : false,
+    });
+  });
+}
+
 function SohubConnectSection() {
   const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
-    document.head.appendChild(link);
-
-    script.onload = () => {
-      if (window.Swiper) {
+    let cancelled = false;
+    ensureSwiperAssets()
+      .then(() => {
+        if (cancelled) return;
         setTimeout(() => {
-          document.querySelectorAll('.swiper-container').forEach(container => {
-            if (!container.swiper) {
-              const slideCount = container.querySelectorAll('.swiper-slide').length;
-              new window.Swiper(container, {
-                loop: slideCount > 1,
-                autoplay: slideCount > 1 ? { delay: 3000, disableOnInteraction: false } : false
-              });
-            }
-          });
-        }, 200);
-      }
-    };
+          if (cancelled) return;
+          initializeSwipers();
+        }, 120);
+      })
+      .catch(() => {
+        // Keep the section usable even if CDN fails.
+      });
 
     return () => {
-      if (script.parentNode) document.body.removeChild(script);
-      if (link.parentNode) document.head.removeChild(link);
+      cancelled = true;
     };
   }, [activeTab]);
 
@@ -53,8 +113,8 @@ function SohubConnectSection() {
             {id: 'operator-panel', label: 'Operator Panel'},
             {id: 'call-report', label: 'Call Report'},
             {id: 'transaction', label: 'Transaction'},
-            {id: 'ticketing', label: 'Problem Ticketing'},
-            {id: 'download', label: 'Download Phone Software'}
+            {id: 'ticketing', label: 'Support Ticketing'},
+            {id: 'download', label: 'Download Softphone'}
           ].map(tab => (
             <div
               key={tab.id}
@@ -96,7 +156,7 @@ function SohubConnectSection() {
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Call Analytics Graph – View all your call activity with an interactive 15-day summary</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Call Analytics Graph – View your recent call activity with a clear visual summary</span>
                   </li>
                 </ul>
                 <p className="font-inter text-xs md:text-sm text-[#525252] dark:text-white dark:text-opacity-70 mt-3 md:mt-5">
@@ -124,12 +184,12 @@ function SohubConnectSection() {
             <div className="flex gap-4 md:gap-8 items-center mb-4 md:mb-8 flex-wrap justify-center">
               <div className="flex-1 min-w-[240px] sm:min-w-[280px] text-left">
                 <h3 className="font-plus-jakarta-sans font-semibold text-sm md:text-lg mb-3 md:mb-4 text-[#111111] dark:text-white">
-                  Monitor all extension activities in real time and stay fully in control of your team's communication status.
+                  Monitor all user activity in real time and stay fully in control of your team's communication status.
                 </h3>
                 <ul className="list-none p-0 m-0 text-xs md:text-sm leading-relaxed">
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Real-Time Extension Monitoring – Instantly view the real-time status of each extension</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Real-Time Phone Monitoring – Instantly view the live status of each phone</span>
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
@@ -137,7 +197,7 @@ function SohubConnectSection() {
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Centralized View – All extension statuses available from a single, intuitive interface</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Centralized View – All phone statuses available from a single, intuitive interface</span>
                   </li>
                 </ul>
                 <p className="font-inter text-xs md:text-sm text-[#525252] dark:text-white dark:text-opacity-70 mt-3 md:mt-5">
@@ -181,7 +241,7 @@ function SohubConnectSection() {
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Search & Filter Options – Quickly find specific calls by date, number, or status</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Search & Filter Options – Quickly find specific calls by date, destination, or status</span>
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
@@ -222,7 +282,7 @@ function SohubConnectSection() {
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Cost Deductions – Know the exact charges in advance for using features like extensions or other services</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Cost Deductions – Know the exact charges in advance for using calling features and other services</span>
                   </li>
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
@@ -291,15 +351,15 @@ function SohubConnectSection() {
             <div className="flex gap-4 md:gap-8 items-center mb-4 md:mb-8 flex-wrap justify-center">
               <div className="flex-1 min-w-[240px] sm:min-w-[280px] text-left">
                 <h3 className="font-plus-jakarta-sans font-semibold text-sm md:text-lg mb-3 md:mb-4 text-[#111111] dark:text-white">
-                  No hardware needed — download our official soft phone on your laptop or desktop and start calling seamlessly.
+                  No hardware needed — download our official softphone on your laptop or desktop and start calling seamlessly.
                 </h3>
                 <ul className="list-none p-0 m-0 text-xs md:text-sm leading-relaxed">
                   <li className="relative mb-2 md:mb-4 pl-6 md:pl-9">
                     <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Download the soft phone easily and install it without hassle. Make professional calls using your laptop or desktop—no hardware phone needed.</span>
+                    <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Download the softphone easily and start making professional calls from your laptop or desktop, with no hardware phone required.</span>
                   </li>
                 </ul>
-                <a href="https://connect.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white px-6 py-2.5 rounded-full no-underline text-sm transition-colors">
+                <a href="https://connect-client.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white px-6 py-2.5 rounded-full no-underline text-sm transition-colors">
                   Download Now
                 </a>
               </div>
@@ -326,41 +386,67 @@ function SohubConnectSection() {
 
 export default function FeaturePage() {
   const [activeTab, setActiveTab] = useState('call-efficiency');
+  const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
-    document.head.appendChild(link);
-
-    script.onload = () => {
-      if (window.Swiper) {
+    let cancelled = false;
+    ensureSwiperAssets()
+      .then(() => {
+        if (cancelled) return;
         setTimeout(() => {
-          document.querySelectorAll('.swiper-container').forEach(container => {
-            const slideCount = container.querySelectorAll('.swiper-slide').length;
-            new window.Swiper(container, {
-              loop: slideCount > 1,
-              autoplay: slideCount > 1 ? { delay: 3000, disableOnInteraction: false } : false
-            });
-          });
-        }, 100);
+          if (cancelled) return;
+          initializeSwipers();
+        }, 120);
+      })
+      .catch(() => {
+        // Keep the section usable even if CDN fails.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!activeImage) {
+      return undefined;
+    }
+
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        setActiveImage(null);
       }
     };
 
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleEsc);
+
     return () => {
-      if (script.parentNode) document.body.removeChild(script);
-      if (link.parentNode) document.head.removeChild(link);
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener('keydown', handleEsc);
     };
-  }, []);
+  }, [activeImage]);
+
+  const handleFeatureImageClick = (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLImageElement)) {
+      return;
+    }
+
+    if (!target.closest('.swiper-container')) {
+      return;
+    }
+
+    setActiveImage({
+      src: target.currentSrc || target.src,
+      alt: target.alt || 'Feature image',
+    });
+  };
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-[#121212]">
+      <div className="features-page min-h-screen bg-white dark:bg-[#121212]">
         <Header />
         
         <section className="text-center py-12 md:py-16 px-4 bg-white dark:bg-[#121212]">
@@ -369,7 +455,7 @@ export default function FeaturePage() {
               Simplify Your Business Communication with <span className="text-[#22C55E]">SOHUB Connect</span>
             </h1>
             <p className="font-inter text-base md:text-lg lg:text-xl text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed">
-              SOHUB Connect is an easy-to-use phone and messaging system made for modern businesses. It helps your business talk smoothly, save money, and grow easily.
+              SOHUB Connect is an easy-to-use calling and messaging platform built for modern businesses. It helps your business communicate smoothly, reduce cost, and grow with confidence.
             </p>
             <p className="font-inter text-sm md:text-base text-[#22C55E] font-semibold">
               Start with FREE FOREVER, then scale as your team grows.
@@ -377,7 +463,7 @@ export default function FeaturePage() {
           </div>
         </section>
         
-        <section className="py-6 md:py-10 px-4">
+        <section className="py-6 md:py-10 px-4" onClickCapture={handleFeatureImageClick}>
           <div className="max-w-[920px] mx-auto my-6 md:my-10 text-center p-4 md:p-5 rounded-xl shadow-lg bg-white dark:bg-[#1E1E1E] border border-gray-200 dark:border-gray-700">
             
             <h1 className="font-plus-jakarta-sans font-bold text-base md:text-lg mb-4 md:mb-5 text-[#111111] dark:text-white">
@@ -419,11 +505,11 @@ export default function FeaturePage() {
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Interactive Voice Menus – Allow callers to choose options like "Press 1 for Sales, Press 2 for Support"</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Interactive Voice Menus – Guide callers to the right team with clear menu options</span>
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Smart Call Transfers – Automatically route callers to the right team or extension based on their needs</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Smart Call Transfers – Automatically route callers to the right team or destination based on their needs</span>
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
@@ -431,11 +517,7 @@ export default function FeaturePage() {
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">CUG & Ring Group Integration – Forward calls using specific verified numbers and smart ring strategies</span>
-                      </li>
-                      <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
-                        <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Fully Web-Based – Create, update, and manage your entire call flow from anywhere in the country</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Ring Group Integration – Forward calls using smart ring strategies for the right team</span>
                       </li>
                     </ul>
                     <p className="font-inter text-xs md:text-sm text-[#525252] dark:text-white dark:text-opacity-70 mt-3 md:mt-5">
@@ -446,11 +528,9 @@ export default function FeaturePage() {
                     <div className="swiper-container" style={{width: '100%', borderRadius: '16px', overflow: 'hidden'}}>
                       <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                          <img src="/images/features/call_flow1.png" alt="Call Flow" style={{width: '100%', display: 'block'}} />
+                          <img src="/images/website/call_flow.png" alt="Call Flow" style={{width: '100%', display: 'block'}} />
                         </div>
-                        <div className="swiper-slide">
-                          <img src="/images/features/call_flow2.png" alt="Call Flow" style={{width: '100%', display: 'block'}} />
-                        </div>
+                    
                       </div>
                     </div>
                   </div>
@@ -463,20 +543,20 @@ export default function FeaturePage() {
                 <div className="flex gap-4 md:gap-10 items-center mb-4 md:mb-8 flex-wrap justify-center">
                   <div className="flex-1 min-w-[240px] sm:min-w-[280px] text-left">
                     <h3 className="font-plus-jakarta-sans font-semibold text-sm md:text-lg mb-3 md:mb-4 text-[#111111] dark:text-white">
-                      Easily Create and Manage User Extensions Without Any Hassle
+                      Easily Create and Manage User Phones Without Any Hassle
                     </h3>
                     <ul className="list-none p-0 m-0 text-xs md:text-sm leading-relaxed">
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Auto Extension Numbering – New extensions are assigned numbers automatically</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Instant Setup – New phones are created quickly and ready to use</span>
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Personalized Extension Naming – Assign extensions based on employee name, ID, or department</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Personalized Phone Naming – Organize phones by employee name, team, or department</span>
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">One-Click Activation – Just save, and your new extension is instantly activated!</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">One-Click Activation – Just save, and your new phone is instantly activated!</span>
                       </li>
                     </ul>
                   </div>
@@ -484,7 +564,7 @@ export default function FeaturePage() {
                     <div className="swiper-container" style={{width: '100%', borderRadius: '16px', overflow: 'hidden'}}>
                       <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                          <img src="/images/features/extension1.png" alt="Extensions" style={{width: '100%', display: 'block'}} />
+                          <img src="/images/features/phones_new.png" alt="Phones" style={{width: '100%', display: 'block'}} />
                         </div>
                       </div>
                     </div>
@@ -507,7 +587,7 @@ export default function FeaturePage() {
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
-                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Add Multiple Extensions – Group multiple team members or departments under one ring group</span>
+                        <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Add Multiple Phones – Group multiple team members or departments under one ring group</span>
                       </li>
                       <li className="relative mb-2 md:mb-4 pl-6 md:pl-9 pr-1 md:pr-2.5 py-1">
                         <span className="absolute left-0 text-[#22C55E] font-bold">✔</span>
@@ -519,7 +599,7 @@ export default function FeaturePage() {
                     <div className="swiper-container" style={{width: '100%', borderRadius: '16px', overflow: 'hidden'}}>
                       <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                          <img src="/images/features/ring_group1.png" alt="Ring Groups" style={{width: '100%', display: 'block'}} />
+                          <img src="/images/features/ring_group_new.png" alt="Ring Groups" style={{width: '100%', display: 'block'}} />
                         </div>
                       </div>
                     </div>
@@ -550,7 +630,7 @@ export default function FeaturePage() {
                     <div className="swiper-container" style={{width: '100%', borderRadius: '16px', overflow: 'hidden'}}>
                       <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                          <img src="/images/features/sound1.png" alt="Custom Audio" style={{width: '100%', display: 'block'}} />
+                          <img src="/images/website/sound_file.png" alt="Custom Audio" style={{width: '100%', display: 'block'}} />
                         </div>
                       </div>
                     </div>
@@ -562,7 +642,34 @@ export default function FeaturePage() {
           </div>
         </section>
 
-        <SohubConnectSection />
+        {activeImage && (
+          <div
+            className="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm px-4 py-6 sm:px-8 sm:py-10 flex items-center justify-center"
+            onClick={() => setActiveImage(null)}
+          >
+            <button
+              type="button"
+              aria-label="Close image preview"
+              className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 text-xl leading-none"
+              onClick={() => setActiveImage(null)}
+            >
+              ×
+            </button>
+
+            <img
+              src={activeImage.src}
+              alt={activeImage.alt}
+              className="max-h-[90vh] max-w-[95vw] w-auto h-auto object-contain rounded-lg shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            />
+          </div>
+        )}
+
+        <style>{`
+          .features-page .swiper-container img {
+            cursor: zoom-in;
+          }
+        `}</style>
 
         <Footer />
       </div>

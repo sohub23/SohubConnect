@@ -10,7 +10,7 @@ export default function FeaturesSection() {
   return (
     <section
       id="features"
-      className="py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]"
+      className="scroll-mt-28 py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -19,10 +19,10 @@ export default function FeaturesSection() {
             We Removed <span className="text-[#22C55E]">Phone Numbers</span>
           </h2>
           <p className="font-inter text-base md:text-lg text-[#525252] dark:text-white dark:text-opacity-70 leading-relaxed max-w-3xl mx-auto">
-            Traditional PBX connects calls using phone numbers and operators. We
-            asked a simple question:{" "}
+            Traditional PBX systems route calls through phone numbers and human
+            operators. We asked a simple question:{" "}
             <span className="font-semibold text-[#111111] dark:text-white">
-              Why should customers dial numbers at all?
+              Why should customers dial a number at all?
             </span>
           </p>
         </div>
@@ -127,12 +127,6 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              {/* Floating badge */}
-              <div className="absolute -right-2 -top-2 md:-right-4 md:-top-4 bg-blue-500 text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
-                <span className="font-inter font-bold text-xs md:text-sm">
-                  Live Demo!
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -174,10 +168,6 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              {/* Floating badge */}
-              <div className="absolute -left-2 -top-2 md:-left-4 md:-top-4 bg-[#22C55E] text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
-                <span className="font-inter font-bold text-xs md:text-sm">Live Demo!</span>
-              </div>
             </div>
 
             {/* Right: Content */}

@@ -8,7 +8,7 @@ import HowItWorks from "../../components/hotscan/HowItWorks.jsx";
 import DifferenceSection from "../../components/hotscan/DifferenceSection.jsx";
 import WhyVoice from "../../components/hotscan/WhyVoice.jsx";
 import CTASection from "../../components/hotscan/CTASection.jsx";
-import FeatureSections from "../../components/sohub/FeatureSections.jsx";
+import ExploreFunctionalitiesSection from "../../components/sohub/ExploreFunctionalitiesSection.jsx";
 
 export default function HotScanPage() {
   return (
@@ -21,7 +21,7 @@ export default function HotScanPage() {
         <HowItWorks />
         <DifferenceSection />
         <WhyVoice />
-        <FeatureSections />
+        <ExploreFunctionalitiesSection />
         <CTASection />
         <Footer />
       </main>

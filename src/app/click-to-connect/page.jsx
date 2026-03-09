@@ -6,18 +6,18 @@ import PauseProblem from "../../components/click-to-connect/PauseProblem";
 import WhatItIs from "../../components/click-to-connect/WhatItIs";
 import HowItWorks from "../../components/click-to-connect/HowItWorks";
 import CalmCTA from "../../components/click-to-connect/CalmCTA";
-import FeatureSections from "../../components/sohub/FeatureSections.jsx";
+import ExploreFunctionalitiesSection from "../../components/sohub/ExploreFunctionalitiesSection.jsx";
 
 export default function ClickToConnectPage() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#121212]">
         <Header />
         <HeroSection />
         <PauseProblem />
         <WhatItIs />
         <HowItWorks />
-        <FeatureSections />
+        <ExploreFunctionalitiesSection />
         <CalmCTA />
         <Footer />
       </div>

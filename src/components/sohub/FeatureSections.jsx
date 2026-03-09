@@ -605,7 +605,7 @@ export default function FeatureSections() {
                       <span className="font-inter text-[#525252] dark:text-white dark:text-opacity-80">Download the soft phone easily and install it without hassle. Make professional calls using your laptop or desktop—no hardware phone needed.</span>
                     </li>
                   </ul>
-                  <a href="https://connect.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white px-6 py-2.5 rounded-full no-underline text-sm transition-colors">
+                  <a href="https://connect-client.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white px-6 py-2.5 rounded-full no-underline text-sm transition-colors">
                     Download Now
                   </a>
                 </div>

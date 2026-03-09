@@ -27,7 +27,7 @@ export default function ProblemSection() {
   ];
 
   return (
-    <section id="pbx" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
+    <section id="pbx" className="scroll-mt-28 py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
       <div className="max-w-6xl mx-auto">
         {/* Eyebrow */}
         <div className="problem-badge inline-flex items-center space-x-2 rounded-full px-4 py-2 mb-6">

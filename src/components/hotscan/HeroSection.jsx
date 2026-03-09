@@ -1,4 +1,26 @@
+const HOW_IT_WORKS_SCROLL_FALLBACK_OFFSET = 124;
+const HOW_IT_WORKS_SCROLL_EXTRA_GAP = 20;
+
 export default function HeroSection() {
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById('how-it-works');
+    if (!element) {
+      return;
+    }
+
+    const header = document.querySelector('header');
+    const headerOffset =
+      header instanceof HTMLElement
+        ? Math.ceil(header.getBoundingClientRect().height) + HOW_IT_WORKS_SCROLL_EXTRA_GAP
+        : HOW_IT_WORKS_SCROLL_FALLBACK_OFFSET;
+
+    const targetY = window.scrollY + element.getBoundingClientRect().top - headerOffset;
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section className="w-full bg-white dark:bg-[#121212] py-8 sm:py-10 md:py-12 lg:py-16">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
@@ -28,7 +50,7 @@ export default function HeroSection() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 px-4">
             <a
-              href="https://connect.sohub.com.bd/authentication/register"
+              href="https://connect-client.sohub.com.bd/authentication/register"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center bg-[#22C55E] text-white font-inter font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[#16A34A] active:scale-95 transition-all duration-200 shadow-lg shadow-[#22C55E]/30"
@@ -37,6 +59,10 @@ export default function HeroSection() {
             </a>
             <a
               href="#how-it-works"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToHowItWorks();
+              }}
               className="w-full sm:w-auto inline-flex items-center justify-center bg-black dark:bg-black text-white font-inter font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-gray-900 active:scale-95 transition-all duration-200 cursor-pointer hotscan-button"
             >
               See how it works

@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 
 export default function PricingSection() {
   const freeFeatures = [
-    "Up to 5 users / extensions",
+    "Up to 5 users / Phones",
     "Click to Connect call button",
     "HotScan QR calls",
     "Team-based call handling",
@@ -13,7 +13,7 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-white dark:bg-[#121212]"
+      className="scroll-mt-28 py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-white dark:bg-[#121212]"
     >
       <div className="max-w-3xl mx-auto">
         {/* Section Header */}
@@ -86,7 +86,7 @@ export default function PricingSection() {
           {/* CTA Button */}
           <div className="mt-8 sm:mt-10">
             <a
-              href="https://connect.sohub.com.bd/authentication/register"
+              href="https://connect-client.sohub.com.bd/authentication/register"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full bg-[#22C55E] text-white font-inter font-bold text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-5 rounded-full hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 text-center shadow-xl shadow-[#22C55E]/30"

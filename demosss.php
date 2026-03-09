@@ -454,7 +454,7 @@
 		</li>
 	  </ul>
 
-	  <a href="https://connect.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" style="display:inline-block; margin-top:12px; font-weight:600; background:#457ec0; color:#fff; padding:10px 22px; border-radius:30px; text-decoration:none; font-size:13px;"> 
+	  <a href="https://connect-client.sohub.com.bd/assets/file/softphone/SohubConnect-3.21.5.exe" target="_blank" style="display:inline-block; margin-top:12px; font-weight:600; background:#457ec0; color:#fff; padding:10px 22px; border-radius:30px; text-decoration:none; font-size:13px;"> 
 		<?php echo ($site_lang == 'english') ? 'Download Now' : 'এখনই ডাউনলোড করুন'; ?>
 	  </a>
 	</div>

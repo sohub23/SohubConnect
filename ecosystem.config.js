@@ -2,8 +2,8 @@ export default {
   apps: [{
     name: 'sohub-connect',
     script: 'npm',
-    args: 'run dev',
-    cwd: '/var/www/html/websites/Sohub_Connect',
+    args: 'run dev -- --host 0.0.0.0 --port 9931',
+    cwd: '/var/www/html/websites/sohub_connect_landing',
     env: {
       PORT: 9931,
       NODE_ENV: 'development'

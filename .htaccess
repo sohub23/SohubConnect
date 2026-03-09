@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Allow only the hardened contact endpoint in web root.
+    RewriteRule ^contact-submit\.php$ - [L]
+
+    # Block every other PHP path to prevent source/code exposure.
+    RewriteCond %{REQUEST_URI} \.php$ [NC]
+    RewriteRule ^ - [F,L]
+
+    # Forward every other request to the React Router app on port 9931.
+    RewriteRule ^(.*)$ http://127.0.0.1:9931/$1 [P,L]
+</IfModule>

@@ -6,8 +6,10 @@ const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
   const [bgColor, setBgColor] = useState('white');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const saved = localStorage.getItem('headerBgColor') || 'white';
     setBgColor(saved);
     applyTheme(saved);
@@ -27,6 +29,14 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('headerBgColor', newColor);
     applyTheme(newColor);
   };
+
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={{ bgColor: 'white', toggleBgColor: () => {} }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={{ bgColor, toggleBgColor }}>

@@ -1,143 +1,141 @@
 "use client";
-import { ArrowUpRight, Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useTheme } from "./ThemeProvider";
 
 const HOME_PATHS = ['/', '/sohub'];
-const INITIATIVES = [
-  {
-    name: 'O-MAMA',
-    href: 'https://omama.sohub.com.bd/',
-    logoSrc: '/images/initiatives/Omama.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'EMP',
-    href: 'https://emp.sohub.com.bd/',
-    logoSrc: '/images/initiatives/EMP.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'TOLPAR',
-    href: '#',
-    logoSrc: '/images/initiatives/TOLPAR.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'AI',
-    href: '#',
-    logoSrc: '/images/initiatives/SOHUB_AI.svg',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'PROTECT',
-    href: '#',
-    logoSrc: '/images/initiatives/SOHUB_PROTECT.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'SOHUB CONTROLS',
-    href: '#',
-    logoSrc: '/images/initiatives/SOHUB_CONTROLS.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'MACHINE BY SOHUB',
-    href: '#',
-    logoSrc: '/images/initiatives/MACHINE_BY_SOHUB.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'Smart Home',
-    href: 'https://home.sohub.com.bd/',
-    logoSrc: '/images/initiatives/SMART_HOME.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'FILMIC STATION',
-    href: '#',
-    logoSrc: '/images/initiatives/FILMIC_STATION.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'XIMPUL',
-    href: 'https://ximpul.com/',
-    logoSrc: '/images/initiatives/XIMPUL.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-  {
-    name: 'CLOWEE',
-    href: '#',
-    logoSrc: '/images/initiatives/CLOWEE.png',
-    logoClass: 'max-h-10 sm:max-h-11',
-  },
-];
+const SECTION_SCROLL_OFFSET = 108;
+const INITIATIVES_API_URL = 'https://sohub.netlify.app/api/initiatives.json';
+const INITIATIVES_BASE_URL = 'https://sohub.netlify.app';
+const DEFAULT_CONNECT_BASE_URL = 'https://connect-client.sohub.com.bd';
+
+const CONNECT_INITIATIVE = {
+  id: 'connect',
+  name: 'SOHUB CONNECT',
+  description: '',
+  href: `${DEFAULT_CONNECT_BASE_URL}/`,
+  logo: '/images/initiatives/sohub_connect.png',
+  order: 0,
+  isActive: true,
+};
+const FALLBACK_INITIATIVES = [];
+
+function resolveInitiativeLogo(logoPath, baseUrl) {
+  if (!logoPath || typeof logoPath !== 'string') {
+    return '';
+  }
+
+  if (/^https?:\/\//i.test(logoPath)) {
+    return logoPath;
+  }
+
+  if (logoPath.startsWith('/images/')) {
+    return logoPath;
+  }
+
+  if (logoPath.startsWith('/')) {
+    return `${baseUrl}${logoPath}`;
+  }
+
+  return `${baseUrl}/${logoPath}`;
+}
+
+function parseInitiativesResponse(data) {
+  const items = Array.isArray(data) ? data : data?.initiatives || [];
+  const baseUrl = typeof data?.baseUrl === 'string' ? data.baseUrl : INITIATIVES_BASE_URL;
+  const parsed = items
+    .map((item, index) => {
+      const name = typeof item?.name === 'string' ? item.name : '';
+      const hrefValue = typeof item?.href === 'string' ? item.href.trim() : '';
+      const href = hrefValue && hrefValue !== '#' ? hrefValue : null;
+
+      return {
+        id: item?.id || `${name || 'initiative'}-${index}`,
+        name,
+        description: typeof item?.description === 'string' ? item.description : '',
+        href,
+        logo: resolveInitiativeLogo(item?.logo, baseUrl),
+        order: Number.isFinite(Number(item?.order)) ? Number(item.order) : index + 1,
+        isActive: item?.isActive !== false,
+      };
+    })
+    .filter((item) => item.isActive && item.name && item.logo)
+    .sort((a, b) => a.order - b.order);
+
+  const hasConnect = parsed.some((item) => item.name.toLowerCase().includes('connect'));
+  if (!hasConnect) {
+    return [CONNECT_INITIATIVE, ...parsed];
+  }
+
+  return parsed;
+}
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [initiativesOpen, setInitiativesOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState('');
+  const [initiatives, setInitiatives] = useState([]);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const initiativesCloseTimeoutRef = useRef(null);
+  const headerRef = useRef(null);
+  const initiativesContainerRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentPath = location.pathname;
+  const registerUrl = `${DEFAULT_CONNECT_BASE_URL}/authentication/register`;
   const { bgColor, toggleBgColor } = useTheme();
   const ownedByLogoSrc =
     bgColor === 'white' ? '/images/sohub.png' : '/images/sohub_white.png';
 
-  const clearInitiativesCloseTimeout = () => {
-    if (initiativesCloseTimeoutRef.current) {
-      clearTimeout(initiativesCloseTimeoutRef.current);
-      initiativesCloseTimeoutRef.current = null;
-    }
-  };
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    fetch(INITIATIVES_API_URL, {
+      mode: 'cors',
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => setInitiatives(Array.isArray(data) ? data : data.initiatives || []))
+      .catch(() => {});
+  }, []);
 
-  const openInitiativesDrawer = () => {
-    clearInitiativesCloseTimeout();
+  const toggleInitiativesDrawer = () => {
     setMobileMenuOpen(false);
-    setInitiativesOpen(true);
+    setInitiativesOpen((prev) => !prev);
   };
 
-  const scheduleCloseInitiativesDrawer = () => {
-    clearInitiativesCloseTimeout();
-    initiativesCloseTimeoutRef.current = setTimeout(() => {
-      setInitiativesOpen(false);
-      initiativesCloseTimeoutRef.current = null;
-    }, 180);
+  const getScrollOffset = () => {
+    const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 96;
+    return Math.ceil(headerHeight) + 12;
   };
 
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-    
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname);
-    };
-    
-    // Listen for both popstate and custom navigation events
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushstate', handleLocationChange);
-    window.addEventListener('replacestate', handleLocationChange);
-    
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushstate', handleLocationChange);
-      window.removeEventListener('replacestate', handleLocationChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      setActiveSection(hash.substring(1));
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        requestAnimationFrame(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        });
-      }
+  const scrollToSectionWithOffset = (sectionId, behavior = 'smooth', offsetOverride) => {
+    const element = document.getElementById(sectionId);
+    if (!element) {
+      return false;
     }
-  }, []);
+
+    const offset = typeof offsetOverride === 'number' ? offsetOverride : getScrollOffset();
+    const targetY = window.scrollY + element.getBoundingClientRect().top - offset;
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior,
+    });
+    return true;
+  };
 
   useEffect(() => {
-    if (mobileMenuOpen || initiativesOpen) {
+    if (!HOME_PATHS.includes(location.pathname)) return;
+    const sectionId = location.hash?.replace('#', '');
+    if (sectionId) {
+      setActiveSection(sectionId);
+      requestAnimationFrame(() => {
+        scrollToSectionWithOffset(sectionId, 'smooth', SECTION_SCROLL_OFFSET);
+      });
+    }
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -145,242 +143,189 @@ export default function Header() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [mobileMenuOpen, initiativesOpen]);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     if (!initiativesOpen) return;
-
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') {
+    const handleEscape = (e) => e.key === 'Escape' && setInitiativesOpen(false);
+    const handleOutside = (e) => {
+      if (initiativesContainerRef.current && !initiativesContainerRef.current.contains(e.target)) {
         setInitiativesOpen(false);
       }
     };
-
     window.addEventListener('keydown', handleEscape);
+    document.addEventListener('mousedown', handleOutside);
     return () => {
       window.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('mousedown', handleOutside);
     };
   }, [initiativesOpen]);
 
   useEffect(() => {
-    return () => {
-      clearInitiativesCloseTimeout();
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
+    if (!HOME_PATHS.includes(location.pathname)) {
+      setActiveSection('');
+      return;
+    }
+
     const handleScroll = () => {
       const sections = ['pbx', 'pricing'];
       let currentSection = '';
-      
+      const markerY = getScrollOffset() - 8;
+
       sections.forEach(sectionId => {
         const element = document.getElementById(sectionId);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
+          if (rect.top <= markerY && rect.bottom >= markerY) {
             currentSection = sectionId;
           }
         }
       });
-      
+
       setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const handleScrollToSection = (sectionId) => {
     setMobileMenuOpen(false);
     setActiveSection(sectionId);
-    const isHomePage = HOME_PATHS.includes(window.location.pathname);
+    const isHomePage = HOME_PATHS.includes(location.pathname);
     
     if (!isHomePage) {
-      window.location.href = `/#${sectionId}`;
+      navigate({ pathname: '/', hash: `#${sectionId}` });
       return;
     }
     
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (scrollToSectionWithOffset(sectionId, 'smooth', SECTION_SCROLL_OFFSET)) {
+      navigate({ pathname: location.pathname, hash: `#${sectionId}` }, { replace: true });
     }
   };
 
+
+
   return (
-    <header className={`w-full border-b sticky top-0 z-50 backdrop-blur-sm ${
+    <header ref={headerRef} className={`w-full border-b sticky top-0 z-50 backdrop-blur-sm ${
       bgColor === 'white' 
         ? 'bg-white/95 border-gray-200' 
         : 'bg-white dark:bg-[#121212] border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#121212]/95'
     }`}>
-      <div
-        className={`fixed left-0 right-0 bottom-0 top-[92px] sm:top-[104px] z-[45] transition-opacity duration-300 ${
-          initiativesOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-      >
-        <button
-          type="button"
-          aria-label="Close initiatives drawer"
-          onClick={() => setInitiativesOpen(false)}
-          className="absolute inset-0 bg-black/10"
-        />
-      </div>
 
       <div
-        id="initiatives-drawer"
-        onMouseEnter={clearInitiativesCloseTimeout}
-        onMouseLeave={scheduleCloseInitiativesDrawer}
-        className={`fixed top-[92px] sm:top-[104px] left-0 right-0 z-[46] origin-top transform-gpu transition-[transform,opacity] duration-300 ease-out ${
-          initiativesOpen
-            ? 'scale-y-100 opacity-100 pointer-events-auto'
-            : 'scale-y-0 opacity-0 pointer-events-none'
-        }`}
-      >
-        <div
-          className={`border-b rounded-b-2xl shadow-2xl ${
-            bgColor === 'white'
-              ? 'bg-[#f3f4f6] border-gray-200'
-              : 'bg-[#0f1115] border-gray-800'
-          }`}
-        >
-            <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-5 pb-4 sm:pb-5">
-            <div className="mb-2 sm:mb-3" />
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-2 sm:gap-y-3 lg:gap-y-4">
-                {INITIATIVES.map((initiative) => {
-                  const isInteractive = typeof initiative.href === 'string' && initiative.href !== '#';
-                  const cardClass = `group relative h-[72px] sm:h-[80px] lg:h-[86px] rounded-xl flex items-center justify-center px-2 sm:px-2.5 transition-colors ${
-                    bgColor === 'white'
-                      ? 'hover:bg-white/80'
-                      : 'hover:bg-[#161a23]'
-                  }`;
-
-                  const content = (
-                    <>
-                      {initiative.logoSrc ? (
-                        <img
-                          src={initiative.logoSrc}
-                          alt={`${initiative.name} logo`}
-                          className="w-[100px] h-[56.66px] object-contain grayscale group-hover:grayscale-0 transition-all duration-200"
-                        />
-                      ) : (
-                        <p
-                          className={`font-inter text-2xl sm:text-[2rem] lg:text-[2.15rem] font-extrabold leading-none tracking-tight ${
-                            bgColor === 'white' ? 'text-[#4b5563]' : 'text-[#cbd5e1]'
-                          }`}
-                        >
-                          {initiative.name}
-                        </p>
-                      )}
-                      {isInteractive ? (
-                        <ArrowUpRight
-                          size={14}
-                          className={`absolute right-2 top-2 shrink-0 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${
-                            bgColor === 'white' ? 'text-[#6b7280]' : 'text-[#9ca3af]'
-                          }`}
-                        />
-                      ) : null}
-                    </>
-                  );
-
-                  if (!isInteractive) {
-                    return (
-                      <div key={initiative.name} className={`${cardClass} cursor-default`} aria-disabled="true">
-                        {content}
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <a
-                      key={initiative.name}
-                      href={initiative.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setInitiativesOpen(false)}
-                      className={`${cardClass} cursor-pointer`}
-                    >
-                      {content}
-                    </a>
-                  );
-                })}
-            </div>
-            </div>
-        </div>
-      </div>
-
-      <div
-        className={`border-b ${
+        className={`transition-all duration-300 overflow-hidden border-b ${
+          isScrolled
+            ? 'max-h-0 opacity-0'
+            : 'max-h-20 opacity-100'
+        } ${
           bgColor === 'white'
             ? 'bg-[#f3f4f6] border-gray-200'
             : 'bg-[#1a1a1a] border-gray-800'
         }`}
       >
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-3">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between py-0.5">
           <a
             href="https://sohub.com.bd/"
             target="_blank"
             rel="noopener noreferrer"
-            className="h-10 sm:h-11 min-w-0 inline-flex items-center gap-2.5"
+            className="flex items-center gap-2"
           >
             <img
               src={ownedByLogoSrc}
               alt="Solution Hub Technologies"
-              className="h-5 sm:h-6 w-auto object-contain"
+              className="h-6"
             />
-            <span
-              className={`font-inter text-xs sm:text-sm font-medium text-left truncate ${
-                bgColor === 'white' ? 'text-[#4b5563]' : 'text-[#d1d5db]'
+            <p className={`text-[10px] md:text-xs ${
+                bgColor === 'white' ? 'text-[#6b7280]' : 'text-[#9ca3af]'
+              }`}>
+              <span className="hidden md:inline">Solution Hub Technologies(SOHUB) Owned & Operated</span>
+              <span className="md:hidden">SOHUB owned & operated</span>
+            </p>
+          </a>
+          <div ref={initiativesContainerRef} className="relative">
+            <button
+              type="button"
+              onClick={toggleInitiativesDrawer}
+              className={`text-xs gap-1 md:mr-0 -mr-4 px-2 py-1 rounded hover:bg-transparent transition-colors ${
+                bgColor === 'white' ? 'text-[#6b7280]' : 'text-[#9ca3af]'
               }`}
             >
-              Solution Hub Technologies(SOHUB) Owned & Operated
-            </span>
-          </a>
-          <button
-            type="button"
-            onMouseEnter={openInitiativesDrawer}
-            onMouseLeave={scheduleCloseInitiativesDrawer}
-            onFocus={openInitiativesDrawer}
-            onBlur={scheduleCloseInitiativesDrawer}
-            onClick={() => {
-              if (initiativesOpen) {
-                setInitiativesOpen(false);
-              } else {
-                openInitiativesDrawer();
-              }
-            }}
-            className={`h-9 sm:h-10 shrink-0 px-4 sm:px-5 rounded-md font-inter text-sm font-semibold transition-colors ${
-              bgColor === 'white'
-                ? 'bg-white text-[#374151] hover:bg-gray-50'
-                : 'bg-[#121212] text-[#e5e7eb] hover:bg-[#1f2937]'
-            }`}
-            aria-expanded={initiativesOpen}
-            aria-controls="initiatives-drawer"
-          >
-            Initiatives
-          </button>
+              <span className="hidden md:inline">Initiatives</span>
+              <span className="md:hidden">Our Initiatives</span>
+              {initiativesOpen ? <ChevronUp className="w-3 h-3 inline ml-1" /> : <ChevronDown className="w-3 h-3 inline ml-1" />}
+            </button>
+
+            {initiativesOpen && initiatives.length > 0 && (
+              <div className="absolute right-0 top-full z-[70] w-[320px] p-3">
+                <div className={`rounded-lg border p-3 shadow-2xl ${
+                  bgColor === 'white' ? 'bg-white border-gray-300' : 'bg-[#0f1115] border-gray-700'
+                }`}>
+                  <div className="grid grid-cols-3 gap-3">
+                    {initiatives.map((initiative) => {
+                      const isCurrentSite = initiative.id === 'connect' || initiative.name.toLowerCase().includes('connect');
+                      return initiative.href ? (
+                        <a
+                          key={initiative.id}
+                          href={initiative.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => setInitiativesOpen(false)}
+                          style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}
+                          className={`flex items-center justify-center p-4 rounded-lg border ${
+                            isCurrentSite
+                              ? 'border-[#22C55E] bg-[#22C55E]/10 ring-2 ring-[#22C55E]/30'
+                              : bgColor === 'white' ? 'border-gray-300' : 'border-gray-700'
+                          }`}
+                        >
+                          <img src={`${INITIATIVES_BASE_URL}${initiative.logo}`} alt={initiative.name} className="w-full h-full object-contain" />
+                        </a>
+                      ) : (
+                        <div
+                          key={initiative.id}
+                          className={`flex items-center justify-center p-4 rounded-lg border opacity-50 cursor-not-allowed ${
+                            bgColor === 'white' ? 'border-gray-300' : 'border-gray-700'
+                          }`}
+                        >
+                          <img src={`${INITIATIVES_BASE_URL}${initiative.logo}`} alt={initiative.name} className="w-full h-full object-contain" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className="flex items-center justify-between h-12 sm:h-14">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="block">
+            <Link to="/" className="block">
               <img 
                 src="/images/connect_new_img.png" 
                 alt="SOHUB Connect Logo" 
                 className="w-28 sm:w-32 h-auto object-contain cursor-pointer"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="/#pbx"
-              onClick={(e) => {
-                e.preventDefault();
+            <button
+              type="button"
+              onClick={() => {
                 handleScrollToSection('pbx');
               }}
               className={`font-inter text-sm font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
@@ -388,44 +333,34 @@ export default function Header() {
               }`}
             >
               PBX
-            </a>
-            <a
-              href="/click-to-connect"
-              onClick={(e) => {
-                setCurrentPath('/click-to-connect');
-              }}
+            </button>
+            <Link
+              to="/click-to-connect"
               className={`font-inter text-sm font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                 currentPath === '/click-to-connect' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
               }`}
             >
               Click to Connect
-            </a>
-            <a
-              href="/hotscan"
-              onClick={(e) => {
-                setCurrentPath('/hotscan');
-              }}
+            </Link>
+            <Link
+              to="/hotscan"
               className={`font-inter text-sm font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                 currentPath === '/hotscan' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
               }`}
             >
               HotScan
-            </a>
-            <a
-              href="/features"
-              onClick={(e) => {
-                setCurrentPath('/features');
-              }}
+            </Link>
+            <Link
+              to="/features"
               className={`font-inter text-sm font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                 currentPath === '/features' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
               }`}
             >
               Features
-            </a>
-            <a
-              href="/#pricing"
-              onClick={(e) => {
-                e.preventDefault();
+            </Link>
+            <button
+              type="button"
+              onClick={() => {
                 handleScrollToSection('pricing');
               }}
               className={`font-inter text-sm font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
@@ -433,7 +368,7 @@ export default function Header() {
               }`}
             >
               Pricing
-            </a>
+            </button>
           </nav>
 
           {/* Desktop CTA Button */}
@@ -447,7 +382,7 @@ export default function Header() {
               {bgColor === 'white' ? <Moon size={20} className="text-gray-600 dark:text-gray-400" /> : <Sun size={20} className="text-gray-600 dark:text-gray-400" />}
             </button>
             <a
-              href="https://connect.sohub.com.bd/authentication/register"
+              href={registerUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-2.5 rounded-full bg-[#22C55E] text-white font-inter font-semibold text-sm hover:bg-[#16A34A] active:bg-[#15803D] active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:ring-opacity-50"
@@ -467,7 +402,7 @@ export default function Header() {
               {bgColor === 'white' ? <Moon size={18} className="text-gray-600 dark:text-gray-400" /> : <Sun size={18} className="text-gray-600 dark:text-gray-400" />}
             </button>
             <a
-              href="https://connect.sohub.com.bd/authentication/register"
+              href={registerUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 rounded-full bg-[#22C55E] text-white font-inter font-semibold text-xs hover:bg-[#16A34A] transition-all duration-200"
@@ -475,83 +410,86 @@ export default function Header() {
               Start Free Forever
             </a>
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-[#525252] dark:text-gray-400 hover:text-[#22C55E] dark:hover:text-[#22C55E] transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-main-menu"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden fixed top-[92px] sm:top-[104px] left-0 right-0 bg-white dark:bg-[#121212] border-b border-gray-200 dark:border-gray-800 shadow-lg z-40">
-            <nav className="flex flex-col space-y-4 px-6 py-4">
-              <a
-                href="/#pbx"
-                onClick={(e) => {
-                  e.preventDefault();
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0" style={{ zIndex: 51 }}>
+          <div
+            id="mobile-main-menu"
+            className="bg-white dark:bg-[#121212] border-b border-gray-200 dark:border-gray-800 shadow-lg rounded-b-[1.75rem] overflow-hidden"
+          >
+            <nav className="flex flex-col items-start space-y-4 px-6 py-4">
+              <button
+                type="button"
+                onClick={() => {
                   handleScrollToSection('pbx');
                 }}
-                className={`font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
+                className={`w-full text-left font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
                   activeSection === 'pbx' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
                 }`}
               >
                 PBX
-              </a>
-              <a
-                href="/click-to-connect"
-                onClick={(e) => {
+              </button>
+              <Link
+                to="/click-to-connect"
+                onClick={() => {
                   setMobileMenuOpen(false);
-                  setCurrentPath('/click-to-connect');
                 }}
-                className={`font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
+                className={`block w-full text-left font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                   currentPath === '/click-to-connect' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
                 }`}
               >
                 Click to Connect
-              </a>
-              <a
-                href="/hotscan"
-                onClick={(e) => {
+              </Link>
+              <Link
+                to="/hotscan"
+                onClick={() => {
                   setMobileMenuOpen(false);
-                  setCurrentPath('/hotscan');
                 }}
-                className={`font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
+                className={`block w-full text-left font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                   currentPath === '/hotscan' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
                 }`}
               >
                 HotScan
-              </a>
-              <a
-                href="/features"
-                onClick={(e) => {
+              </Link>
+              <Link
+                to="/features"
+                onClick={() => {
                   setMobileMenuOpen(false);
-                  setCurrentPath('/features');
                 }}
-                className={`font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
+                className={`block w-full text-left font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 ${
                   currentPath === '/features' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
                 }`}
               >
                 Features
-              </a>
-              <a
-                href="/#pricing"
-                onClick={(e) => {
-                  e.preventDefault();
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
                   handleScrollToSection('pricing');
                 }}
-                className={`font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
+                className={`w-full text-left font-inter text-base font-medium hover:text-[#22C55E] transition-colors duration-200 cursor-pointer ${
                   activeSection === 'pricing' ? 'font-bold text-[#22C55E]' : 'text-[#525252] dark:text-white'
                 }`}
               >
                 Pricing
-              </a>
+              </button>
             </nav>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 }

@@ -15,7 +15,7 @@ export default function CalmCTA() {
         </div>
         <div className="pt-4">
           <a
-            href="https://connect.sohub.com.bd/authentication/register"
+            href="https://connect-client.sohub.com.bd/authentication/register"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center bg-white text-[#22C55E] font-inter font-semibold text-sm sm:text-base px-8 sm:px-10 py-3 sm:py-4 rounded-full hover:bg-gray-50 active:scale-95 transition-all duration-200 shadow-lg"

@@ -1,12 +1,14 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { Search, Menu, ChevronRight, ChevronDown, Sun, Moon, Phone, Users, BarChart3, CreditCard, Ticket, Wallet, Package, FileText, Clock, CheckCircle, XCircle, AlertCircle, Play, PhoneCall, MousePointer, QrCode, Zap, Settings, Headphones, Volume2, Mic, MicOff, PhoneIncoming, PhoneOutgoing, Globe, Code, Smartphone, Monitor, Router, UserCheck, Shield, Headset, Download, Layers, Route, MessageCircle, MapPin, CalendarDays, Link2 } from 'lucide-react';
+import { Search, Menu, ChevronRight, ChevronDown, Sun, Moon, Phone, Users, BarChart3, Ticket, Wallet, CheckCircle, PhoneCall, MousePointer, QrCode, Zap, Settings, Volume2, Code, Smartphone, Monitor, Router, Headset, Download, Route, MessageCircle, MapPin, CalendarDays, Link2 } from 'lucide-react';
 
 export default function Documentation() {
   const [bgColor, setBgColor] = useState('white');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [expandedSections, setExpandedSections] = useState({ voice: true, reports: true });
+  const [expandedSections, setExpandedSections] = useState({ voice: true, pbx: true });
   const [searchResults, setSearchResults] = useState([]);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
@@ -61,28 +63,17 @@ export default function Documentation() {
   }, [hotScanCallTrigger]);
 
   const allSections = [
-    { id: 'overview', title: 'Overview' },
     { id: 'dashboard', title: 'Dashboard' },
-
     { id: 'operator-panel', title: 'Operator Panel' },
-    { id: 'extensions', title: 'Extensions' },
-    { id: 'inbound-route', title: 'Inbound Route' },
-    { id: 'outbound-route', title: 'Outbound Route' },
+    { id: 'Phones', title: 'Phone' },
     { id: 'ring-group', title: 'Ring Group' },
-    { id: 'closed-user-group', title: 'Closed User Group' },
-    { id: 'approved-trunks', title: 'Approved Trunks' },
-    { id: 'caller-ids', title: 'Caller IDs' },
     { id: 'sound-files', title: 'Sound Files' },
-    { id: 'text-to-speech', title: 'Text To Speech' },
-    { id: 'quick-call', title: 'Quick Call' },
     { id: 'call-flow', title: 'Call Flow' },
     { id: 'click-to-connect', title: 'Click to Connect' },
     { id: 'hotscan', title: 'HotScan' },
     { id: 'call-reports', title: 'Call Reports' },
-    { id: 'transaction-history', title: 'Transaction History' },
     { id: 'tickets', title: 'Tickets' },
     { id: 'wallet', title: 'Wallet' },
-
     { id: 'softphone', title: 'Get SoftPhone' },
   ];
 
@@ -99,41 +90,31 @@ export default function Documentation() {
   };
 
   const sections = [
-    { id: 'overview', title: 'Overview', icon: FileText },
     { id: 'dashboard', title: 'Dashboard', icon: Monitor },
     { 
       id: 'voice', 
       title: 'Voice', 
       icon: Phone,
       children: [
-        { id: 'operator-panel', title: 'Operator Panel', icon: Headset },
-        { id: 'extensions', title: 'Extensions', icon: Users },
-        { id: 'inbound-route', title: 'Inbound Route', icon: PhoneIncoming },
-        { id: 'outbound-route', title: 'Outbound Route', icon: PhoneOutgoing },
-        { id: 'ring-group', title: 'Ring Group', icon: Users },
-        { id: 'closed-user-group', title: 'Closed User Group', icon: Shield },
-        { id: 'approved-trunks', title: 'Approved Trunks', icon: Route },
-        { id: 'caller-ids', title: 'Caller ID\'s', icon: Phone },
+        { 
+          id: 'pbx',
+          title: 'PBX',
+          icon: Router,
+          children: [
+            { id: 'operator-panel', title: 'Operator Panel', icon: Headset },
+            { id: 'Phones', title: 'Phone', icon: Users },
+            { id: 'ring-group', title: 'Ring Group', icon: Users }
+          ]
+        },
         { id: 'sound-files', title: 'Sound Files', icon: Volume2 },
-        { id: 'text-to-speech', title: 'Text To Speech', icon: Mic },
-        { id: 'quick-call', title: 'Quick Call', icon: PhoneCall },
         { id: 'call-flow', title: 'Call Flow', icon: Settings }
       ]
     },
-    { id: 'click-to-connect', title: 'Click to Connect', icon: MousePointer },
-    { id: 'hotscan', title: 'HotScan', icon: Zap },
-    { 
-      id: 'reports', 
-      title: 'Reports', 
-      icon: BarChart3,
-      children: [
-        { id: 'call-reports', title: 'Call Reports', icon: BarChart3 },
-        { id: 'transaction-history', title: 'Transaction History', icon: CreditCard }
-      ]
-    },
+    { id: 'click-to-connect', title: 'Click To Connect', icon: MousePointer },
+    { id: 'hotscan', title: 'Hotscan', icon: Zap },
+    { id: 'call-reports', title: 'Call Reports', icon: BarChart3 },
     { id: 'tickets', title: 'Tickets', icon: Ticket },
     { id: 'wallet', title: 'Wallet', icon: Wallet },
-
     { id: 'softphone', title: 'Get SoftPhone', icon: Download },
   ];
 
@@ -218,149 +199,6 @@ export default function Documentation() {
 
   const renderSectionContent = () => {
     switch(activeSection) {
-      case 'overview':
-        return (
-          <div>
-            <h1 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Overview
-            </h1>
-            <p className="text-xl text-[#5f6368] dark:text-[#9aa0a6] mb-12 leading-relaxed">
-              SOHUB Connect is a numberless, internet-first communication platform that enables instant voice conversations through a click or a scan.
-            </p>
-            
-            <div className="prose prose-lg max-w-none">
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-6">
-                This user manual provides a practical guide to set up your workspace, configure calling flows, manage users, and operate SOHUB Connect day to day.
-              </p>
-              
-              <div className="docs-overview-highlight bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg p-6 my-6">
-                <p className="text-[#202124] dark:text-[#e8eaed] text-lg font-medium text-center m-0">
-                  Click. Scan. Talk.
-                </p>
-                <div className="docs-overview-journey mt-6">
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    <article className="docs-overview-step flex-1 rounded-xl p-4 border" style={{ '--step-delay': '80ms' }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="docs-overview-step-icon inline-flex h-7 w-7 items-center justify-center rounded-full">
-                          <MousePointer className="w-4 h-4" />
-                        </span>
-                        <p className="text-sm font-semibold text-[#202124] dark:text-[#e8eaed] m-0">Click</p>
-                      </div>
-                      <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] m-0">
-                        Visitor taps your call button
-                      </p>
-                    </article>
-
-                    <div className="docs-overview-arrow flex items-center justify-center text-[#64748b] dark:text-[#9aa0a6]" style={{ '--arrow-delay': '180ms' }}>
-                      <ChevronRight className="hidden sm:block w-4 h-4" />
-                      <ChevronDown className="sm:hidden w-4 h-4" />
-                    </div>
-
-                    <article className="docs-overview-step flex-1 rounded-xl p-4 border" style={{ '--step-delay': '280ms' }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="docs-overview-step-icon inline-flex h-7 w-7 items-center justify-center rounded-full">
-                          <QrCode className="w-4 h-4" />
-                        </span>
-                        <p className="text-sm font-semibold text-[#202124] dark:text-[#e8eaed] m-0">Scan</p>
-                      </div>
-                      <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] m-0">
-                        Or customer scans your HotScan QR
-                      </p>
-                    </article>
-
-                    <div className="docs-overview-arrow flex items-center justify-center text-[#64748b] dark:text-[#9aa0a6]" style={{ '--arrow-delay': '380ms' }}>
-                      <ChevronRight className="hidden sm:block w-4 h-4" />
-                      <ChevronDown className="sm:hidden w-4 h-4" />
-                    </div>
-
-                    <article className="docs-overview-step flex-1 rounded-xl p-4 border" style={{ '--step-delay': '480ms' }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="docs-overview-step-icon inline-flex h-7 w-7 items-center justify-center rounded-full">
-                          <PhoneCall className="w-4 h-4" />
-                        </span>
-                        <p className="text-sm font-semibold text-[#202124] dark:text-[#e8eaed] m-0">Talk</p>
-                      </div>
-                      <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] m-0">
-                        Call is routed to the right team
-                      </p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                How SOHUB Connect Works
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                Unlike traditional telephony, SOHUB Connect removes the need for direct dialing and allows customers to start conversations instantly through digital entry points.
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Internet-first voice connection</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">No manual dialing for customers</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Fast routing to the right team or extension</li>
-              </ul>
-
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Feature Overview
-              </h2>
-              
-              <h3 className="text-xl font-normal text-[#202124] dark:text-[#e8eaed] mt-8 mb-3">
-                Core Workspace
-              </h3>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Dashboard</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Operator Panel</li>
-              </ul>
-
-              <h3 className="text-xl font-normal text-[#202124] dark:text-[#e8eaed] mt-8 mb-3">
-                Voice Configuration
-              </h3>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Extensions</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Inbound Route and Outbound Route</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Ring Group and Closed User Group (CUG)</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Approved Trunks and Caller IDs</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Sound Files and Text to Speech (TTS)</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Quick Call and Call Flow</li>
-              </ul>
-
-              <h3 className="text-xl font-normal text-[#202124] dark:text-[#e8eaed] mt-8 mb-3">
-                Customer Entry Channels
-              </h3>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Click to Connect</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">HotScan</li>
-              </ul>
-
-              <h3 className="text-xl font-normal text-[#202124] dark:text-[#e8eaed] mt-8 mb-3">
-                Monitoring and Operations
-              </h3>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Call Reports</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Transaction History</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Tickets</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Wallet</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Get SoftPhone</li>
-              </ul>
-
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Getting Started Path
-              </h2>
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-6">
-                You can start with a single Click to Connect button, one HotScan profile, and one extension user, then expand to full PBX routing and reporting as your operation grows.
-              </p>
-              
-              <div className="docs-overview-highlight bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg p-6 my-6">
-                <p className="text-[#202124] dark:text-[#e8eaed] text-lg font-medium text-center m-0">
-                  One click. One scan. Real conversation.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
       case 'dashboard':
         return (
           <div>
@@ -372,1088 +210,263 @@ export default function Documentation() {
             </p>
             
             <div className="prose prose-lg max-w-none">
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-6">
-                It gives you a live snapshot of your communication setup — what's active, what's available, and what you can do next.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Top Summary Cards
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                At the top of the Dashboard, you'll see a quick system summary.
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Click to Connect Buttons — how many are active</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">HotScan Profiles — QR-based calling profiles currently in use</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Extension Users — team members available to receive calls</li>
-              </ul>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-6">
-                This section answers one question instantly: "Is my system ready to receive calls right now?"
-              </p>
-              
-              <img src="/doc_images/Dashboard_new.png?v=1" alt="Dashboard Overview" className="w-full rounded-lg shadow-md mb-8" />
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Click to Connect Profiles
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                Click to Connect Profiles power instant voice conversations from the internet.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                From here you can:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Create new Click to Connect buttons</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Assign call flows</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Generate embed scripts for websites or apps</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Manage who receives calls</li>
-              </ul>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                HotScan Profiles
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                HotScan Profiles enable QR-based calling — no phone numbers required.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                HotScan works anywhere:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Product packaging</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Business cards</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Flyers and brochures</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Physical locations</li>
-              </ul>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Extension Users
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                Extension Users are the people behind the conversations.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                From this section you can:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Add or remove team members</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Assign extensions</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Control call availability</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Manage users based on your plan</li>
-              </ul>
-              
-              <div className="bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg p-6 my-8">
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base text-center m-0">
-                  Start simple. Expand when ready. Conversations come first.
-                </p>
+              <div className="space-y-10">
+                <section>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-0">
+                    It gives you a live snapshot of your communication setup — what's active, what's available, and what you can do next.
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-0 mb-4">
+                    Top Summary Cards
+                  </h2>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
+                    At the top of the Dashboard, you'll see a quick system summary.
+                  </p>
+                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Click to Connect — active widgets and calling entry points</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">HotScan — active QR-based calling profiles</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Phone Accounts — configured Phones available for calling</li>
+                  </ul>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-0">
+                    This section answers one question instantly: "Is my system ready to receive calls right now?"
+                  </p>
+                </section>
+
+                <section>
+                  <img src="/images/user_manual/dashboard.png" alt="Dashboard Overview" className="w-full rounded-lg shadow-md mb-0" />
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-0 mb-4">
+                    Click to Connect
+                  </h2>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
+                    Click to Connect enables instant voice conversations from the internet.
+                  </p>
+                  <ul className="list-disc pl-6 mb-0 space-y-2">
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Create new Click to Connect buttons</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Assign call flows</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Generate embed scripts for websites or apps</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Manage who receives calls</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-0 mb-4">
+                    HotScan
+                  </h2>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
+                    HotScan enables QR-based calling — no phone numbers required.
+                  </p>
+                  <ul className="list-disc pl-6 mb-0 space-y-2">
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Product packaging</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Business cards</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Flyers and brochures</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Physical locations</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-0 mb-4">
+                    Phone
+                  </h2>
+                  <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
+                    Phone is where you manage call-ready Phone accounts.
+                  </p>
+                  <ul className="list-disc pl-6 mb-0 space-y-2">
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Add new Phone accounts</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Manage existing Phone accounts</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Control active/inactive Phone status</li>
+                    <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Prepare users to receive calls</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <div className="bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg p-6">
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base text-center m-0">
+                      Start simple. Expand when ready. Conversations come first.
+                    </p>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
         );
-
 
       case 'operator-panel':
         return (
           <div>
-            <h1 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Operator Panel
-            </h1>
-            <p className="text-xl text-[#5f6368] dark:text-[#9aa0a6] mb-12 leading-relaxed">
-              The Operator Panel is the live control desk of your call system.
-            </p>
-            
-            <div className="prose prose-lg max-w-none">
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-6">
-                It shows who is available, who is busy, and where calls should go — in real time.
-              </p>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                Instead of guessing or waiting, you see everything as it happens.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                What the Operator Panel Does
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                The Operator Panel helps you manage incoming and ongoing calls efficiently.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                From one screen, you can:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Monitor active and idle extensions</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">See call status in real time</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Understand call flow behavior instantly</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Control how calls are handled during busy hours</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                It acts as the central visibility layer of your PBX.
-              </p>
-              
-              <img src="/doc_images/Operator_panel.png" alt="Operator Panel" className="w-full rounded-lg shadow-md mb-8" />
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Real-Time Call Visibility
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                Every call has a state. The Operator Panel shows it clearly.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                You can instantly see:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Which extensions are free</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Which are ringing</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Which are on a call</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Which are offline or unavailable</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                This removes confusion and improves response speed.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Smarter Call Handling
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                When multiple calls arrive at the same time, the Operator Panel helps ensure no call is ignored.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                It allows you to:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Identify overloaded extensions</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Balance call distribution</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Reduce missed or dropped calls</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Maintain a smooth calling experience</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                No manual coordination is required.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Works With All Call Entry Points
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                The Operator Panel is not limited to traditional calls.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                It works seamlessly with:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Click to Connect calls</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">HotScan QR calls</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Direct extension calls</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Inbound routes and ring groups</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                No matter how a call starts, it appears here.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Designed for Human Decisions
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                The Operator Panel does not automate decisions blindly.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                It supports human judgment by:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Showing live system status</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Reducing guesswork</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Enabling faster decisions during peak time</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                You stay in control. The system simply keeps you informed.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Who Should Use the Operator Panel
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                The Operator Panel is ideal for:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Front desk operators</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Call supervisors</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Business owners</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Support team leads</li>
-              </ul>
-              
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base leading-7 mb-6">
-                Anyone responsible for call handling benefits from this view.
-              </p>
-              
-              <h2 className="text-2xl font-normal text-[#202124] dark:text-[#e8eaed] mt-12 mb-4">
-                Why It Matters
-              </h2>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-4">
-                Calls are time-sensitive. Visibility creates confidence.
-              </p>
-              
-              <p className="text-[#202124] dark:text-[#e8eaed] text-base leading-7 mb-2">
-                With the Operator Panel:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Customers wait less</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Teams respond faster</li>
-                <li className="text-[#202124] dark:text-[#e8eaed] text-base leading-7">Businesses operate calmly under pressure</li>
-              </ul>
-              
-              <div className="bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg p-6 my-8">
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] text-base text-center m-0">
-                  When you can see what's happening, you can handle conversations better.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'extensions':
-        return (
-          <div>
             <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Extensions
+              Operator Panel
             </h2>
-            <p className="text-xl text-[#3c4043] dark:text-[#bdc1c6] mb-2">
-              Create and manage users who make and receive calls
-            </p>
-            <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-8 leading-7">
-              Extensions are the core calling accounts in SOHUB Connect. Each extension usually represents one agent, softphone, or desk device.
+            <p className="text-xl text-[#3c4043] dark:text-[#bdc1c6] mb-8 leading-7">
+              Manage live calls with Operator Panel
             </p>
 
             <div className="space-y-8">
-              <section className="bg-[#f8f9fa] dark:bg-[#202124] border border-[#dadce0] dark:border-[#3c4043] rounded-xl p-5">
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-2">Quick workflow</h3>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">Create Extension → Assign Caller ID → Register on Softphone/IP Phone → Verify in Operator Panel</p>
-                <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">This is the minimum setup path to make an extension live.</p>
+              <section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">What you're trying to do</h3>
+                <p className="text-[#3c4043] dark:text-[#bdc1c6] mb-2">
+                  See who is available to receive calls and monitor live calling status in real time.
+                </p>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6]">
+                  The Operator Panel shows all your extensions and their current state.
+                </p>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">What you can do here</h3>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">When to use Operator Panel</h3>
+                <p className="text-[#3c4043] dark:text-[#bdc1c6] mb-2">Use the Operator Panel when you want to:</p>
                 <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
-                  <li>• Create new extensions</li>
-                  <li>• View all existing extensions</li>
-                  <li>• Assign caller IDs to extensions</li>
-                  <li>• Activate or deactivate calling users</li>
-                  <li>• Edit or delete extensions</li>
+                  <li>• Check who is online or idle</li>
+                  <li>• Know who is unavailable</li>
+                  <li>• Monitor call readiness before routing calls</li>
                 </ul>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mt-3 italic">
+                  You don't configure anything here. This page is for visibility only.
+                </p>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Where to find Extensions</h3>
-                <p className="text-[#3c4043] dark:text-[#bdc1c6] mb-2">Navigate to: <span className="font-medium">Voice → PBX → Extensions</span></p>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">You will see two tabs:</p>
-                <ul className="space-y-1 text-[#3c4043] dark:text-[#bdc1c6] ml-4">
-                  <li>• <span className="font-medium">Extensions</span> – View and manage existing extensions</li>
-                  <li>• <span className="font-medium">Add Extension</span> – Create a new extension</li>
-                </ul>
-              </section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">What you'll see on the screen</h3>
+                <img src="/images/user_manual/operator_panel.png" alt="Operator Panel" className="w-full rounded-lg shadow-md mb-4" />
+                
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-2">Search bar</h4>
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6]">
+                      Use the search field to quickly find extensions or users.
+                    </p>
+                  </div>
 
-              <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Extensions list view</h3>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-3">In the <span className="font-medium">Extensions</span> tab, you can review all created users.</p>
-                <img src="/doc_images/Extesion 02.png" alt="Extensions List" className="w-full rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-2">Columns explained</h4>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Extension Type</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Indicates the account type (usually "Extension").</p>
+                  <div>
+                    <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-2">Status tabs</h4>
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">
+                      The panel provides these tabs:
+                    </p>
+                    <ul className="space-y-1 text-[#3c4043] dark:text-[#bdc1c6] ml-4">
+                      <li>• Available</li>
+                      <li>• Unavailable</li>
+                      <li>• All Phones</li>
+                    </ul>
                   </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Display Name</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Name shown in Operator Panel and reports.</p>
+
+                  <div>
+                    <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-2">Auto Refresh</h4>
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6]">
+                      Auto Refresh keeps statuses updated in real time without manually reloading the page.
+                    </p>
                   </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Caller ID</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Number shown to recipients during outgoing calls.</p>
-                  </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Assigned User</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">SOHUB account or company linked to the extension.</p>
-                  </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Status</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Active = can make/receive calls, Inactive = call access blocked.</p>
-                  </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Manage (⚙️ icon)</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Edit extension settings.</p>
-                  </div>
-                  <div className="rounded-lg border border-[#dbe3ef] dark:border-[#3c4043] bg-[#f8fafc] dark:bg-[#202124] p-3 sm:col-span-2">
-                    <span className="block text-sm font-semibold text-[#0f172a] dark:text-[#e8eaed]">Delete (🗑 icon)</span>
-                    <p className="mt-1 text-sm leading-6 text-[#334155] dark:text-[#bdc1c6]">Permanently remove the extension.</p>
+
+                  <div>
+                    <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-2">Phone cards</h4>
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">Each card displays:</p>
+                    <ul className="space-y-1 text-[#3c4043] dark:text-[#bdc1c6] ml-4">
+                      <li>• Extension or destination number</li>
+                      <li>• Status badge (for example: UNAVAILABLE)</li>
+                      <li>• User name</li>
+                      <li>• Channel type tag (Phone / Click to Connect / Hotscan)</li>
+                    </ul>
+                    <p className="text-[#5f6368] dark:text-[#9aa0a6] mt-2">
+                      Use these details to understand who can receive calls and through which channel.
+                    </p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Add a new extension</h3>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-4">To create a new extension, open the <span className="font-medium">Add Extension</span> tab.</p>
-                <img src="/doc_images/add_to_extension.png" alt="Add Extension" className="w-full rounded-lg shadow-md mb-4" />
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 p-3 sm:p-4 mb-4">
-                  <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create Extension</p>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">What you don't do here</h3>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">The Operator Panel is not used to:</p>
+                <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
+                  <li>• Create extensions</li>
+                  <li>• Assign call flows</li>
+                  <li>• Change routing rules</li>
+                </ul>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mt-2">Those actions are done in other Voice sections.</p>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Quick checklist</h3>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">If calls aren't connecting as expected:</p>
+                <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
+                  <li>• Open Operator Panel</li>
+                  <li>• Check Available and Unavailable counts</li>
+                  <li>• Verify status badges on Phone cards</li>
+                  <li>• Make sure users are online and SoftPhone is running</li>
+                  <li>• If extensions are unavailable, calls cannot be received</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        );
+      case 'Phones':
+        return (
+          <div>
+            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
+              Phone
+            </h2>
+            <p className="text-xl text-[#3c4043] dark:text-[#bdc1c6] mb-8 leading-7">
+              Create users who can make and receive calls
+            </p>
+
+            <div className="space-y-8">
+              <section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Open Phone</h3>
+                <p className="text-[#3c4043] dark:text-[#bdc1c6] mb-2">Navigate to: <span className="font-medium">Voice → PBX → Phone</span></p>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">You will see two tabs:</p>
+                <ul className="space-y-1 text-[#3c4043] dark:text-[#bdc1c6] ml-4">
+                  <li>• <span className="font-medium">Phones</span> – View and manage existing Phones</li>
+                  <li>• <span className="font-medium">Add Phone</span> – Create a new Phone</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">View all Phones</h3>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-3">
+                  In the <span className="font-medium">Phones</span> tab, you can search, manage, renew, activate, or delete Phones.
+                </p>
+                <img src="/images/user_manual/phone_list.png" alt="Phone List" className="w-full rounded-lg shadow-md mb-4" />
+                <p className="text-sm text-[#5f6368] dark:text-[#9aa0a6]">
+                  If a Phone is suspended, the action changes from <span className="font-medium">Renew</span> to <span className="font-medium">Activate</span> so you can re-enable it from the list.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Add a new Phone</h3>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-4">To create a new Phone, go to the <span className="font-medium">Add Phone</span> tab.</p>
+                <img src="/images/user_manual/add_phone.png" alt="Add Phone" className="w-full rounded-lg shadow-md mb-4" />
+                <div className="p-3 rounded-lg bg-[#f1f3f4] dark:bg-[#3c4043]">
+                  <p className="text-[#202124] dark:text-[#e8eaed] mb-1 font-medium">Billing note</p>
+                  <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm m-0">
+                    Up to 5 Phone creations are free for lifetime. After the first 5, additional Phones require a billing term (Monthly or Yearly).
+                  </p>
+                </div>
+                <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 p-3 sm:p-4 mb-4">
+                  <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create Phone</p>
                   <video
                     controls
                     playsInline
                     preload="metadata"
                     className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-black"
                   >
-                    <source src="/videos/documentation/Extension_create.mp4" type="video/mp4" />
+                    <source src="/images/user_manual/videos/add_phones.mp4" type="video/mp4" />
                   </video>
                 </div>
-                <h4 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-3">Required fields</h4>
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-1">Extension No *</h5>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mb-1">Unique internal number for the extension.</p>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm">Examples: 101, 105, 2112</p>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm italic">Extension numbers must be unique.</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-1">Display Name *</h5>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mb-1">The name of the user or extension.</p>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm">Examples: Support Agent, Marketing Agent, Sales Desk</p>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm italic">This name appears in the Operator Panel and call reports.</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-1">Caller ID</h5>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mb-1">Select an approved caller ID from the dropdown list.</p>
-                    <ul className="text-[#5f6368] dark:text-[#9aa0a6] text-sm space-y-1 ml-4">
-                      <li>• This number will be displayed on outgoing calls</li>
-                      <li>• Outgoing calls may fail if no caller ID is assigned</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-[#202124] dark:text-[#e8eaed] mb-1">Extension Password *</h5>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mb-1">Password used to register the extension on a softphone or IP phone.</p>
-                    <ul className="text-[#5f6368] dark:text-[#9aa0a6] text-sm space-y-1 ml-4">
-                      <li>• The system automatically generates a password</li>
-                      <li>• You can manually edit the password if needed</li>
-                      <li>• Click the refresh (🔄) icon to regenerate a new password</li>
-                    </ul>
-                    <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm italic mt-1">Store this password securely. It is required for softphone/device setup.</p>
-                  </div>
-                </div>
                 <div className="mt-4 p-3 bg-[#f1f3f4] dark:bg-[#3c4043] rounded-lg">
-                  <p className="text-[#202124] dark:text-[#e8eaed]">After completing the required fields, click <span className="font-medium">Create Extension</span>.</p>
-                  <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm">The extension is created and activated immediately.</p>
+                  <p className="text-[#202124] dark:text-[#e8eaed]">
+                    Fill in the required fields, then click <span className="font-medium">Create Phone</span>.
+                  </p>
+                  <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm">The Phone will be created and activated immediately.</p>
                 </div>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">After creating an extension</h3>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">Recommended next steps:</p>
-                <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
-                  <li>• Configure the extension in a softphone or IP phone</li>
-                  <li>• Assign the extension to an inbound route or ring group</li>
-                  <li>• Verify the extension status in the Operator Panel</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Common issues to avoid</h3>
-                <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
-                  <li>• Duplicate extension numbers are not allowed</li>
-                  <li>• Outgoing calls may not work without a caller ID</li>
-                  <li>• Inactive extensions cannot receive calls</li>
-                  <li>• Incorrect passwords will prevent softphone registration</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Not configured from this page</h3>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] mb-2">These configurations are outside the Extensions section:</p>
-                <ul className="space-y-2 text-[#3c4043] dark:text-[#bdc1c6]">
-                  <li>• Call routing and IVR setup</li>
-                  <li>• Inbound call flow design</li>
-                  <li>• Billing and usage configuration</li>
-                </ul>
-                <p className="text-[#5f6368] dark:text-[#9aa0a6] text-sm mt-2">Use Inbound Route, Call Flow, and Reports sections for these tasks.</p>
-              </section>
-            </div>
-          </div>
-        );
-
-      case 'inbound-route':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Inbound Route
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Control how incoming calls enter your system
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Inbound Routes define what happens when a call reaches your business. They connect an incoming call source to a Call Flow, such as ringing agents, playing an IVR, or forwarding calls.
+                <h3 className="text-lg font-semibold text-[#202124] dark:text-[#e8eaed] mb-3">Manage, Renew, Activate</h3>
+                <p className="text-[#5f6368] dark:text-[#9aa0a6]">
+                  Use <span className="font-medium">Manage</span> to open details. Use <span className="font-medium">Renew</span> to select Monthly/Yearly. If suspended, use <span className="font-medium">Activate</span> from the same row.
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Without an inbound route, incoming calls cannot be handled correctly.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What is an Inbound Route?</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">An Inbound Route is a rule that decides:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Which incoming call</li>
-                  <li>• Goes to which call flow</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  It acts as the entry point between the outside world and your internal calling logic.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What you can do here</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Create inbound call routes</li>
-                  <li>• Link numbers to call flows</li>
-                  <li>• Activate or deactivate incoming call handling</li>
-                  <li>• Manage how calls enter your PBX</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create an Inbound Route</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">Navigate to: <span className="font-medium">Voice → PBX → Inbound Route</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Click <span className="font-medium">Add Inbound Route</span>, then fill in the following:</p>
-                <img src="/doc_images/add_inbound_route.png" alt="Add Inbound Route Form" className="w-[75%] rounded-lg shadow-md mb-4" />
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Inbound Route Name *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">A descriptive name for easy identification.</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Examples: Main Office, Support Line, Sales Number</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Select Caller ID *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Choose the incoming number that will receive calls.</p>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic">This must be an approved or active DID.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Select Call Flow *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Define how the call will be handled.</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Examples: IVR, Ring Group, Extension, Time-based flow</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Route Status *</h4>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Active — Calls will be received</li>
-                      <li>• Inactive — Calls will not be handled</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded">
-                  <p className="text-gray-700 dark:text-gray-300">Click <span className="font-medium">Save</span> to apply.</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">Once active, the route starts working immediately.</p>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Inbound Route List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The Inbound Route list shows all configured routes with:</p>
-                <img src="/doc_images/view_inbound_route.png?v=1" alt="View All Inbound Routes" className="w-full rounded-lg shadow-md mb-4" />
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Created time</li>
-                  <li>• Route name</li>
-                  <li>• Incoming caller ID</li>
-                  <li>• Assigned call flow</li>
-                  <li>• Status (Active / Inactive)</li>
-                  <li>• Edit and delete actions</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Use this list to quickly review or update how incoming calls are routed.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Common Use Cases</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Route a main business number to an IVR</li>
-                  <li>• Send support calls to a ring group</li>
-                  <li>• Direct calls to different flows based on time or department</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Every inbound route must have a call flow</li>
-                  <li>• Inactive routes will not receive calls</li>
-                  <li>• A caller ID can only be used in one inbound route at a time</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Inbound Routes decide where conversations begin.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'outbound-route':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Outbound Route
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Control how calls leave your system
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Outbound Routes define how extensions make outgoing calls, which destination they can dial, and which caller ID is used.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Without an outbound route, extensions cannot place external calls.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What is an Outbound Route?</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">An Outbound Route is a rule that decides:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Which extensions can make calls</li>
-                  <li>• Where they can call (destination)</li>
-                  <li>• Which caller ID is shown</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  It acts as the exit point for outbound communication.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create an Outbound Route</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">Navigate to: <span className="font-medium">Voice → PBX → Outbound Route → Add Outbound Route</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Fill in the following fields:</p>
-                <img src="/doc_images/add_outbound_rooute.png" alt="Add Outbound Route Form" className="w-[75%] rounded-lg shadow-md mb-4" />
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Outbound Route Name *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">A descriptive name for the route.</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Example: BD Route – Bangladesh, International Route</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Route Destination *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Defines where calls can be placed.</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Example: Bangladesh, Specific country or region</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Caller ID *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">The number displayed on outgoing calls.</p>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic">Only approved and active caller IDs can be selected.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Allowed Extensions *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Select which extensions are permitted to use this route.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Route Status</h4>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Active — Route is available for outbound calls</li>
-                      <li>• Inactive — Route is disabled</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded">
-                  <p className="text-gray-700 dark:text-gray-300">Click <span className="font-medium">Save</span> to apply the route.</p>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Outbound Route List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The Outbound Route list displays all configured routes with:</p>
-                <img src="/doc_images/view_outbound_route.png?v=1" alt="View All Outbound Routes" className="w-full rounded-lg shadow-md mb-4" />
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Created time</li>
-                  <li>• Route name</li>
-                  <li>• Destination</li>
-                  <li>• Caller ID</li>
-                  <li>• Allowed extensions</li>
-                  <li>• Assigned organization</li>
-                  <li>• Status (Active / Inactive)</li>
-                </ul>
-                <div className="mt-4">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Actions</h4>
-                  <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                    <li>• ✏️ Edit — Modify route settings</li>
-                    <li>• 🗑️ Delete — Remove the route</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Notes & Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Always create extensions before configuring outbound routes</li>
-                  <li>• Use approved caller IDs only</li>
-                  <li>• Test outbound calling after setup</li>
-                  <li>• Use clear route names for easy identification</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Outbound Routes control how your voice reaches the world.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'ring-group':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Ring Group
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Route incoming calls to multiple extensions efficiently
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300">
-                  Ring Groups allow incoming calls to ring multiple extensions at once or in a defined strategy, ensuring calls are answered quickly by available team members.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What is a Ring Group?</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  A Ring Group is a call distribution method that sends one incoming call to multiple extensions based on a selected ring strategy.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Common use cases:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Sales team answering a shared number</li>
-                  <li>• Support desk handling customer calls</li>
-                  <li>• Any team where the first available agent should answer</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Access Ring Group</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Navigate to: <span className="font-medium">Call Management → Ring Group</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">You will see two tabs:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Ring Groups</span> — View and manage existing ring groups</li>
-                  <li>• <span className="font-medium">Add Ring Group</span> — Create a new ring group</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create a Ring Group</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">To create a new ring group, click <span className="font-medium">Add Ring Group</span> and fill in the following fields:</p>
-                <img src="/doc_images/ring_group1.png" alt="Ring Group Form" className="w-[40%] rounded-lg shadow-md mb-4" />
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Group Description *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">A clear name for the ring group.</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Examples: Sales Team, Support Desk, Billing Group</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Extension List *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Select the extensions that should receive calls.</p>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Use Quick Select Extension to add extensions</li>
-                      <li>• Selected extensions appear in the list</li>
-                      <li>• Click Clear to remove all selections</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Ring Strategy *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Defines how calls are distributed:</p>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-4">• <span className="font-medium">Ring All</span> — All selected extensions ring simultaneously</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Ring Time *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">How long the extensions will ring before the call moves forward or ends.</p>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Minimum: 5 seconds</li>
-                      <li>• Maximum: 300 seconds</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Music on Hold</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">What the caller hears while waiting:</p>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-4">• <span className="font-medium">Ring</span> — Standard ringing tone</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Ring Group Status</h4>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Active — Can receive calls</li>
-                      <li>• Inactive — Will not receive calls</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded">
-                  <p className="text-gray-700 dark:text-gray-300">Click <span className="font-medium">Create Ring Group</span> to save, or <span className="font-medium">Cancel</span> to discard changes.</p>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Ring Group List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The Ring Groups page shows all configured groups with:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Created time</li>
-                  <li>• Group number (system-generated)</li>
-                  <li>• Group description</li>
-                  <li>• Extension list</li>
-                  <li>• Ring strategy</li>
-                  <li>• Ring time</li>
-                  <li>• Music on hold</li>
-                  <li>• Assigned account</li>
-                  <li>• Status (Active / Inactive)</li>
-                </ul>
-                <div className="mt-4">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Actions</h4>
-                  <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                    <li>• ✏️ Edit — Update ring group settings</li>
-                    <li>• 🗑️ Delete — Permanently remove the ring group</li>
-                  </ul>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mt-3">
-                  Use the Search box and page size controls to manage large lists easily.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Edit or Delete a Ring Group</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Click <span className="font-medium">Edit</span> to modify extensions, strategy, or timing</li>
-                  <li>• Click <span className="font-medium">Delete</span> to remove the ring group permanently</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mt-3 italic">
-                  Deleting a ring group may affect inbound call routing.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Use clear and meaningful group names</li>
-                  <li>• Avoid adding too many extensions to one ring group</li>
-                  <li>• Review inactive or unused ring groups regularly</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Ring Groups help your team respond faster—so no call goes unanswered.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'closed-user-group':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Closed User Group (CUG)
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Control who your system can talk to
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Closed User Group (CUG) lets you create a private, approved list of contact numbers. Only these numbers can be used or recognized under specific calling rules.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  It's designed for secure, controlled communication—nothing extra, nothing accidental.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Why CUG Exists</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Not every number should be reachable.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">CUG is commonly used to:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Restrict calling to approved numbers only</li>
-                  <li>• Manage internal or trusted external contacts</li>
-                  <li>• Apply special call rules for a defined group</li>
-                  <li>• Reduce misuse, errors, and unwanted calls</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  Think of it as a trusted contact boundary inside your PBX.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Access Closed User Group</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Navigate to: <span className="font-medium">Voice → PBX → Closed User Group (CUG)</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">You'll see three tabs:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Closed User Groups</span> — View and manage contacts</li>
-                  <li>• <span className="font-medium">Add Contact</span> — Add a single contact manually</li>
-                  <li>• <span className="font-medium">Upload Contacts</span> — Bulk upload using CSV</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Add Contact (Manual)</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Use this when adding one contact at a time.</p>
-                <img src="/doc_images/CUG_add.png" alt="Add Contact Form" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">Steps:</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Open <span className="font-medium">Add Contact</span></li>
-                  <li>2. Enter:
-                    <ul className="ml-4 mt-1 space-y-1">
-                      <li>• <span className="font-medium">Contact Name</span> — A recognizable name</li>
-                      <li>• <span className="font-medium">Contact Number</span> — Full number (no spaces or symbols)</li>
-                    </ul>
-                  </li>
-                  <li>3. Click <span className="font-medium">Add Contact</span></li>
-                </ol>
-                <div className="mt-3">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Notes:</h4>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                    <li>• Numbers must be in complete format</li>
-                    <li>• Duplicate numbers are not allowed</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Upload Contacts (Bulk)</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Use this for large contact lists.</p>
-                <img src="/doc_images/CUG_upload.png" alt="Upload Contacts" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">Steps:</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Open <span className="font-medium">Upload Contacts</span></li>
-                  <li>2. Download the sample CSV</li>
-                  <li>3. Fill in contact details following the sample format</li>
-                  <li>4. Upload the completed CSV file</li>
-                  <li>5. Click <span className="font-medium">Upload</span></li>
-                </ol>
-                <div className="mt-3">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Tips:</h4>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                    <li>• Follow the exact CSV format</li>
-                    <li>• Invalid or duplicate numbers may be skipped automatically</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Closed User Group List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The list shows all saved contacts with:</p>
-                <img src="/doc_images/cug1.png?v=1" alt="Closed User Group List" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Created date</li>
-                  <li>• Contact name</li>
-                  <li>• Contact number</li>
-                  <li>• Assigned user or account</li>
-                </ul>
-                <div className="mt-4">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Actions</h4>
-                  <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                    <li>• ✏️ Edit — Update contact details</li>
-                    <li>• 🗑️ Delete — Remove the contact permanently</li>
-                  </ul>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mt-3">
-                  Use search and pagination to manage large lists easily.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Keep the list clean and updated</li>
-                  <li>• Remove unused or outdated contacts</li>
-                  <li>• Use bulk upload for faster setup</li>
-                  <li>• Double-check numbers to avoid call failures</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  CUG keeps communication intentional—only the right numbers, at the right time.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'caller-ids':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Caller IDs
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              The identity shown when you call
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Caller IDs define which phone number is displayed to recipients during outbound calls from Sohub Connect. They help build trust, brand recognition, and consistent call identity.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Every outbound call must use a valid, active Caller ID.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Why Caller IDs Matter</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">People answer calls they recognize.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Caller IDs ensure:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Trust on outbound calls</li>
-                  <li>• Brand-consistent communication</li>
-                  <li>• Compliance with carrier rules</li>
-                  <li>• Controlled call identity per route or extension</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Caller ID List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">This page shows all configured Caller IDs.</p>
-                <img src="/doc_images/callerid.png?v=1" alt="Caller ID List" className="w-full rounded-lg shadow-md mb-4" />
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each entry includes:</p>
-                <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <div>
-                    <span className="font-medium">Created Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the Caller ID was added</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Internal display name for easy identification</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Caller ID</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">The phone number shown to call recipients</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Channels</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Number of simultaneous outbound calls allowed</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Status</span>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 mt-1">
-                      <li>• Active — Can be used for outbound calls</li>
-                      <li>• Inactive — Disabled</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <span className="font-medium">Assigned User</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">User or organization the Caller ID belongs to</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Action</span>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 mt-1">
-                      <li>• Edit — Update Caller ID details</li>
-                      <li>• Delete — Remove the Caller ID</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Add Caller ID</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Register a new Caller ID for outbound calling.</p>
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">Steps</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Navigate to <span className="font-medium">Caller IDs</span></li>
-                  <li>2. Click <span className="font-medium">Add Caller ID</span></li>
-                  <li>3. Fill in the required fields:
-                    <ul className="ml-4 mt-2 space-y-2">
-                      <li>• <span className="font-medium">Select Trunk</span> — Choose an approved trunk (Caller IDs must be linked to a trunk)</li>
-                      <li>• <span className="font-medium">Name</span> — Internal name for identification</li>
-                      <li>• <span className="font-medium">Caller ID</span> — Phone number shown to recipients</li>
-                      <li>• <span className="font-medium">Channels</span> — Maximum number of concurrent outbound calls</li>
-                      <li>• <span className="font-medium">Status</span> — Enable or disable the Caller ID</li>
-                    </ul>
-                  </li>
-                  <li>4. Click <span className="font-medium">Add Caller ID</span> to save</li>
-                </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  The Caller ID becomes available immediately if active.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Only approved trunks can be used</li>
-                  <li>• Inactive Caller IDs cannot place calls</li>
-                  <li>• Channel limits control call concurrency</li>
-                  <li>• Outbound calls may fail without a valid Caller ID</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Use recognizable numbers to improve answer rates</li>
-                  <li>• Match Caller IDs with correct outbound routes</li>
-                  <li>• Set channel limits based on expected call volume</li>
-                  <li>• Keep unused Caller IDs inactive or removed</li>
-                </ul>
               </section>
             </div>
           </div>
@@ -1463,490 +476,59 @@ export default function Documentation() {
         return (
           <div>
             <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Sound Files
+              Sounds
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Custom audio used in your call experience
+              Upload and manage audio for IVR, announcements, and prompts
             </p>
 
             <div className="space-y-8">
               <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Sound Files let you upload and manage audio such as IVR greetings, announcements, and voice prompts that are played during calls. They help guide callers clearly and create a consistent brand voice.
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Open Sounds</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  Navigate to: <span className="font-medium">Voice → Sound Files</span>
                 </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Sound Files Are Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Sound files can be used across different voice features, including:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• IVR menus</li>
-                  <li>• Call flows</li>
-                  <li>• Ring groups</li>
-                  <li>• Announcements and prompts</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  If a caller hears something — it starts here.
+                <p className="text-gray-600 dark:text-gray-400 mb-0">
+                  You will see two tabs: <span className="font-medium">Sound Files</span> and <span className="font-medium">Add Sound File</span>.
                 </p>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Add a Sound File</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Upload a new audio file for use in call flows.</p>
-                <img src="/doc_images/sound_file.png?v=1" alt="Add Sound File" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">Steps</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Navigate to <span className="font-medium">Dashboard → Sound Files</span></li>
-                  <li>2. Click <span className="font-medium">Add Sound File</span></li>
-                  <li>3. Enter a <span className="font-medium">Sound Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 ml-4">A clear name to identify the audio (e.g., Welcome Message, Office Closed)</p>
-                  </li>
-                  <li>4. Upload the audio file
-                    <ul className="ml-4 mt-1 space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                      <li>• Drag and drop the file, or</li>
-                      <li>• Click the upload area to select a file</li>
-                    </ul>
-                  </li>
-                  <li>5. Click <span className="font-medium">Save</span></li>
-                </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  The file is uploaded and prepared for use automatically.
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In the <span className="font-medium">Add Sound File</span> tab, enter the name, upload the audio file, then click <span className="font-medium">Save</span>.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Supported Formats</h3>
+                <img src="/images/user_manual/add_sound_file.png" alt="Add Sound File" className="w-full rounded-lg shadow-md mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Fields shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• MP3</li>
-                  <li>• WAV</li>
+                  <li>• Sound Name</li>
+                  <li>• Audio File</li>
+                  <li>• Supported formats: MP3, WAV (auto-converts to 8kHz 16-bit Mono WAV)</li>
                 </ul>
-                <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded">
-                  <p className="text-gray-700 dark:text-gray-300 mb-2">All uploaded files are automatically converted to:</p>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                    <li>• 8kHz</li>
-                    <li>• 16-bit</li>
-                    <li>• Mono WAV</li>
-                  </ul>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">
-                    This ensures full telephony compatibility and stable playback quality.
-                  </p>
-                </div>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Sound Files List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The Sound Files page shows all uploaded audio files.</p>
-                <img src="/doc_images/sound02.png?v=1" alt="Sound Files List" className="w-[73%] rounded-lg shadow-md mb-4" />
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each entry includes:</p>
-                <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <div>
-                    <span className="font-medium">Created Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the sound file was uploaded</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Sound Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Name assigned to the audio</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Sound File</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Built-in player to preview the audio</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Assigned User</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">User or account the sound file belongs to</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Status</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Indicates whether the sound file is active</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Verify</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Confirms the file is valid and ready for use</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Action</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Delete the sound file if it is no longer needed</p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Only verified sound files can be used in call flows</li>
-                  <li>• Audio is optimized automatically — no manual conversion needed</li>
-                  <li>• Deleted sound files cannot be recovered</li>
-                  <li>• Renaming files clearly helps avoid IVR confusion later</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Keep messages short and clear</li>
-                  <li>• Avoid background noise and music-heavy audio</li>
-                  <li>• Use consistent voice tone across all prompts</li>
-                  <li>• Preview audio before assigning it to live call flows</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Clear audio reduces confusion. Simple voices guide better conversations.
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In the <span className="font-medium">Sound Files</span> tab, you can search and manage uploaded sound files.
                 </p>
-              </div>
+                <img src="/images/user_manual/sound_file_list.png" alt="Sound Files List" className="w-full rounded-lg shadow-md mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Created Time</li>
+                  <li>• Sound Name</li>
+                  <li>• Sound File (player)</li>
+                  <li>• Assigned User</li>
+                  <li>• Status</li>
+                  <li>• Verify</li>
+                  <li>• Action (Delete)</li>
+                </ul>
+              </section>
+
             </div>
           </div>
         );
 
-      case 'text-to-speech':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Text to Speech (TTS)
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Turn written text into spoken voice
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Text to Speech (TTS) lets you convert text into natural-sounding audio that can be used in IVR messages, announcements, and automated call flows — without recording or uploading audio files.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Write once. Speak everywhere.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What TTS Is Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">TTS is commonly used for:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• IVR greetings and menu prompts</li>
-                  <li>• Automated announcements</li>
-                  <li>• Dynamic call flow messages</li>
-                  <li>• Multilingual voice messages</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  It removes the need for manual voice recording.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Add a Text to Speech Entry</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Create a new TTS voice message.</p>
-                <img src="/doc_images/text_to_speech_02.png" alt="Add TTS Entry" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">Steps</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Navigate to <span className="font-medium">Dashboard → Text to Speech</span></li>
-                  <li>2. Click <span className="font-medium">Add TTS</span></li>
-                  <li>3. Enter a <span className="font-medium">Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 ml-4">A clear identifier (e.g., Welcome Message, Office Hours Notice)</p>
-                  </li>
-                  <li>4. Enter the <span className="font-medium">TTS Text</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 ml-4">The text you want the system to speak</p>
-                  </li>
-                  <li>5. Select the <span className="font-medium">Language</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 ml-4">Example: English, Bangla</p>
-                  </li>
-                  <li>6. Click <span className="font-medium">Save</span></li>
-                </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  The system instantly converts the text into voice and makes it available for use.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">TTS List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">The TTS list shows all created TTS entries.</p>
-                <img src="/doc_images/text_to_speech.png" alt="TTS List" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each entry includes:</p>
-                <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <div>
-                    <span className="font-medium">Created Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the TTS entry was created</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Identifier for the TTS message</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">TTS Text</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">The text that will be converted into speech</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Language</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Selected language for voice generation</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Assigned User</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">User or role associated with the TTS</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Action</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Edit, lock, or delete the TTS entry (based on permissions)</p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Using TTS in Call Flows</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Once created, TTS entries can be:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Selected directly in IVR menus</li>
-                  <li>• Used in call flow steps</li>
-                  <li>• Updated anytime without re-uploading audio</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  Change the text → voice updates automatically.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Keep sentences short and clear</li>
-                  <li>• Avoid abbreviations and symbols</li>
-                  <li>• Use punctuation for natural pauses</li>
-                  <li>• Create separate TTS entries for different languages</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Clear words create clear conversations.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'quick-call':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Quick Call
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Instant outbound calls without setup
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Quick Call lets you place an immediate outbound call to any number using a selected Caller ID and play a predefined Sound File or Text to Speech (TTS) message — without creating a full call flow.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  It's designed for speed, testing, and quick communication.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Quick Call Is Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Quick Call is commonly used to:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Test sound files or TTS messages</li>
-                  <li>• Verify Caller ID and trunk configuration</li>
-                  <li>• Make quick announcement calls</li>
-                  <li>• Place instant outbound calls without routing setup</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  If you just need to call and play a message — this is the fastest way.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Access Quick Call</h3>
-                <p className="text-gray-700 dark:text-gray-300">Navigate to: <span className="font-medium">Dashboard → Quick Call</span></p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Quick Call Fields</h3>
-                <img src="/doc_images/quick_call.png" alt="Quick Call" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Call To *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Enter the destination phone number.</p>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• The number must be valid</li>
-                      <li>• Must be reachable based on your trunk configuration</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Caller ID *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Select the Caller ID to display to the recipient.</p>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Only active and assigned Caller IDs appear</li>
-                      <li>• Outbound calls require a valid Caller ID</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Select Play Type *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Choose what audio will play during the call:</p>
-                    <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-1 ml-4">
-                      <li>• <span className="font-medium">Sound File</span> – Plays a pre-uploaded audio file</li>
-                      <li>• <span className="font-medium">Text to Speech (TTS)</span> – Plays saved TTS content</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">Select Sound File *</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">(Visible when Sound File is selected)</p>
-                    <ul className="text-gray-600 dark:text-gray-400 text-sm space-y-1 ml-4">
-                      <li>• Choose an active sound file</li>
-                      <li>• The selected audio plays immediately after the call connects</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Make a Quick Call</h3>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Enter the <span className="font-medium">Call To</span> number</li>
-                  <li>2. Select a <span className="font-medium">Caller ID</span></li>
-                  <li>3. Choose a <span className="font-medium">Play Type</span></li>
-                  <li>4. Select a <span className="font-medium">Sound File</span> or <span className="font-medium">TTS</span></li>
-                  <li>5. Click <span className="font-medium">Call Now</span></li>
-                </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  The system instantly places the call and plays the selected audio.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Quick Call History</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Below the form, you can see a history of Quick Calls.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each record shows:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Created Time</span> – When the call was initiated</li>
-                  <li>• <span className="font-medium">Call To</span> – Destination number</li>
-                  <li>• <span className="font-medium">Caller ID</span> – Caller ID used</li>
-                  <li>• <span className="font-medium">Play Strategy</span> – Sound File or TTS</li>
-                  <li>• <span className="font-medium">Assigned User</span> – User who initiated the call</li>
-                  <li>• <span className="font-medium">Action</span> – Delete record (does not affect call logs)</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Quick Call does not create permanent call flows</li>
-                  <li>• Deleting history does not delete call records</li>
-                  <li>• Calls will fail if Caller ID or trunk is misconfigured</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  When you need a call now — don't build, just connect.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'customer-inquiries':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              
-              Customer Inquiries
-            </h2>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Overview</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                The Customer Inquiries module displays all incoming leads generated from HotScan widgets, 
-                helping admins and agents track, follow up, and manage customer inquiries effectively.
-              </p>
-              
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Information Displayed</h4>
-              <div className="grid md:grid-cols-2 gap-4 mb-8">
-                {[
-                  { field: 'Created At', desc: 'Date and time when inquiry was submitted' },
-                  { field: 'Customer Name', desc: 'Name provided by the visitor' },
-                  { field: 'Phone', desc: 'Contact phone number' },
-                  { field: 'Email', desc: 'Email address for follow-up' },
-                  { field: 'Company', desc: 'Company or organization name' },
-                  { field: 'Location', desc: 'Geographic location of customer' },
-                  { field: 'Message', desc: 'Inquiry details and requirements' },
-                  { field: 'Status', desc: 'Current inquiry status (New, In Progress, Closed)' },
-                  { field: 'Assigned To', desc: 'Agent responsible for follow-up' },
-                  { field: 'Profile ID', desc: 'Unique customer profile identifier' }
-                ].map((item) => (
-                  <div key={item.field} className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <div className="font-medium text-green-900 dark:text-green-300">{item.field}</div>
-                    <div className="text-sm text-green-700 dark:text-green-400">{item.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 mb-8">
-              <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-3">Use Case Example</h4>
-              <div className="space-y-3">
-                {[
-                  'A visitor opens the HotScan widget on a website',
-                  'The visitor submits contact details or initiates a call',
-                  'The system routes the call using the assigned call flow',
-                  'The inquiry is logged under Customer Inquiries',
-                  'An agent follows up with the lead'
-                ].map((step, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="keep-white-text flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-                      {index + 1}
-                    </div>
-                    <p className="text-blue-800 dark:text-blue-200">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Management Features</h4>
-                <div className="space-y-3">
-                  {[
-                    'View all incoming inquiries in one place',
-                    'Filter inquiries by status and date',
-                    'Assign inquiries to specific agents',
-                    'Track follow-up activities',
-                    'Update inquiry status and notes',
-                    'Export inquiry data for analysis'
-                  ].map((feature) => (
-                    <div key={feature} className="flex items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Benefits</h4>
-                <div className="space-y-3">
-                  {[
-                    'Never miss a potential customer',
-                    'Organized lead management system',
-                    'Improved response times',
-                    'Better customer service tracking',
-                    'Enhanced sales conversion rates',
-                    'Comprehensive inquiry analytics'
-                  ].map((benefit) => (
-                    <div key={benefit} className="flex items-center p-2 bg-green-50 dark:bg-green-900/20 rounded">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
       case 'call-flow':
         return (
           <div>
@@ -1954,358 +536,74 @@ export default function Documentation() {
               Call Flow
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Design how calls move. Visually.
+              Create and manage call routing flows
             </p>
 
             <div className="space-y-8">
               <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Call Flow lets you control what happens when a call starts — without code, scripts, or complexity. Using simple building blocks, you can design IVRs, routing logic, announcements, and call handling exactly the way your business needs.
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Open Call Flow</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  Navigate to: <span className="font-medium">Voice → Call Flow</span>
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Think of Call Flow as the brain of your calling system.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Call Flow Is Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Call Flow is used to:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Design IVR menus</li>
-                  <li>• Route incoming calls to teams or users</li>
-                  <li>• Play greetings or announcements</li>
-                  <li>• Control call order and fallback logic</li>
-                  <li>• Handle calls visually, not technically</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  If a call needs logic — it lives here.
+                <p className="text-gray-600 dark:text-gray-400 mb-0">
+                  Tabs: <span className="font-medium">Call Flow List</span>, <span className="font-medium">Create Call Flow</span>
                 </p>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Access Call Flow</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Navigate to: <span className="font-medium">Call Flow</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">You will see two tabs:</p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Call Flow List</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  The list shows all created call flows. You can search and manage them.
+                </p>
+                <img
+                  src="/images/user_manual/call_flow_list.png"
+                  alt="Call Flow List"
+                  className="w-full rounded-lg shadow-md mb-4"
+                />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Call Flow List</span> – View, edit, or delete existing call flows</li>
-                  <li>• <span className="font-medium">Create Call Flow</span> – Build a new call flow from scratch</li>
+                  <li>• Sl</li>
+                  <li>• Date Time</li>
+                  <li>• Name</li>
+                  <li>• Flow Code</li>
+                  <li>• Assigned To</li>
+                  <li>• Action (Edit, Delete)</li>
                 </ul>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create a New Call Flow</h3>
-                <img src="/doc_images/call_flow.png" alt="Call Flow" className="w-[73%] rounded-lg shadow-md mb-4" />
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Click <span className="font-medium">Create Call Flow</span></li>
-                  <li>2. In <span className="font-medium">Start Call Flow</span>, enter a <span className="font-medium">Flow Name</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 ml-4">Example: Main IVR, Support Flow, Office Hours</p>
-                  </li>
-                  <li>3. The visual flow builder opens</li>
-                  <li>4. Add steps by connecting blocks vertically</li>
-                  <li>5. Click <span className="font-medium">Save</span> anytime to store progress</li>
-                </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Changes are saved without interrupting live calls until the flow is applied.
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create Call Flow</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In <span className="font-medium">Create Call Flow</span>, enter a <span className="font-medium">Flow Name</span>, click{' '}
+                  <span className="font-medium">Insert step here</span>, select a step, then click <span className="font-medium">Save</span>.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Call Flow Building Blocks</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Each block defines what happens next in the call.</p>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Dial</h4>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">Connects the call to users or teams.</p>
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">Use Dial to:</p>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                      <li>• Ring a Ring Group</li>
-                      <li>• Route calls to extensions</li>
-                      <li>• Create fallback routing</li>
-                    </ul>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">Common use: Ring Sales → if unanswered → ring Support</p>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic mt-1">You can add multiple Dial steps in sequence.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Playback</h4>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">Plays a pre-recorded audio message.</p>
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">Use Playback to:</p>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                      <li>• Play greetings</li>
-                      <li>• Announce information</li>
-                      <li>• Guide callers</li>
-                    </ul>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic mt-2">Playback uses audio from Sound Files.</p>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">Example: "Thank you for calling. Please wait while we connect you."</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Menu (IVR)</h4>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">Creates an interactive menu for callers.</p>
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">Use Menu to:</p>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                      <li>• Offer options like "Press 1 for Sales"</li>
-                      <li>• Route callers based on keypress</li>
-                      <li>• Reduce manual call handling</li>
-                    </ul>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic mt-2">Each menu option can connect to another block.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Hangup</h4>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">Ends the call.</p>
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">Use Hangup to:</p>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4">
-                      <li>• Close a completed call</li>
-                      <li>• End calls after announcements</li>
-                      <li>• Prevent infinite routing loops</li>
-                    </ul>
-                    <p className="text-gray-500 dark:text-gray-500 text-sm italic mt-2">Simple, intentional endings matter.</p>
-                  </div>
+                <img
+                  src="/images/user_manual/add_call_flow.png"
+                  alt="Create Call Flow"
+                  className="w-full rounded-lg shadow-md mb-4"
+                />
+                <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 p-3 sm:p-4 mt-4">
+                  <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create Call Flow</p>
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-black"
+                  >
+                    <source src="/images/user_manual/videos/call_flow.mp4" type="video/mp4" />
+                  </video>
                 </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How Call Flow Works Together</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">A typical flow looks like:</p>
-                <p className="text-gray-600 dark:text-gray-400 font-mono ml-4">Playback → Menu → Dial → Hangup</p>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Each block connects to the next, creating a clear and predictable call journey.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Keep flows simple and readable</li>
-                  <li>• Use clear audio and short messages</li>
-                  <li>• Always define a fallback path</li>
-                  <li>• Test flows before assigning them to live numbers</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Call Flow Does Not Do</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Call Flow does not:</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Steps shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Manage extensions or users</li>
-                  <li>• Handle billing or usage</li>
-                  <li>• Replace inbound or outbound routes</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  It controls logic, not accounts.
-                </p>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Good call flows don't feel automated. They feel obvious.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-      case 'approved-trunks':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Approved Trunks
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Your approved connection to the outside world
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Approved Trunks show the list of SIP / PSTN trunks that have been requested by a customer and approved by Sohub or the telecom provider. These trunks are required to send and receive calls in Sohub Connect.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Until a trunk is approved, it stays inactive—and cannot be used.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Why Approved Trunks Matter</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Calls don't happen without a trusted carrier.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Approved Trunks ensure:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Secure, verified telecom connections</li>
-                  <li>• Regulatory compliance</li>
-                  <li>• Stable inbound and outbound calling</li>
-                  <li>• Clean separation between request and usage</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
-                  Only approved trunks can carry real calls.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Access Approved Trunks</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">Navigate to: <span className="font-medium">Voice → Approved Trunks</span></p>
-                <p className="text-gray-600 dark:text-gray-400">
-                  This page shows all trunk requests and their current status.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Trunk List Overview</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each trunk entry includes:</p>
-                <img src="/doc_images/approve_trunks.png?v=1" alt="Approved Trunks List" className="w-full rounded-lg shadow-md mb-4" />
-                <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <div>
-                    <span className="font-medium">Requested Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the trunk was requested</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Approved Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When it was approved. Shows "Not Approved Yet" if still pending</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Merchant No</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">The company or account the trunk belongs to</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Provider</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Telecom or SIP provider name</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Trunk Number</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Main DID or number assigned by the provider</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Trunk Username / Password</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">SIP credentials (Passwords are hidden for security)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Trunk Host</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">SIP server or carrier host address</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Status</span>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 mt-1">
-                      <li>• Pending — Under review</li>
-                      <li>• Active — Approved and usable</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <span className="font-medium">Action</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Delete — Remove the request (if allowed)</p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Trunk Approval Flow</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Every trunk follows the same lifecycle:</p>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. <span className="font-medium">Requested</span> — Customer submits a trunk request</li>
-                  <li>2. <span className="font-medium">Pending</span> — Sohub or the provider reviews the request</li>
-                  <li>3. <span className="font-medium">Active</span> — Trunk is approved and ready for use</li>
-                </ol>
-                <div className="mt-4">
-                  <p className="text-gray-600 dark:text-gray-400 mb-2">Only <span className="font-medium">Active</span> trunks can be used in:</p>
-                  <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                    <li>• Inbound Routes</li>
-                    <li>• Outbound Routes</li>
-                    <li>• Call Flow configurations</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Pending trunks cannot make or receive calls</li>
-                  <li>• SIP credentials are partially hidden for safety</li>
-                  <li>• Trunk details should never be shared publicly</li>
-                  <li>• If approval is delayed, contact Sohub support</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Verify provider details before requesting a trunk</li>
-                  <li>• Use only Active trunks when setting up routes</li>
-                  <li>• Review trunk status regularly to avoid call failures</li>
+                  <li>• Start Call Flow: Input Flow Name</li>
+                  <li>• Insert step here</li>
+                  <li>• Choose a step: Playback, Dial, Menu, Hangup</li>
+                  <li>• Save</li>
                 </ul>
               </section>
             </div>
           </div>
         );
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              
-              PBX (Private Branch Exchange)
-            </h2>
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 mb-8">
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                PBX system manages internal and external call routing, providing enterprise-level telephony features 
-                for your organization.
-              </p>
-              
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {sections.find(s => s.id === 'voice')?.children?.find(sub => sub.id === 'pbx')?.children?.map((child) => {
-                  const Icon = child.icon;
-                  return (
-                    <div
-                      key={child.id}
-                      onClick={() => selectSection(child.id)}
-                      className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800 hover:shadow-md transition-all cursor-pointer group"
-                    >
-                      <Icon className="w-6 h-6 text-purple-600 mb-2 group-hover:scale-110 transition-transform" />
-                      <h4 className="font-semibold text-purple-900 dark:text-purple-300 text-sm">{child.title}</h4>
-                    </div>
-                  );
-                })}
-              </div>
-              
-              <div className="grid lg:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Core PBX Features</h4>
-                  <div className="space-y-3">
-                    {[
-                      { feature: 'Call Routing', desc: 'Intelligent call distribution to extensions' },
-                      { feature: 'Auto Attendant', desc: 'Automated call answering and menu system' },
-                      { feature: 'Call Queuing', desc: 'Manage high call volumes efficiently' },
-                      { feature: 'Call Transfer', desc: 'Seamless call transfers between extensions' },
-                      { feature: 'Conference Calling', desc: 'Multi-party conference capabilities' },
-                      { feature: 'Voicemail System', desc: 'Individual and group voicemail boxes' }
-                    ].map((item) => (
-                      <div key={item.feature} className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                        <div className="font-medium text-purple-900 dark:text-purple-300">{item.feature}</div>
-                        <div className="text-sm text-purple-700 dark:text-purple-400">{item.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Advanced Features</h4>
-                  <div className="space-y-3">
-                    {[
-                      { feature: 'IVR Integration', desc: 'Interactive Voice Response menus' },
-                      { feature: 'Call Recording', desc: 'Record calls for quality and compliance' },
-                      { feature: 'Real-time Monitoring', desc: 'Live call supervision and analytics' },
-                      { feature: 'Failover Protection', desc: 'Automatic backup and redundancy' },
-                      { feature: 'SIP Trunking', desc: 'Connect to external phone networks' },
-                      { feature: 'Mobile Integration', desc: 'Extend PBX to mobile devices' }
-                    ].map((item) => (
-                      <div key={item.feature} className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <div className="font-medium text-green-900 dark:text-green-300">{item.feature}</div>
-                        <div className="text-sm text-green-700 dark:text-green-400">{item.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-
       case 'click-to-connect':
         return (
           <div>
@@ -2377,12 +675,12 @@ export default function Documentation() {
                   Configure these first:
                 </p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Extensions</span> for users/devices who receive calls</li>
+                  <li>• <span className="font-medium">Phones</span> for users/devices who receive calls</li>
                   <li>• <span className="font-medium">Ring Group</span> to define call distribution strategy</li>
-                  <li>• <span className="font-medium">Call Flow</span> to route calls (Ring Group/IVR/Queue/Extension/Voicemail)</li>
+                  <li>• <span className="font-medium">Call Flow</span> to route calls (Ring Group/IVR/Queue/Phone/Voicemail)</li>
                 </ul>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
-                  Example: Support Team -&gt; Extensions 101, 102, 103
+                  Example: Support Team -&gt; Phones 101, 102, 103
                 </p>
               </section>
 
@@ -2397,7 +695,7 @@ export default function Documentation() {
                   <p className="relative text-sm text-slate-600 dark:text-slate-300 mb-5">
                     When a visitor clicks, the request follows this exact routing path:
                     <span className="block mt-1 font-medium text-slate-800 dark:text-slate-100">
-                      Visitor Click -&gt; Widget -&gt; Call Flow -&gt; Ring Group -&gt; Extensions
+                      Visitor Click -&gt; Widget -&gt; Call Flow -&gt; Ring Group -&gt; Phones
                     </span>
                   </p>
 
@@ -2463,7 +761,7 @@ export default function Documentation() {
                         <span className="keep-white-text inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-semibold px-1.5">05</span>
                         <Users className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
                       </div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Extensions</p>
+                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Phones</p>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Agents receive and answer the call</p>
                     </div>
                   </div>
@@ -2475,46 +773,87 @@ export default function Documentation() {
                 <p className="text-gray-700 dark:text-gray-300 mb-3">
                   Navigate to: <span className="font-medium">Dashboard → Click to Connect → Create Click to Connect</span>
                 </p>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Basic Info: add widget name and choose call flow</li>
-                  <li>2. Styling: set state design (initial/dialing/calling/end)</li>
-                  <li>3. Preview & Submit: review and publish</li>
-                </ol>
+                <div className="space-y-8">
+                  <section>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Connect List</h4>
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">
+                      The main list shows all created Click to Connect widgets.
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
+                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                      <li>• Created Time</li>
+                      <li>• Due Date</li>
+                      <li>• Status</li>
+                      <li>• Connect Name</li>
+                      <li>• Phone</li>
+                      <li>• Call Flow</li>
+                      <li>• Assigned User</li>
+                      <li>• Embed Code (View Script)</li>
+                      <li>• Renew / Activate</li>
+                      <li>• Action (Edit, Delete)</li>
+                    </ul>
+                    <p className="text-gray-600 dark:text-gray-400 mt-3">
+                      Up to 5 widget creations are free for lifetime. After the first 5, additional widgets require a billing term (Monthly or Yearly).
+                    </p>
+                  </section>
+
+                  <section>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Step 1: Basic Info</h4>
+                    <p className="text-gray-600 dark:text-gray-400 mb-3">
+                      Enter <span className="font-medium">Widget Name</span> and select <span className="font-medium">Hotline</span>, then click <span className="font-medium">Next</span>.
+                    </p>
+                    <img src="/images/user_manual/add_click_to_connect_step_1.png" alt="Click to Connect Step 1" className="w-full rounded-lg shadow-md" />
+                  </section>
+
+                  <section>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Step 2: Styling & Preview</h4>
+                    <p className="text-gray-600 dark:text-gray-400 mb-3">
+                      Customize the widget states (<span className="font-medium">Initial</span>, <span className="font-medium">Dialing</span>, <span className="font-medium">Calling</span>, <span className="font-medium">End Call</span>) and check the preview, then click <span className="font-medium">Next</span>.
+                    </p>
+                    <img src="/images/user_manual/add_c2c_step_2.png" alt="Click to Connect Step 2" className="w-full rounded-lg shadow-md" />
+                  </section>
+
+                  <section>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Step 3: Preview & Submit</h4>
+                    <p className="text-gray-600 dark:text-gray-400 mb-3">
+                      Review the live preview, then click <span className="font-medium">Submit</span>.
+                    </p>
+                    <img src="/images/user_manual/add_c2c_step_3.png" alt="Click to Connect Step 3" className="w-full rounded-lg shadow-md" />
+                  </section>
+                </div>
                 <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 p-3 sm:p-4">
                   <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create Click to Connect</p>
                   <video
-                    src="/videos/documentation/create_c2c.mp4"
                     controls
                     playsInline
                     preload="metadata"
-                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-black"
                   >
+                    <source src="/images/user_manual/videos/click_to_connect.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                </div>
-                <div className="grid md:grid-cols-3 gap-3 mt-4">
-                  <img src="/doc_images/click_to_connect_step1.png" alt="Click to Connect Step 1" className="w-full rounded-lg shadow-md" />
-                  <img src="/doc_images/c2c_step2.png" alt="Click to Connect Step 2" className="w-full rounded-lg shadow-md" />
-                  <img src="/doc_images/c2c_step3.png" alt="Click to Connect Step 3" className="w-full rounded-lg shadow-md" />
                 </div>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Publish & Manage</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">View Script (Embed Code)</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In the list, click <span className="font-medium">View Script</span> to open the embed code modal.
+                </p>
+                <img src="/images/website/script.png" alt="Widget Embed Code Modal" className="w-full rounded-lg shadow-md mb-4" />
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Use <span className="font-medium">View Script</span> to copy embed code</li>
-                  <li>• Paste script before closing <span className="font-medium">&lt;/body&gt;</span> tag</li>
-                  <li>• Manage widgets from list: view, edit, or delete</li>
-                  <li>• Use cases: support, sales inquiry, helpdesk</li>
+                  <li>• Copy the script and paste it into your website HTML, just before the closing <span className="font-medium">&lt;/body&gt;</span> tag</li>
+                  <li>• This widget only works on <span className="font-medium">HTTPS</span> websites (WebRTC security requirement)</li>
+                  <li>• Use <span className="font-medium">Copy Code</span> to copy the script</li>
+                  <li>• The modal also shows the <span className="font-medium">Widget ID</span></li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• At least one call flow is required before widget creation</li>
-                  <li>• Widget changes apply instantly after saving</li>
-                  <li>• Routing follows the configured call flow path</li>
+                  <li>• Select a Hotline and Call Flow before creating a widget</li>
+                  <li>• If a widget is suspended, the row shows <span className="font-medium">Activate</span> instead of Renew</li>
                 </ul>
               </section>
 
@@ -2559,423 +898,97 @@ export default function Documentation() {
                 <p className="text-gray-600 dark:text-gray-400 mt-3 italic">
                   If Click to Connect is for websites, HotScan is for the real world.
                 </p>
-              </section>
+	              </section>
 
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Animated Demo Flow</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  Billboard/poster QR scan journey: scan, open, call, and connected calling state.
-                </p>
-
-                <div className="docs-hs-anim-shell">
-                  <article className="docs-hs-anim-stage" aria-label="HotScan poster to call animation">
-                    <div className="docs-hs-anim-poster">
-                      <span className="docs-hs-anim-pin docs-hs-anim-pin-a" />
-                      <span className="docs-hs-anim-pin docs-hs-anim-pin-b" />
-                      <div className="docs-hs-anim-poster-sheet">
-                        <p className="docs-hs-anim-poster-kicker mb-1">ABC AGENCY</p>
-                        <p className="docs-hs-anim-poster-title mb-1">Need Help Fast?</p>
-                        <p className="docs-hs-anim-poster-sub mb-3">Scan the code and call instantly</p>
-
-                        <div className="docs-hs-anim-poster-grid">
-                          <div className="docs-hs-anim-poster-meta">
-                            <p className="mb-1">24/7 Service Desk</p>
-                            <p className="mb-1">Dhaka, Bangladesh</p>
-                            <p className="mb-0">sohub.com.bd</p>
-                          </div>
-
-                          <div className="docs-hs-anim-qr-art" aria-hidden="true">
-                            <span className="docs-hs-anim-qr-finder docs-hs-anim-qr-finder-tl" />
-                            <span className="docs-hs-anim-qr-finder docs-hs-anim-qr-finder-tr" />
-                            <span className="docs-hs-anim-qr-finder docs-hs-anim-qr-finder-bl" />
-                          </div>
-                        </div>
-
-                        <p className="docs-hs-anim-poster-foot mb-0">Scan. Call. Talk.</p>
-                      </div>
-                      <span className="docs-hs-anim-poster-gloss" />
-                    </div>
-
-                    <div className={`docs-hs-anim-human${hotScanCallActive ? ' docs-hs-anim-human-manual-calling' : ''}`}>
-                      <div className={`docs-hs-anim-phone${hotScanCallActive ? ' docs-hs-anim-phone-manual-calling' : ''}`}>
-                        <div className="docs-hs-anim-screen docs-hs-anim-screen-scan">
-                          <p className="docs-hs-anim-screen-title mb-2">Camera Scan</p>
-                          <div className="docs-hs-anim-mini-qr">
-                            <QrCode className="w-10 h-10" />
-                          </div>
-                        </div>
-
-                        <div className="docs-hs-anim-screen docs-hs-anim-screen-open">
-                          <span className="docs-hs-anim-ui-bubble docs-hs-anim-ui-bubble-a" />
-                          <span className="docs-hs-anim-ui-bubble docs-hs-anim-ui-bubble-b" />
-                          <span className="docs-hs-anim-ui-theme-badge" aria-hidden="true">
-                            <Sun className="w-3 h-3" />
-                          </span>
-
-                          <div className="docs-hs-anim-open-avatar" aria-hidden="true">
-                            <span className="docs-hs-anim-open-avatar-dot" />
-                          </div>
-                          <p className="docs-hs-anim-open-name mb-0">test</p>
-                          <p className="docs-hs-anim-open-ready mb-0">We're ready to talk</p>
-                          <button
-                            type="button"
-                            className="docs-hs-anim-call-btn docs-hs-anim-open-call keep-white-text"
-                            onClick={() => setHotScanCallTrigger((prev) => prev + 1)}
-                          >
-                            <PhoneCall className="w-3 h-3" />
-                            <span>Call Now</span>
-                          </button>
-                          <button type="button" className="docs-hs-anim-open-code">
-                            <Link2 className="w-3 h-3" />
-                            <span>990351</span>
-                          </button>
-                          <p className="docs-hs-anim-open-note mb-0">Free Call • No Sim required • No App Required</p>
-                          <div className="docs-hs-anim-open-actions">
-                            <span className="docs-hs-anim-open-action">
-                              <MessageCircle className="w-3 h-3" />
-                              <span>Message</span>
-                            </span>
-                            <span className="docs-hs-anim-open-action">
-                              <MapPin className="w-3 h-3" />
-                              <span>Location</span>
-                            </span>
-                          </div>
-                          <span className="docs-hs-anim-open-schedule">
-                            <CalendarDays className="w-3 h-3" />
-                            <span>Schedule a Call</span>
-                          </span>
-                          <span className="docs-hs-anim-open-more">... More Info</span>
-                          <p className="docs-hs-anim-open-footer mb-0">Powered by SOHUB Connect | End to End Encrypted</p>
-                        </div>
-
-                        <div className="docs-hs-anim-screen docs-hs-anim-screen-calling">
-                          <span className="docs-hs-anim-ui-bubble docs-hs-anim-ui-bubble-a" />
-                          <span className="docs-hs-anim-ui-bubble docs-hs-anim-ui-bubble-b" />
-                          <div className="docs-hs-anim-open-avatar" aria-hidden="true">
-                            <span className="docs-hs-anim-open-avatar-dot" />
-                          </div>
-                          <p className="docs-hs-anim-open-name mb-0">test</p>
-                          <p className="docs-hs-anim-open-ready mb-0">Calling...</p>
-                          <div className="docs-hs-anim-calling-orb keep-white-text">
-                            <PhoneCall className="w-4 h-4" />
-                          </div>
-                          <p className="docs-hs-anim-calling-note mb-0">Please wait...</p>
-                        </div>
-
-                        <span className="docs-hs-anim-scan-focus">
-                          <span className="docs-hs-anim-scan-line" />
-                        </span>
-                        <span className="docs-hs-anim-tap" />
-                        <span className="docs-hs-anim-ring docs-hs-anim-ring-a" />
-                        <span className="docs-hs-anim-ring docs-hs-anim-ring-b" />
-                      </div>
-                    </div>
-
-                    <div className="docs-hs-anim-stepbar" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </article>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                  Before You Begin
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  HotScan works with your existing call handling setup.
-                  Before creating a HotScan Profile, ensure these are configured:
-                </p>
-
-                <div className="space-y-5">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">1. Create Extensions</h4>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Extensions represent individual users or devices that receive calls. Each team member who should handle HotScan calls must have an extension.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">2. Create a Ring Group (Optional but Recommended)</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
-                      A Ring Group defines who receives incoming calls. You can group multiple extensions so calls ring:
-                    </p>
-                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                      <li>• Simultaneously</li>
-                      <li>• Sequentially</li>
-                      <li>• Based on your ring strategy</li>
-                    </ul>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                      Example: Support Team -&gt; Extensions 101, 102, 103
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">3. Create a Call Flow</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
-                      A Call Flow defines how calls are routed. Inside your Call Flow, you can assign:
-                    </p>
-                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                      <li>• Ring Group</li>
-                      <li>• Extension</li>
-                      <li>• IVR</li>
-                      <li>• Queue</li>
-                      <li>• Voicemail</li>
-                    </ul>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                      Example: Incoming Call -&gt; Ring Group (Support Team)
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  How This Connects to HotScan
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  When a customer scans your QR code, the system follows your configured routing path automatically.
-                </p>
-
-                <div className="docs-hs-flow-card relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 p-5 sm:p-6 shadow-[0_12px_34px_rgba(15,23,42,0.10)]">
-                  <div className="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-emerald-200/35 dark:bg-emerald-500/20 blur-2xl" />
-                  <div className="pointer-events-none absolute -bottom-14 -left-16 w-40 h-40 rounded-full bg-blue-200/35 dark:bg-blue-500/20 blur-2xl" />
-
-                  <p className="relative text-sm text-slate-600 dark:text-slate-300 mb-5">
-                    Scan -&gt; HotScan Widget -&gt; Call Flow -&gt; Ring Group / Extension
+ 
+                <section>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Before You Create HotScan</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">
+                    Make sure these are set up first:
                   </p>
-
-                  <div className="relative flex flex-col xl:flex-row items-stretch xl:items-center gap-3">
-                    <div className="docs-hs-flow-step flex-1 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white/90 dark:bg-slate-800/80 backdrop-blur p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="keep-white-text inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-semibold px-1.5">01</span>
-                        <Smartphone className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Customer Scan</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Customer scans the printed QR code</p>
-                    </div>
-
-                    <div className="flex justify-center xl:justify-start">
-                      <ChevronDown className="w-4 h-4 text-slate-400 xl:hidden" />
-                      <ChevronRight className="w-4 h-4 text-slate-400 hidden xl:block" />
-                    </div>
-
-                    <div className="docs-hs-flow-step flex-1 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white/90 dark:bg-slate-800/80 backdrop-blur p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="keep-white-text inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-semibold px-1.5">02</span>
-                        <Zap className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">HotScan Widget</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Widget opens with your configured profile</p>
-                    </div>
-
-                    <div className="flex justify-center xl:justify-start">
-                      <ChevronDown className="w-4 h-4 text-slate-400 xl:hidden" />
-                      <ChevronRight className="w-4 h-4 text-slate-400 hidden xl:block" />
-                    </div>
-
-                    <div className="docs-hs-flow-step flex-1 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white/90 dark:bg-slate-800/80 backdrop-blur p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="keep-white-text inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-semibold px-1.5">03</span>
-                        <Settings className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Call Flow</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Routing logic determines the next destination</p>
-                    </div>
-
-                    <div className="flex justify-center xl:justify-start">
-                      <ChevronDown className="w-4 h-4 text-slate-400 xl:hidden" />
-                      <ChevronRight className="w-4 h-4 text-slate-400 hidden xl:block" />
-                    </div>
-
-                    <div className="docs-hs-flow-step flex-1 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white/90 dark:bg-slate-800/80 backdrop-blur p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="keep-white-text inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-semibold px-1.5">04</span>
-                        <Route className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Ring Group / Extension</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Call reaches the right team or individual</p>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-gray-600 dark:text-gray-400 mt-4">
-                  This ensures calls and interactions are routed correctly.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">HotScan Profiles</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Each HotScan widget is managed as a HotScan Profile.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">HotScan Profile List</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">This page shows all created profiles.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">For each profile, you'll see:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Logo – Brand or company logo</li>
-                  <li>• Created On – Profile creation date</li>
-                  <li>• Widget Name – Customer-facing name</li>
-                  <li>• Call Flow – Assigned destination (call flow / extension / ring group)</li>
-                  <li>• Assigned To – Responsible user or admin</li>
-                </ul>
-                <div className="mt-4">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">Actions</h4>
                   <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                    <li>• View QR Code</li>
-                    <li>• Edit Profile</li>
-                    <li>• Delete Profile</li>
+                    <li>• <span className="font-medium">Phones</span> (users/devices who will receive calls)</li>
+                    <li>• <span className="font-medium">Ring Group</span> (optional, recommended for teams)</li>
+                    <li>• <span className="font-medium">Call Flow</span> (routes HotScan calls to Ring Group/Phone)</li>
                   </ul>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Each profile generates a unique QR code.
+                </section>
+
+	              <section>
+	                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">HotScan Profiles</h3>
+	                <p className="text-gray-700 dark:text-gray-300 mb-2">
+	                  HotScan Profiles are the QR widgets you create and manage.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create a HotScan Profile</h3>
-                <img src="/doc_images/hotscan.png" alt="HotScan" className="w-full max-w-4xl mx-auto rounded-xl border border-slate-200 dark:border-slate-700 shadow-md mb-4 cursor-zoom-in" />
-                <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  Navigate to: <span className="font-medium">Dashboard -&gt; HotScan -&gt; Add HotScan Profile</span>
+                <img
+                  src="/images/user_manual/hotscan_list.png"
+                  alt="HotScan Profiles List"
+                  className="w-full max-w-4xl mx-auto rounded-xl border border-slate-200 dark:border-slate-700 shadow-md mb-4"
+                />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  Tabs: <span className="font-medium">HotScan Profiles</span>, <span className="font-medium">Create QR</span>
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">The setup includes three sections.</p>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">1. Widget Information</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-3">Defines how the widget behaves.</p>
-                    <div className="space-y-3">
-                      <div>
-                        <span className="font-medium text-gray-900 dark:text-white">Display Name *</span>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Customer-facing widget name.</p>
-                      </div>
-                      <div>
-                        <span className="font-medium text-gray-900 dark:text-white">Call Flow *</span>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Choose how interactions are handled.</p>
-                        <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 space-y-1">
-                          <li>• Call Flow</li>
-                          <li>• Extension</li>
-                          <li>• Ring Group</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm italic mt-2">(* Required fields)</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">2. Company Information</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-3">Displayed inside the widget.</p>
-                    <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                      <li>• <span className="font-medium">About Us</span> – Short business description</li>
-                      <li>• <span className="font-medium">Website</span> – Official website URL</li>
-                      <li>• <span className="font-medium">Email</span> – Contact email address</li>
-                      <li>• <span className="font-medium">Contact Number</span> – Business phone number (numbers only)</li>
-                      <li>• <span className="font-medium">Location</span> – Business address</li>
-                      <li>• <span className="font-medium">Office Days</span> – Working days (From → To)</li>
-                      <li>• <span className="font-medium">Office Time</span> – Business hours (From → To)</li>
-                    </ul>
-                    <p className="text-gray-600 dark:text-gray-400 mt-3">
-                      This information builds trust before interaction.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">3. Social Media (Optional)</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">Add links to:</p>
-                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                      <li>• Facebook</li>
-                      <li>• Instagram</li>
-                      <li>• LinkedIn</li>
-                    </ul>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                      Helps customers verify and recognize your brand.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Logo Upload</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">Upload your brand or company logo.</p>
-                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                      <li>• Drag and drop or select file</li>
-                      <li>• Appears on widget and QR preview</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Live Preview</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
-                      HotScan includes a Live Preview panel. Use it to:
-                    </p>
-                    <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                      <li>• Verify design</li>
-                      <li>• Check branding</li>
-                      <li>• Preview customer experience</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Save Profile</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">Click <span className="font-medium">Save</span> to create the profile.</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Once saved:</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Profile appears in list</li>
-                  <li>• QR code generated instantly</li>
-                  <li>• Ready to download and share</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Customer Inquiries</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  All HotScan leads appear under:
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 mb-3 font-medium">
-                  Dashboard -&gt; Customer Inquiries
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 mb-3">Each inquiry includes:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Created At – Submission time</li>
-                  <li>• Customer Details</li>
-                  <li>• Message</li>
+                  <li>• Logo</li>
+                  <li>• Created On</li>
+                  <li>• Due Date</li>
+                  <li>• Widget Name</li>
+                  <li>• Call Flow</li>
+                  <li>• Phone</li>
                   <li>• Status</li>
                   <li>• Assigned To</li>
-                  <li>• Profile ID</li>
+                  <li>• Renew / Activate</li>
+                  <li>• Action (View QR, Edit, Delete)</li>
                 </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How HotScan Works</h3>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Customer scans QR code</li>
-                  <li>2. Widget opens</li>
-                  <li>3. Customer calls or submits details</li>
-                  <li>4. System routes via Call Flow</li>
-                  <li>5. Inquiry logged</li>
-                  <li>6. Team responds</li>
-                </ol>
                 <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  No friction. No delay.
+                  Free up to 5 profile creations, lifetime. After the first 5, additional profiles require a billing term (Monthly or Yearly).
                 </p>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Place QR codes where intent is highest</li>
-                  <li>• Keep business details clear</li>
-                  <li>• Assign correct Call Flow</li>
-                  <li>• Use brand logo</li>
-                  <li>• Monitor inquiries regularly</li>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create QR (Add Profile)</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  Use <span className="font-medium">Create QR</span> to create a new HotScan profile.
+                </p>
+                <img
+                  src="/images/user_manual/add_hotscan.png"
+                  alt="HotScan Add Profile"
+                  className="w-full max-w-4xl mx-auto rounded-xl border border-slate-200 dark:border-slate-700 shadow-md mb-4 cursor-zoom-in"
+                />
+                <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 p-3 sm:p-4">
+                  <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create HotScan</p>
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-black"
+                  >
+                    <source src="/images/user_manual/videos/hotscan.mp4" type="video/mp4" />
+                  </video>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Widget Information (Required):</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Logo *</li>
+                  <li>• Display Name *</li>
+                  <li>• Sub Heading</li>
+                  <li>• Call Flow *</li>
                 </ul>
+
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Optional sections:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Company Information (Optional)</li>
+                  <li>• Social Media (Optional)</li>
+                  <li>• QR Reference (Optional): Generate New QR Reference (reuse for already printed posters)</li>
+                </ul>
+
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Billing:</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-0">
+                  Free up to 5 creations, lifetime.
+                </p>
+
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-0">
+                  Live Preview (right side) shows your logo, business name, sub heading, and the <span className="font-medium">Start Call</span> button.
+                </p>
               </section>
 
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -2987,407 +1000,62 @@ export default function Documentation() {
           </div>
         );
 
-      case 'reports':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              
-              Reports
-            </h2>
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 mb-8">
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                Comprehensive reporting system providing detailed insights into call performance, 
-                transaction history, and business analytics.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                {sections.find(s => s.id === 'reports')?.children?.map((sub) => {
-                  const Icon = sub.icon;
-                  return (
-                    <div
-                      key={sub.id}
-                      onClick={() => selectSection(sub.id)}
-                      className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-6 border border-indigo-200 dark:border-indigo-800 hover:shadow-md transition-all cursor-pointer group"
-                    >
-                      <Icon className="w-8 h-8 text-indigo-600 mb-4 group-hover:scale-110 transition-transform" />
-                      <h4 className="text-lg font-semibold text-indigo-900 dark:text-indigo-300 mb-2">{sub.title}</h4>
-                      <p className="text-indigo-700 dark:text-indigo-400 text-sm">
-                        Detailed {sub.title.toLowerCase()} with analytics and insights
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        );
-
       case 'call-reports':
         return (
           <div>
             <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Call Detail Records (CDR)
+              Call Detail Record
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              See what happened on every call.
+              Search and review call history
             </p>
 
             <div className="space-y-8">
               <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The Call Detail Records (CDR) section gives you a complete view of all call activity in Sohub Connect.
-                  It helps teams understand call performance, outcomes, and behavior—not just numbers.
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Open Call Detail Record</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">
+                  Navigate to: <span className="font-medium">Reports → Call Reports</span>
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  If a call happened, it's logged here.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What CDR Is Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">CDR helps you:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Monitor answered vs missed calls</li>
-                  <li>• Analyze call outcomes and durations</li>
-                  <li>• Review call recordings (if enabled)</li>
-                  <li>• Understand traffic and performance trends</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  It's your system's call history and health report.
-                </p>
+                <img src="/images/user_manual/call_report.png?v=2" alt="Call Detail Record" className="w-full rounded-lg shadow-md mb-4" />
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Filter by Date Range</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  At the top of the page, you can filter records by time.
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• <span className="font-medium">Date Picker</span> – Select start and end dates</li>
-                  <li>• <span className="font-medium">Filter</span> – Apply the selected range</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  All summaries and call records update instantly based on the selected period.
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  Select the date range from the picker, then click <span className="font-medium">Filter</span>.
                 </p>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">CDR Summary</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The CDR Summary gives a quick snapshot of call activity for the selected date range.
-                </p>
-                <img src="/doc_images/cdr_summary.png" alt="CDR Summary" className="w-[90%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Summary Metrics</h4>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Date Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Selected start and end period</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Calls</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Total calls made or received</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Answer</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Successfully connected calls</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Busy</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Calls failed because the destination was busy</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Congestion</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Calls failed due to network or system congestion</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">No Answer</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Calls that were not answered</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-4">
-                  This section helps you understand performance at a glance.
-                </p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Date Time</li>
+                  <li>• Calls</li>
+                  <li>• Answer</li>
+                  <li>• Busy</li>
+                  <li>• Congestion</li>
+                  <li>• No Answer</li>
+                </ul>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">CDR Details</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The CDR Details table shows every call individually.
-                </p>
-                <img src="/doc_images/cdr_details.png" alt="CDR Details" className="w-[90%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Table Columns</h4>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Date Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Exact time when the call occurred</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Caller</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Extension or number that initiated the call</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Destination</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Extension or number that received the call</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Duration</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Total call duration (HH:MM:SS)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Disposition</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Final call status:</p>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 space-y-1">
-                      <li>• ANSWER</li>
-                      <li>• NO ANSWER</li>
-                      <li>• BUSY</li>
-                      <li>• CONGESTION</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Recording</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Play button to listen to the call recording (if enabled)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Action</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Delete individual call records</p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Search and Filters</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  You can quickly narrow down records using:
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Disposition Filter</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">View calls by status (Answered, No Answer, Busy, etc.)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Search Box</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Search by caller or destination number</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  These tools help you find specific calls in seconds.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Common Use Cases</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Filters shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Track missed vs answered calls</li>
-                  <li>• Review agent performance</li>
-                  <li>• Listen to recordings for quality control</li>
-                  <li>• Diagnose call failures</li>
-                  <li>• Analyze daily or monthly call traffic</li>
+                  <li>• Disposition dropdown (example: <span className="font-medium">All</span>)</li>
+                  <li>• Search box</li>
                 </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Call recordings appear only if recording is enabled</li>
-                  <li>• Deleting a CDR does not affect billing data</li>
-                  <li>• Large date ranges may take longer to load</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  What gets measured gets understood.<br />
-                  What's understood gets improved.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'transaction-history':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Transaction History
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              See where every balance move came from.
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Transaction History gives you a complete view of all financial activities inside Sohub Connect.
-                  It helps you track credits, deductions, payments, and system-generated transactions with clarity.
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Everything that affects balance appears here.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Transaction History Is Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Transaction History helps you:</p>
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Columns shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Track wallet balance changes</li>
-                  <li>• Verify service-related charges</li>
-                  <li>• Audit system credits and deductions</li>
-                  <li>• Monitor external payments</li>
-                  <li>• Maintain financial transparency</li>
+                  <li>• Date Time</li>
+                  <li>• Caller</li>
+                  <li>• Destination</li>
+                  <li>• Duration</li>
+                  <li>• Disposition</li>
+                  <li>• Recording</li>
                 </ul>
               </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Transaction Types</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  Transaction History is divided into two sections:
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Internal Transactions</li>
-                  <li>• External Transactions</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Each serves a different purpose.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Internal Transactions</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  Internal Transactions show balance movements within the Sohub Connect system.
-                </p>
-                <img src="/doc_images/internal_transaction.png" alt="Internal Transactions" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <p className="text-gray-600 dark:text-gray-400 mb-2">These include:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Wallet payments</li>
-                  <li>• System-generated credits</li>
-                  <li>• Charges for services (extensions, HotScan, Click to Connect, etc.)</li>
-                </ul>
-
-                <h4 className="font-medium text-gray-900 dark:text-white mt-6 mb-3">Internal Transactions Features</h4>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Rows per page – Control how many records are shown</li>
-                  <li>• Search – Find transactions by ID, user, or remarks</li>
-                  <li>• Pagination – Navigate through multiple pages</li>
-                </ul>
-
-                <h4 className="font-medium text-gray-900 dark:text-white mt-6 mb-3">Internal Transactions Table Columns</h4>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Date Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the transaction occurred</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Payment Method</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">How the transaction was processed</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Examples: Wallet Pay, From System</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Transaction ID</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Unique transaction reference</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">From</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Source account or user</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">(e.g., Super Admin, Customer)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">To</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Destination account or user</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Amount</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Transaction amount with currency</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Status</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Transaction result</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Success or Failed</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Remarks</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Purpose of the transaction</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">(e.g., extension creation, HotScan setup, Click to Connect)</p>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">External Transactions</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  External Transactions show payments made from outside the system.
-                </p>
-                <img src="/doc_images/external_transaction.png" alt="External Transactions" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <p className="text-gray-600 dark:text-gray-400 mb-2">These include:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Mobile number payments</li>
-                  <li>• Payment gateway transactions</li>
-                  <li>• Third-party payment sources</li>
-                </ul>
-
-                <h4 className="font-medium text-gray-900 dark:text-white mt-6 mb-3">External Transactions Features</h4>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Rows per page – Control visible records</li>
-                  <li>• Search – Find specific external transactions</li>
-                </ul>
-
-                <h4 className="font-medium text-gray-900 dark:text-white mt-6 mb-3">External Transactions Table Columns</h4>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Date Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the external payment occurred</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Payment Method</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">External payment channel used</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Amount</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Paid or received amount</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">From Number</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">External number or source</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Transaction ID</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">External transaction reference</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Status</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Success, Failed, or Pending</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-4">
-                  If no data exists, the system displays: "No data available in table."
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Common Use Cases</h3>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Verify successful payments</li>
-                  <li>• Reconcile wallet balances</li>
-                  <li>• Track service charges</li>
-                  <li>• Monitor payment failures</li>
-                  <li>• Maintain audit-ready records</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Internal and external transactions are logged separately</li>
-                  <li>• Failed transactions do not affect balance</li>
-                  <li>• Transaction records are read-only and cannot be edited</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Clear money trails build quiet trust.
-                </p>
-              </div>
             </div>
           </div>
         );
@@ -3399,141 +1067,71 @@ export default function Documentation() {
               Tickets
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Get help. Track progress. Stay informed.
+              Create and track support requests
             </p>
 
             <div className="space-y-8">
               <section>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The Tickets module lets you create and track support requests inside Sohub Connect.
-                  Every issue is recorded, assigned, and resolved with clear visibility.
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Open Tickets</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-0">
+                  Navigate to: <span className="font-medium">Dashboard → Tickets</span>
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  No emails. No follow-ups. Everything stays in one place.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What Tickets Are Used For</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Tickets help you:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Report technical or account issues</li>
-                  <li>• Request features or improvements</li>
-                  <li>• Track support responses and status</li>
-                  <li>• Maintain a history of resolved issues</li>
-                </ul>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Tickets List</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The Tickets List shows all previously created tickets.
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  Tabs: <span className="font-medium">Tickets</span>, <span className="font-medium">Create Ticket</span>
                 </p>
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Columns Explained</h4>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Created Time</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">When the ticket was created</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Ticket ID</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Unique reference number</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Ticket Type</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Issue category</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">(Bug Report, Technical Support, etc.)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Description</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Short summary of the issue</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Comment</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Support or admin responses (if any)</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Assigned User</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Support staff handling the ticket</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Status</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Current state:</p>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 ml-4 space-y-1">
-                      <li>• Open</li>
-                      <li>• Closed</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Action</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">View ticket details</p>
-                  </div>
-                </div>
-
-                <h4 className="font-medium text-gray-900 dark:text-white mt-6 mb-3">List Features</h4>
+                <img src="/images/user_manual/ticket_list.png" alt="Tickets List" className="w-full rounded-lg shadow-md mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Filters shown:</p>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Filter tickets by Ticket ID or date range</li>
-                  <li>• Search tickets using the search box</li>
-                  <li>• Use pagination for easy navigation</li>
+                  <li>• Ticket ID</li>
+                  <li>• Date range (From, To)</li>
+                  <li>• Search button</li>
+                  <li>• Reset button</li>
+                </ul>
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Table controls:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Rows per page</li>
+                  <li>• Search box (top-right)</li>
+                  <li>• Pagination</li>
+                </ul>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Created Time</li>
+                  <li>• Ticket Id</li>
+                  <li>• Ticket Type</li>
+                  <li>• Description</li>
+                  <li>• Comment</li>
+                  <li>• Assigned User</li>
+                  <li>• Status (Open, Closed)</li>
+                  <li>• Action (View)</li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create a Ticket</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Create a new support request in seconds.
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  Open <span className="font-medium">Create Ticket</span>, fill the form, then click <span className="font-medium">Save</span>.
                 </p>
-                <img src="/doc_images/tickets.png" alt="Create Ticket" className="w-[75%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Steps</h4>
-                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Go to <span className="font-medium">Create Ticket</span></li>
-                  <li>2. Select a <span className="font-medium">Ticket Type</span>:
-                    <ul className="ml-4 mt-1 space-y-1 text-gray-600 dark:text-gray-400">
-                      <li>• Bug Report</li>
-                      <li>• Feature Request</li>
-                      <li>• Technical Support</li>
-                      <li>• Account Issue</li>
-                      <li>• Billing Inquiry</li>
-                    </ul>
-                  </li>
-                  <li>3. Enter a clear <span className="font-medium">Description</span> of the issue</li>
-                  <li>4. Click <span className="font-medium">Submit</span></li>
-                </ol>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Support Response</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  After submission, a confirmation message appears:
+                <img src="/images/user_manual/create_ticket.png" alt="Create Ticket" className="w-full max-w-3xl rounded-lg shadow-md mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  Support Commitment: support resolves tickets within 24 hours.
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 italic">
-                  Support will review and resolve the issue within 24 hours.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Ticket Status</h3>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Open</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Ticket is active and under review</p>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900 dark:text-white">Closed</span>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Issue has been resolved</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  You can track progress directly from the Tickets List.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Best Practices</h3>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Be specific in the description</li>
-                  <li>• Include steps to reproduce issues (if applicable)</li>
-                  <li>• Check ticket status before creating duplicates</li>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Fields shown:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Ticket Type *</li>
+                  <li>• Description *</li>
+                  <li>• Save</li>
+                </ul>
+                <p className="text-gray-600 dark:text-gray-400 mt-4 mb-2">Ticket Type options:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Bug Report</li>
+                  <li>• Feature Request</li>
+                  <li>• Technical Support</li>
+                  <li>• Account Issue</li>
+                  <li>• Billing Inquiry</li>
                 </ul>
               </section>
 
@@ -3546,6 +1144,76 @@ export default function Documentation() {
           </div>
         );
 
+      case 'ring-group':
+        return (
+          <div>
+            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
+              Ring Group
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+              Route calls to teams, not just individuals.
+            </p>
+
+            <div className="space-y-8">
+              <section>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Open Ring Group</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  Navigate to: <span className="font-medium">Voice → PBX → Ring Group</span>
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 mb-0">
+                  You will see two tabs: <span className="font-medium">Ring Groups</span> and <span className="font-medium">Add Ring Group</span>.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Ring Groups List</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In the <span className="font-medium">Ring Groups</span> tab, you can view, search, edit, or delete ring groups.
+                </p>
+                <img src="/images/user_manual/ring_group_list.png" alt="Ring Groups List" className="w-full rounded-lg shadow-md mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Columns shown:</p>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>• Created Time</li>
+                  <li>• Group Number</li>
+                  <li>• Group Description</li>
+                  <li>• Assigned To</li>
+                  <li>• Status</li>
+                  <li>• Action (Edit / Delete)</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Create a Ring Group</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  In the <span className="font-medium">Add Ring Group</span> tab, fill in the form and click <span className="font-medium">Create Ring Group</span>.
+                </p>
+                <img src="/images/user_manual/add_ring_group.png" alt="Add Ring Group" className="w-full rounded-lg shadow-md mb-4" />
+                <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 p-3 sm:p-4">
+                  <p className="text-sm font-medium text-slate-900 dark:text-white mb-3">Video Guide: Create Ring Group</p>
+                  <video
+                    src="/images/user_manual/videos/ring_group.mp4"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Fields shown:</p>
+                <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
+                  <li>1. <span className="font-medium">Group Description</span></li>
+                  <li>2. <span className="font-medium">Phone List</span> (or <span className="font-medium">Select Phones</span>)</li>
+                  <li>3. <span className="font-medium">Ring Strategy</span></li>
+                  <li>4. <span className="font-medium">Ring Time</span></li>
+                  <li>5. <span className="font-medium">Music On Hold</span></li>
+                  <li>6. <span className="font-medium">Ring Group Status</span></li>
+                </ol>
+              </section>
+            </div>
+          </div>
+        );
+
       case 'wallet':
         return (
           <div>
@@ -3553,235 +1221,50 @@ export default function Documentation() {
               Wallet
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              Manage your balance. Keep services running.
+              Top up your balance and track payments.
             </p>
 
             <div className="space-y-8">
               <section>
-                <p className="text-gray-700 dark:text-gray-300">
-                  The Wallet module lets you view your account balance, add funds, and track all payment activity in one place.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Wallet Overview</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The Wallet dashboard gives you a quick snapshot of your account balance and available payment actions.
+                  Wallet shows your <span className="font-medium">Remaining Balance</span> and lets you <span className="font-medium">Topup Now</span>.
                 </p>
-                <img src="/doc_images/wallet.png" alt="Wallet" className="w-[75%] rounded-lg shadow-md mb-4" />
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Remaining Balance</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  Shows the current available balance in your wallet.
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Balance is displayed in BDT</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3 mb-2">
-                  The balance is automatically updated after:
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Successful top-ups</li>
-                  <li>• Service usage and deductions</li>
-                  <li>• System-generated adjustments or credits</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  This ensures your displayed balance is always up to date.
-                </p>
+                <img src="/images/user_manual/wallet.png" alt="Wallet page" className="w-full rounded-lg shadow-md" />
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Top Up Balance</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Add funds to your wallet anytime.
+                <p className="text-gray-700 dark:text-gray-300 mb-3">
+                  Navigate to: <span className="font-medium">Dashboard → Wallet</span>
                 </p>
-                <img src="/doc_images/top_up.png" alt="Top Up" className="w-[50%] rounded-lg shadow-md mb-4" />
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Topup Now</h4>
                 <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>1. Click <span className="font-medium">Topup Now</span> to recharge your wallet</li>
-                  <li>2. Select from the available payment methods</li>
-                  <li>3. Complete the payment process</li>
+                  <li>1. Click <span className="font-medium">Topup Now</span></li>
+                  <li>2. In <span className="font-medium">Make Payment</span>, select a payment method:</li>
+                  <li>• <span className="font-medium">bKash Mobile Banking</span></li>
+                  <li>• <span className="font-medium">SSL Commerce</span></li>
+                  <li>3. Enter the <span className="font-medium">Amount</span></li>
+                  <li>4. Click <span className="font-medium">Proceed To Payment</span> and complete the checkout</li>
                 </ol>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Once the payment is successful, your wallet balance is updated automatically.
-                </p>
               </section>
 
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Payment Logs</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Track every transaction for full transparency.
-                </p>
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">View Logs</h4>
                 <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  Click <span className="font-medium">View Logs</span> to access your payment history, including:
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Previous top-up transactions</li>
-                  <li>• System-added credits</li>
-                  <li>• Wallet deductions for services</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  These logs help you verify payments and monitor usage.
+                  Click <span className="font-medium">View Logs</span> to check your payment history.
                 </p>
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Why Use Wallet</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">The Wallet helps you:</p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Avoid service interruptions</li>
-                  <li>• Monitor spending and balance changes</li>
-                  <li>• Maintain a clear financial record of all activity</li>
-                </ul>
-              </section>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Keep your wallet topped up to keep your calls flowing.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'packages':
-        return (
-          <div>
-            <h2 className="text-[2.75rem] font-normal text-[#202124] dark:text-[#e8eaed] mb-4 leading-tight">
-              Packages (Choose Your Plan)
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-              View, compare, and manage subscription plans based on your business needs.
-            </p>
-
-            <div className="space-y-8">
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Current Plan Overview</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  At the top of the page, users can see details of their active subscription:
-                </p>
-                <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• Current Plan Name (e.g., Free, Plus)</li>
-                  <li>• Plan Start Date</li>
-                  <li>• Next Billing Date</li>
-                  <li>• Days Active</li>
-                  <li>• Days Remaining</li>
-                  <li>• Monthly Charge</li>
-                  <li>• Total Extensions & Cost Breakdown</li>
-                </ul>
-                <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  This overview helps users easily track billing cycles, usage, and upcoming charges.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Available Plans</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">1. Free Plan (FREE FOREVER)</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-3">Best for small teams or basic usage.</p>
-                    
-                    <div className="mb-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Price</span>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">BDT 0 / User / Month (FREE FOREVER)</p>
-                    </div>
-
-                    <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Features</span>
-                      <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4 mt-2">
-                        <li>• Up to 5 extensions and 3 channels</li>
-                        <li>• Advanced Call Flow / IVR (e.g., Press 1 for Sales)</li>
-                        <li>• Standard calling features (Hold, Transfer, DND)</li>
-                        <li>• Call Detail Records (CDR)</li>
-                        <li>• Real-time Dashboard</li>
-                        <li>• Sound File management (IVR greetings, announcements)</li>
-                        <li>• Text-to-Speech (TTS) management</li>
-                        <li>• Live Call Monitoring</li>
-                      </ul>
-                    </div>
-
-                    <div className="mt-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Action</span>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Click <span className="font-medium">Switch</span> to move to this plan</p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">2. Plus Plan (Current Plan)</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-3">Ideal for growing teams that need scalability and more control.</p>
-                    
-                    <div className="mb-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Price</span>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">BDT 50 / User / Month</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">(Discounted pricing may apply)</p>
-                    </div>
-
-                    <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Includes</span>
-                      <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4 mt-2">
-                        <li>• All features of the Free Plan</li>
-                        <li>• Unlimited extensions and unlimited channels</li>
-                        <li>• IPSTN / verified trunk connection</li>
-                        <li>• Support Ticket system</li>
-                        <li>• AI Agent (Coming Soon)</li>
-                      </ul>
-                    </div>
-
-                    <div className="mt-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Status</span>
-                      <ul className="space-y-1 text-gray-600 dark:text-gray-400 ml-4 mt-1">
-                        <li>• Marked as <span className="font-medium">Current Plan</span> when active</li>
-                        <li>• Switching is disabled while this plan is active</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">3. Pro Plan</h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-3">Designed for enterprises and call centers with advanced requirements.</p>
-                    
-                    <div className="mb-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Price</span>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Custom Pricing (Contact Sales)</p>
-                    </div>
-
-                    <div>
-                      <span className="font-medium text-gray-900 dark:text-white">Includes</span>
-                      <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4 mt-2">
-                        <li>• All features of the Plus Plan</li>
-                        <li>• Customized feature set</li>
-                        <li>• API integration support</li>
-                        <li>• Dedicated technical support</li>
-                        <li>• Support Ticket system</li>
-                        <li>• On-premise deployment option</li>
-                      </ul>
-                    </div>
-
-                    <div className="mt-3">
-                      <span className="font-medium text-gray-900 dark:text-white">Action</span>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Click <span className="font-medium">Request Now</span> to contact sales/support</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Plan Management Notes</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Users can upgrade or downgrade plans at any time</li>
-                  <li>• Plan changes affect:
-                    <ul className="ml-4 mt-1 space-y-1 text-gray-600 dark:text-gray-400">
-                      <li>• Billing amount</li>
-                      <li>• Available features</li>
-                    </ul>
-                  </li>
-                  <li>• Some plans may require sufficient wallet balance before activation</li>
+                  <li>• Balance updates after a successful payment.</li>
+                  <li>• Use <span className="font-medium">Payment Logs</span> if a top up is not reflected yet.</li>
                 </ul>
               </section>
+
             </div>
           </div>
         );
@@ -3799,7 +1282,7 @@ export default function Documentation() {
             <div className="space-y-8">
               <section>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  The SoftPhone application lets you make and receive calls directly from your device using your Sohub Connect extension.
+                  The SoftPhone application lets you make and receive calls directly from your device using your Sohub Connect Phone.
                 </p>
                 <p className="text-gray-600 dark:text-gray-400 italic">
                   No desk phone needed. Just install, register, and talk.
@@ -3809,8 +1292,8 @@ export default function Documentation() {
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What You Need</h3>
                 <ul className="space-y-1 text-gray-700 dark:text-gray-300 ml-4">
-                  <li>• A created extension (from Voice → PBX → Extensions)</li>
-                  <li>• Extension number and password</li>
+                  <li>• A created Phone (from Voice → PBX → Phones)</li>
+                  <li>• Phone number and password</li>
                   <li>• Internet connection</li>
                 </ul>
               </section>
@@ -3826,21 +1309,29 @@ export default function Documentation() {
               </section>
 
               <section>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Register Your Extension</h3>
-                <img src="/doc_images/softphone1.png" alt="SoftPhone Registration" className="w-[30%] rounded-lg shadow-md mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Register Your Phone</h3>
+                <img
+                  src="/images/user_manual/softphone1.png"
+                  alt="SoftPhone Registration"
+                  className="w-full max-w-xs sm:max-w-none sm:w-[30%] mx-auto rounded-lg shadow-md mb-4"
+                />
                 <p className="text-gray-700 dark:text-gray-300 mb-3">
                   After installing the SoftPhone:
                 </p>
                 <ol className="space-y-2 text-gray-700 dark:text-gray-300 ml-4">
                   <li>1. Open the application</li>
-                  <li>2. Enter your <span className="font-medium">Extension Number</span></li>
-                  <li>3. Enter your <span className="font-medium">Extension Password</span></li>
+                  <li>2. Enter your <span className="font-medium">Phone Number</span></li>
+                  <li>3. Enter your <span className="font-medium">Phone Password</span></li>
                   <li>4. Click <span className="font-medium">Register</span></li>
                 </ol>
                 <p className="text-gray-600 dark:text-gray-400 mt-3">
-                  Once registered, your extension status will show as "Online" and you're ready to make and receive calls.
+                  Once registered, your Phone status will show as "Online" and you're ready to make and receive calls.
                 </p>
-                <img src="/doc_images/softphone2.png" alt="SoftPhone Online Status" className="w-[25%] rounded-lg shadow-md mb-4" />
+                <img
+                  src="/images/user_manual/softphone2.png"
+                  alt="SoftPhone Online Status"
+                  className="w-full max-w-xs sm:max-w-none sm:w-[25%] mx-auto rounded-lg shadow-md mb-4"
+                />
               </section>
 
               <section>
@@ -3858,15 +1349,15 @@ export default function Documentation() {
               <section>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Important Notes</h3>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li>• Extension must be active to register</li>
-                  <li>• One extension can be registered on multiple devices</li>
+                  <li>• Phone must be active to register</li>
+                  <li>• One Phone can be registered on multiple devices</li>
                   <li>• Stable internet connection is required for call quality</li>
                 </ul>
               </section>
 
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <p className="text-gray-600 dark:text-gray-400 text-center italic">
-                  Your extension. Your device. Anywhere.
+                  Your Phone. Your device. Anywhere.
                 </p>
               </div>
             </div>

@@ -19,7 +19,7 @@ export default function CTASection() {
 
             <div className="pt-2 sm:pt-4">
               <a
-                href="https://connect.sohub.com.bd/authentication/register"
+                href="https://connect-client.sohub.com.bd/authentication/register"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center space-x-2 bg-white text-[#22C55E] font-inter font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full hover:bg-gray-50 active:scale-95 transition-all duration-200 shadow-2xl w-full sm:w-auto whitespace-nowrap"

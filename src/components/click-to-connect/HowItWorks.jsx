@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react';
 
 export default function HowItWorks() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeImage, setActiveImage] = useState(null);
   const slideImages = [
-    "/images/click_to_connect/c2c1.png",
-    "/images/click_to_connect/c2c2.png",
-    "/images/click_to_connect/c2c3.png"
+    "/images/website/add_click_to_connect.png",
+    "/images/website/Click_to_connecct_2.png",
+    "/images/website/c2c3.png"
   ];
 
   useEffect(() => {
@@ -15,6 +16,23 @@ export default function HowItWorks() {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (!activeImage) return;
+
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') setActiveImage(null);
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [activeImage]);
 
   const steps = [
     {
@@ -27,7 +45,7 @@ export default function HowItWorks() {
       number: "2",
       title: "Add",
       description: "Copy the embed code and place it on your website.\nNo configuration required.",
-      image: "/images/click_to_connect/code.png"
+      image: "/images/website/script.png"
     },
     {
       number: "3",
@@ -38,7 +56,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-10 sm:py-12 md:py-14 lg:py-16 px-4 sm:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
+    <section id="how-it-works" className="scroll-mt-28 py-10 sm:py-12 md:py-14 lg:py-16 px-4 sm:px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10 sm:mb-12 md:mb-16">
           <h2 className="font-plus-jakarta-sans font-bold text-[24px] sm:text-[28px] md:text-[36px] lg:text-[48px] text-[#111111] dark:text-white mb-3 sm:mb-4 leading-tight px-2">
@@ -77,13 +95,30 @@ export default function HowItWorks() {
                           key={i}
                           src={img}
                           alt={`Step ${step.number} - ${i + 1}`}
-                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                          className={`c2c-hiw-zoomable absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                          onClick={() => {
+                            if (i !== currentSlide) return;
+                            setActiveImage({
+                              src: img,
+                              alt: `Step ${step.number}`,
+                            });
+                          }}
                         />
                       ))}
                     </div>
                   ) : step.image ? (
                     <div className="aspect-video rounded-lg overflow-hidden">
-                      <img src={step.image} alt={step.title} className="w-full h-full object-contain" />
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="c2c-hiw-zoomable w-full h-full object-contain"
+                        onClick={() =>
+                          setActiveImage({
+                            src: step.image,
+                            alt: step.title,
+                          })
+                        }
+                      />
                     </div>
                   ) : step.video ? (
                     <div className="aspect-video rounded-lg overflow-hidden">
@@ -111,6 +146,44 @@ export default function HowItWorks() {
           That's it.
         </p>
       </div>
+
+      {activeImage && (
+        <div
+          className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm px-4 py-6 sm:px-8 sm:py-10 flex items-center justify-center"
+          onClick={() => setActiveImage(null)}
+        >
+          <button
+            type="button"
+            className="text-white absolute top-4 right-4 bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 text-xl leading-none"
+            onClick={() => setActiveImage(null)}
+            aria-label="Close image preview"
+          >
+            ×
+          </button>
+
+          <img
+            src={activeImage.src}
+            alt={activeImage.alt}
+            className="max-h-[90vh] max-w-[95vw] w-auto h-auto object-contain rounded-lg shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
+
+      <style>{`
+        @media (hover: hover) and (pointer: fine) {
+          .c2c-hiw-zoomable {
+            transition: transform 220ms ease, box-shadow 220ms ease;
+            transform-origin: center;
+            cursor: zoom-in;
+            will-change: transform;
+          }
+          .c2c-hiw-zoomable:hover {
+            transform: scale(1.04);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+          }
+        }
+      `}</style>
     </section>
   );
 }

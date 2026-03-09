@@ -19,12 +19,11 @@ import {
   type FC,
   Component,
 } from 'react';
-import './global.css';
+import globalStylesHref from './global.css?url';
 
 import { toPng } from 'html-to-image';
 import fetch from '@/__create/fetch';
 // @ts-ignore
-import { SessionProvider } from '@auth/create/react';
 import { useNavigate } from 'react-router';
 import { serializeError } from 'serialize-error';
 import { Toaster } from 'sonner';
@@ -35,13 +34,15 @@ import { useSandboxStore } from '../__create/hmr-sandbox-store';
 import type { Route } from './+types/root';
 import { useDevServerHeartbeat } from '../__create/useDevServerHeartbeat';
 
-export const links = () => [];
+export const links = () => [
+  { rel: 'stylesheet', href: globalStylesHref },
+  { rel: 'icon', href: '/images/fav_icon_update.png' },
+];
 
 if (globalThis.window && globalThis.window !== undefined) {
   globalThis.window.fetch = fetch;
 }
 
-const LoadFontsSSR = import.meta.env.SSR ? LoadFonts : null;
 if (import.meta.hot) {
   import.meta.hot.on('update-font-links', (urls: string[]) => {
     // remove old font links
@@ -456,17 +457,15 @@ export function Layout({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
   return (
-    <html lang="en">
-      <head>
+    <html lang="en" suppressHydrationWarning>
+      <head suppressHydrationWarning>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script type="module" src="/src/__create/dev-error-overlay.js"></script>
-        <link rel="icon" href="/images/fav.png" />
-        {LoadFontsSSR ? <LoadFontsSSR /> : null}
+        <LoadFonts />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ClientOnly loader={() => children} />
         <HotReloadIndicator />
         <Toaster position="bottom-right" />
@@ -479,9 +478,5 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <SessionProvider>
-      <Outlet />
-    </SessionProvider>
-  );
+  return <Outlet />;
 }
