@@ -62,15 +62,15 @@ export default function PricingSection() {
           {/* Then section */}
           <div className="space-y-2">
             <div>
-              <p className="font-inter text-xs text-[#6B7280] dark:text-white dark:text-opacity-70 mb-1">
+              <p className="font-inter text-sm font-semibold text-[#6B7280] dark:text-white dark:text-opacity-70 mb-2">
                 Then:
               </p>
-              <div className="flex items-baseline space-x-2">
-                <span className="font-plus-jakarta-sans font-bold text-2xl sm:text-3xl text-[#111111] dark:text-white">
+              <div className="flex flex-col">
+                <span className="font-plus-jakarta-sans font-bold text-3xl sm:text-4xl text-[#111111] dark:text-white mb-1">
                   50 BDT
                 </span>
-                <span className="font-inter text-xs text-[#525252] dark:text-white dark:text-opacity-70">
-                  per additional user / month
+                <span className="font-inter text-sm text-[#525252] dark:text-white dark:text-opacity-70">
+                  Per additional user / month
                 </span>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function PricingSection() {
 
         {/* Bottom note */}
         <div className="mt-6 text-center">
-          <p className="font-inter text-xs text-[#525252] dark:text-white dark:text-opacity-70">
+          <p className="font-inter text-sm text-[#525252] dark:text-white dark:text-opacity-70">
             That's it. Really.
           </p>
         </div>
