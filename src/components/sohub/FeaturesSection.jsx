@@ -58,7 +58,7 @@ export default function FeaturesSection() {
                 <p className="font-inter text-sm font-semibold text-[#111111] dark:text-white">
                   This button can live on:
                 </p>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0">
                   {[
                     "Websites",
                     "Web apps",
@@ -196,7 +196,7 @@ export default function FeaturesSection() {
                 <p className="font-inter text-sm font-semibold text-[#111111] dark:text-white">
                   Works on:
                 </p>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0">
                   {[
                     "Brochures",
                     "Packaging",

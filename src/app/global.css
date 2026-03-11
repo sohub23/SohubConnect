@@ -124,7 +124,7 @@
 
 .light-mode a[href="#features"] span,
 .light-mode a[href="#how-it-works"] span {
-  color: #ffffff !important;
+  color: #111111 !important;
 }
 
 /* Dashboard Preview Exception */
@@ -218,4 +218,22 @@
 .problem-badge,
 .problem-badge * {
   color: #ffffff !important;
+}
+
+
+@media (min-width: 768px) {
+  .desktop-gap-0 {
+    gap: 0.125rem !important; /* 2px for desktop */
+  }
+}
+
+/* Custom desktop gap for FeaturesSection */
+.desktop-gap-0 {
+  gap: 0.75rem; /* gap-3 for mobile */
+}
+
+@media (min-width: 768px) {
+  .desktop-gap-0 {
+    gap: 0.125rem !important; /* 2px for desktop */
+  }
 }
