@@ -6,6 +6,7 @@ import FeaturesSection from "../components/sohub/FeaturesSection";
 import PricingSection from "../components/sohub/PricingSection";
 import FAQSection from "../components/sohub/FAQSection";
 import CTASection from "../components/sohub/CTASection";
+import OurInitiatives from "../components/sohub/OurInitiatives";
 import Footer from "../components/sohub/Footer";
 import { ThemeProvider } from "../components/sohub/ThemeProvider";
 
@@ -21,6 +22,7 @@ export default function Page() {
         <PricingSection />
         <FAQSection />
         <CTASection />
+        <OurInitiatives />
         <Footer />
       </main>
     </ThemeProvider>
