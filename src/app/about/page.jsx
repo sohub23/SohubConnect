@@ -13,7 +13,7 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-8">
             <h1 className="font-plus-jakarta-sans text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] dark:text-white leading-tight">
-              Our Introduction
+              About Connect
             </h1>
             <p className="font-inter text-xl md:text-2xl text-[#111111] dark:text-white font-semibold leading-relaxed max-w-4xl mx-auto">
               We're rethinking how people and businesses talk in Bangladesh.
@@ -33,23 +33,23 @@ export default function AboutPage() {
       {/* Who We Are */}
       <section className="w-full py-20 md:py-24 px-6 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-8">
+          <div className="text-center space-y-8">
             <h2 className="font-plus-jakarta-sans text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] dark:text-white leading-tight">
               Who We Are
             </h2>
-            <div className="space-y-6 max-w-3xl">
-              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-justify">
+            <div className="text-center space-y-6 max-w-3xl mx-auto">
+              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-center">
                 SOHUB Connect is a cloud-native communication platform from Bangladesh, designed to modernize how voice conversations happen online.
               </p>
-              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-justify">
+              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-center">
                 We help individuals, teams, startups, growing companies, and large organizations move beyond personal numbers, missed calls, and slow responses — and into instant, organized, and secure conversations.
               </p>
-              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-justify">
+              <p className="font-inter text-lg text-[#525252] dark:text-white/70 leading-relaxed text-center">
                 Expanding your team, opening new branches, supporting customers, or working remotely? SOHUB Connect adapts quietly in the background, giving you one simple system to talk, manage, and scale without friction.
               </p>
             </div>
             <div className="pt-6">
-              <p className="font-inter text-2xl text-[#111111] dark:text-white font-semibold max-w-2xl">
+              <p className="font-inter text-2xl text-[#111111] dark:text-white font-semibold max-w-2xl mx-auto text-center">
                 We're not just building telephony.<br />
                 We're building a better way to start conversations.
               </p>

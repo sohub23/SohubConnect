@@ -23,8 +23,21 @@
   color-scheme: light;
 }
 
+/* QR Modal Exception */
+.qr-modal-content {
+  background: white !important;
+}
+
+.dark .qr-modal-content {
+  background: black !important;
+}
+
+.light-mode .qr-modal-content {
+  background: white !important;
+}
+
 .light-mode section:not(.cta-section),
-.light-mode div:not([class*="bg-[#22C55E]"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-yellow"]):not(.problem-badge):not(.cta-section):not(.cta-section *):not(footer *):not([class*="bg-gradient"]):not([class*="aspect-"]):not(.dashboard-preview):not(.browser-mockup):not(.browser-mockup *):not(.feature-bottom):not(.feature-bottom *):not(.pricing-card):not(.pricing-card *),
+.light-mode div:not([class*="bg-[#22C55E]"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-yellow"]):not(.problem-badge):not(.cta-section):not(.cta-section *):not(footer *):not([class*="bg-gradient"]):not([class*="aspect-"]):not(.dashboard-preview):not(.browser-mockup):not(.browser-mockup *):not(.feature-bottom):not(.feature-bottom *):not(.pricing-card):not(.pricing-card *):not(.qr-modal-overlay):not(.qr-modal-overlay *),
 .light-mode header {
   background: #ffffff !important;
   border-color: #e5e7eb !important;

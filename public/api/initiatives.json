@@ -2,75 +2,12 @@
   "baseUrl": "",
   "initiatives": [
     {
-      "id": "connect",
-      "name": "SOHUB CONNECT",
-      "description": "",
-      "href": "https://connect-client.sohub.com.bd/",
-      "logo": "/images/initiatives/sohub_connect.png",
-      "order": 0,
-      "isActive": true
-    },
-    {
       "id": "omama",
       "name": "O-MAMA",
       "description": "",
       "href": "https://omama.sohub.com.bd/",
       "logo": "/images/initiatives/Omama.png",
-      "order": 1,
-      "isActive": true
-    },
-    {
-      "id": "emp",
-      "name": "EMP",
-      "description": "",
-      "href": "https://emp.sohub.com.bd/",
-      "logo": "/images/initiatives/EMP.png",
-      "order": 2,
-      "isActive": true
-    },
-    {
-      "id": "tolpar",
-      "name": "TOLPAR",
-      "description": "",
-      "href": null,
-      "logo": "/images/initiatives/TOLPAR.png",
-      "order": 3,
-      "isActive": true
-    },
-    {
-      "id": "ai",
-      "name": "AI",
-      "description": "",
-      "href": null,
-      "logo": "/images/initiatives/SOHUB_AI.svg",
-      "order": 4,
-      "isActive": true
-    },
-    {
-      "id": "protect",
-      "name": "PROTECT",
-      "description": "",
-      "href": null,
-      "logo": "/images/initiatives/SOHUB_PROTECT.png",
-      "order": 5,
-      "isActive": true
-    },
-    {
-      "id": "sohub-controls",
-      "name": "SOHUB CONTROLS",
-      "description": "",
-      "href": null,
-      "logo": "/images/initiatives/SOHUB_CONTROLS.png",
-      "order": 6,
-      "isActive": true
-    },
-    {
-      "id": "machine",
-      "name": "MACHINE BY SOHUB",
-      "description": "",
-      "href": null,
-      "logo": "/images/initiatives/MACHINE_BY_SOHUB.png",
-      "order": 7,
+      "order": 0,
       "isActive": true
     },
     {
@@ -79,6 +16,69 @@
       "description": "",
       "href": "https://home.sohub.com.bd/",
       "logo": "/images/initiatives/SMART_HOME.png",
+      "order": 1,
+      "isActive": true
+    },
+    {
+      "id": "sohub-controls",
+      "name": "SOHUB CONTROLS",
+      "description": "",
+      "href": null,
+      "logo": "/images/initiatives/SOHUB_CONTROLS.png",
+      "order": 2,
+      "isActive": true
+    },
+    {
+      "id": "protect",
+      "name": "SOHUB PROTECT",
+      "description": "",
+      "href": null,
+      "logo": "/images/initiatives/SOHUB_PROTECT.png",
+      "order": 3,
+      "isActive": true
+    },
+    {
+      "id": "ai",
+      "name": "SOHUB AI",
+      "description": "",
+      "href": null,
+      "logo": "/images/initiatives/SOHUB_AI.svg",
+      "order": 4,
+      "isActive": true
+    },
+    {
+      "id": "machine",
+      "name": "MACHINE BY SOHUB",
+      "description": "",
+      "href": null,
+      "logo": "/images/initiatives/MACHINE_BY_SOHUB.png",
+      "order": 5,
+      "isActive": true
+    },
+    {
+      "id": "connect",
+      "name": "SOHUB CONNECT",
+      "description": "",
+      "href": "https://connect-client.sohub.com.bd/",
+      "logo": "/images/initiatives/sohub_connect.png",
+      "order": 6,
+      "isActive": true
+    },
+    {
+      "id": "emp",
+      "name": "EMP",
+      "description": "",
+      "href": "https://emp.sohub.com.bd/",
+      "logo": "/images/initiatives/EMP.png",
+      "order": 7,
+      "isActive": true
+    },
+    {
+      "id": "ximpul",
+      "name": "XIMPUL",
+      "description": "",
+      "href": "https://ximpul.com/",
+      "logo": "/images/initiatives/XIMPUL.png",
       "order": 8,
       "isActive": true
     },
@@ -92,20 +92,20 @@
       "isActive": true
     },
     {
-      "id": "ximpul",
-      "name": "XIMPUL",
-      "description": "",
-      "href": "https://ximpul.com/",
-      "logo": "/images/initiatives/XIMPUL.png",
-      "order": 10,
-      "isActive": true
-    },
-    {
       "id": "clowee",
       "name": "CLOWEE",
       "description": "",
       "href": null,
       "logo": "/images/initiatives/CLOWEE.png",
+      "order": 10,
+      "isActive": true
+    },
+    {
+      "id": "tolpar",
+      "name": "TOLPAR",
+      "description": "",
+      "href": null,
+      "logo": "/images/initiatives/TOLPAR.png",
       "order": 11,
       "isActive": true
     }

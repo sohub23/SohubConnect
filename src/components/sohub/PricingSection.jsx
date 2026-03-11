@@ -42,13 +42,13 @@ export default function PricingSection() {
 
           {/* Features */}
           <div className="mb-3">
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               {freeFeatures.map((feature, index) => (
                 <div key={index} className="flex items-start space-x-2">
                   <div className="flex-shrink-0 w-4 h-4 bg-[#22C55E] rounded-full flex items-center justify-center mt-0.5">
                     <Check size={12} className="text-white" />
                   </div>
-                  <span className="font-inter text-xs text-[#111111] dark:text-white">
+                  <span className="font-inter text-base text-[#111111] dark:text-white">
                     {feature}
                   </span>
                 </div>
