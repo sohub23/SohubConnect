@@ -1,0 +1,70 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is SOHUB Connect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SOHUB Connect is a borderless, cloud-native PBX system built for Bangladeshi businesses. It replaces traditional phone numbers with click-to-call buttons and QR-based calling."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Click to Connect work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Customers click a button on your website or app, and instantly connect via voice call. No dialing, no phone numbers needed. Works on websites, web apps, landing pages, and any online platform."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is HotScan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HotScan is QR-based calling for offline marketing. Print QR codes on brochures, packaging, billboards, or delivery slips. Customers scan with their smartphone camera and connect instantly via voice call."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a free plan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! FREE FOREVER plan includes up to 5 users/phones, Click to Connect buttons, HotScan QR calls, team-based call handling, call history & analytics, and email support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost after 5 users?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "50 BDT per additional user per month. 1 Button = 1 User, 1 HotScan = 1 User."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do customers need to download an app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No! Customers use their smartphone's built-in browser. No app downloads required for Click to Connect or HotScan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What features are included?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Smart IVR/call flow, ring groups, custom audio recordings, team management, call analytics, dashboard, operator panel, and more. All accessible from any web browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it suitable for e-commerce businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Perfect for SOHO and e-commerce businesses in Bangladesh. Replace personal mobile numbers with professional calling solutions that work across cities and countries."
+      }
+    }
+  ]
+}

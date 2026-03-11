@@ -15,19 +15,28 @@ export default function Documentation() {
   const [hotScanCallTrigger, setHotScanCallTrigger] = useState(0);
   const [hotScanCallActive, setHotScanCallActive] = useState(false);
   const isLightMode = bgColor === 'white';
+  const THEME_KEY = 'themeMode';
+  const LEGACY_THEME_KEY = 'headerBgColor';
+
+  const normalizeTheme = (value) => {
+    if (value === 'light' || value === 'white') return 'white';
+    if (value === 'dark' || value === 'default') return 'default';
+    return 'white';
+  };
 
   const applyTheme = (color) => {
-    if (color === 'white') {
-      document.documentElement.classList.add('light-mode');
-      return;
-    }
-    document.documentElement.classList.remove('light-mode');
+    const light = color === 'white';
+    document.documentElement.classList.toggle('light-mode', light);
+    document.documentElement.classList.toggle('dark', !light);
+    document.documentElement.style.colorScheme = light ? 'light' : 'dark';
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem('headerBgColor') || 'white';
-    setBgColor(saved);
-    applyTheme(saved);
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
+    const resolved = normalizeTheme(savedTheme || legacyTheme);
+    setBgColor(resolved);
+    applyTheme(resolved);
   }, []);
 
   useEffect(() => {
@@ -134,7 +143,8 @@ export default function Documentation() {
   const toggleBgColor = () => {
     const newColor = bgColor === 'default' ? 'white' : 'default';
     setBgColor(newColor);
-    localStorage.setItem('headerBgColor', newColor);
+    localStorage.setItem(LEGACY_THEME_KEY, newColor);
+    localStorage.setItem(THEME_KEY, newColor === 'white' ? 'light' : 'dark');
     applyTheme(newColor);
   };
 

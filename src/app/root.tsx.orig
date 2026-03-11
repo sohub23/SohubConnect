@@ -1,0 +1,258 @@
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useAsyncError,
+  useLocation,
+  useRouteError,
+} from 'react-router';
+
+import { useButton } from '@react-aria/button';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type FC,
+  Component,
+} from 'react';
+import globalStylesHref from './global.css?url';
+
+import { toPng } from 'html-to-image';
+import fetch from '@/__create/fetch';
+// @ts-ignore
+import { useNavigate } from 'react-router';
+import { serializeError } from 'serialize-error';
+import { Toaster } from 'sonner';
+// @ts-ignore
+import { LoadFonts } from 'virtual:load-fonts.jsx';
+import { HotReloadIndicator } from '../__create/HotReload';
+import { useSandboxStore } from '../__create/hmr-sandbox-store';
+import type { Route } from './+types/root';
+import { useDevServerHeartbeat } from '../__create/useDevServerHeartbeat';
+import { SeoMeta } from '../components/sohub/SeoMeta';
+
+export const links = () => [
+  { rel: 'stylesheet', href: globalStylesHref },
+  { rel: 'icon', href: '/images/fav_icon_update.png' },
+];
+
+export const meta = () => {
+  return [
+    { title: "SOHUB Connect - Borderless PBX for Bangladesh" },
+    { name: "description", content: "Modern PBX without phone numbers. Click-to-call buttons and QR-based calling for Bangladeshi businesses. Free forever plan." },
+    { property: "og:title", content: "SOHUB Connect - Borderless PBX for Bangladesh" },
+    { property: "og:description", content: "Modern PBX without phone numbers. Click-to-call buttons and QR-based calling for Bangladeshi businesses. Free forever plan." },
+    { property: "og:image", content: "https://connect.sohub.com.bd/images/connect_new_img.png" },
+    { property: "og:url", content: "https://connect.sohub.com.bd" },
+    { property: "og:type", content: "website" },
+    { property: "og:site_name", content: "SOHUB Connect" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "SOHUB Connect - Borderless PBX for Bangladesh" },
+    { name: "twitter:description", content: "Modern PBX without phone numbers. Click-to-call buttons and QR-based calling for Bangladeshi businesses. Free forever plan." },
+    { name: "twitter:image", content: "https://connect.sohub.com.bd/images/connect_new_img.png" },
+  ];
+};
+
+if (globalThis.window && globalThis.window !== undefined) {
+  globalThis.window.fetch = fetch;
+}
+
+function SharedErrorBoundary({
+  isOpen,
+  children,
+}: {
+  isOpen: boolean;
+  children?: ReactNode;
+}): React.ReactElement {
+  return (
+    <div
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ease-out ${
+        isOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+      }`}
+    >
+      <div className="bg-[#18191B] text-[#F2F2F2] rounded-lg p-4 max-w-md w-full mx-4 shadow-lg">
+        <div className="flex items-start gap-3">
+          <div className="flex-shrink-0">
+            <div className="w-8 h-8 bg-[#F2F2F2] rounded-full flex items-center justify-center">
+              <span className="text-black text-[1.125rem] leading-none">!</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 flex-1">
+            <div className="flex flex-col gap-1">
+              <p className="font-light text-[#F2F2F2] text-sm">App Error Detected</p>
+              <p className="text-[#959697] text-sm font-light">
+                It looks like an error occurred while trying to use your app.
+              </p>
+            </div>
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * NOTE: we have a shared error boundary for the app, but then we also expose
+ * this in case something goes wrong outside of the normal user's app flow.
+ * React-router will mount this one
+ */
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  return <SharedErrorBoundary isOpen={true} />;
+}
+
+function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
+  const routeError = useRouteError();
+  const asyncError = useAsyncError();
+  const error = errorArg ?? asyncError ?? routeError;
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const animateTimer = setTimeout(() => setIsOpen(true), 100);
+    return () => clearTimeout(animateTimer);
+  }, []);
+  const { buttonProps: showLogsButtonProps } = useButton(
+    {
+      onPress: useCallback(() => {
+        window.parent.postMessage(
+          {
+            type: 'sandbox:web:show-logs',
+          },
+          '*'
+        );
+      }, []),
+    },
+    useRef<HTMLButtonElement>(null)
+  );
+  const { buttonProps: fixButtonProps } = useButton(
+    {
+      onPress: useCallback(() => {
+        window.parent.postMessage(
+          {
+            type: 'sandbox:web:fix',
+            error: serializeError(error),
+          },
+          '*'
+        );
+        setIsOpen(false);
+      }, [error]),
+      isDisabled: !error,
+    },
+    useRef<HTMLButtonElement>(null)
+  );
+  const { buttonProps: copyButtonProps } = useButton(
+    {
+      onPress: useCallback(() => {
+        navigator.clipboard.writeText(JSON.stringify(serializeError(error)));
+      }, [error]),
+    },
+    useRef<HTMLButtonElement>(null)
+  );
+
+  function isInIframe() {
+    try {
+      return window.parent !== window;
+    } catch {
+      return true;
+    }
+  }
+  return (
+    <SharedErrorBoundary isOpen={isOpen}>
+      {isInIframe() ? (
+        <div className="flex gap-2">
+          {!!error && (
+            <button
+              {...fixButtonProps}
+              className="px-3 py-1.5 bg-[#22C55E] text-white text-sm rounded hover:bg-[#16A34A] transition-colors"
+            >
+              Fix
+            </button>
+          )}
+          <button
+            {...showLogsButtonProps}
+            className="px-3 py-1.5 bg-[#3B82F6] text-white text-sm rounded hover:bg-[#2563EB] transition-colors"
+          >
+            Show Logs
+          </button>
+          {!!error && (
+            <button
+              {...copyButtonProps}
+              className="px-3 py-1.5 bg-[#6B7280] text-white text-sm rounded hover:bg-[#4B5563] transition-colors"
+            >
+              Copy Error
+            </button>
+          )}
+        </div>
+      ) : (
+        <p className="text-sm text-[#959697]">
+          Check the console for more details.
+        </p>
+      )}
+    </SharedErrorBoundary>
+  );
+}
+
+export default function App() {
+  const location = useLocation();
+  const [connected, setConnected] = useState(() => !!import.meta.hot);
+
+  useEffect(() => {
+    if (!import.meta.hot) return;
+
+    const onConnect = () => setConnected(true);
+    const onDisconnect = () => setConnected(false);
+    const onFullReload = () => setConnected(false);
+
+    import.meta.hot.on('vite:ws:disconnect', onDisconnect);
+    import.meta.hot.on('vite:ws:connect', onConnect);
+    import.meta.hot.on('vite:beforeFullReload', onFullReload);
+
+    return () => {
+      import.meta.hot?.off('vite:ws:disconnect', onDisconnect);
+      import.meta.hot?.off('vite:ws:connect', onConnect);
+      import.meta.hot?.off('vite:beforeFullReload', onFullReload);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!import.meta.hot) return;
+
+    const onFontLinksUpdate = () => {
+      const existing = document.querySelectorAll('link[rel="stylesheet"][data-fonts]');
+      existing.forEach((link) => link.remove());
+      LoadFonts();
+    };
+
+    import.meta.hot.on('update-font-links', onFontLinksUpdate);
+
+    return () => {
+      import.meta.hot?.off('update-font-links', onFontLinksUpdate);
+    };
+  }, []);
+
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+        <SeoMeta 
+          url={`https://connect.sohub.com.bd${location.pathname}`}
+        />
+      </head>
+      <body>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <Toaster />
+        <HotReloadIndicator connected={connected} />
+      </body>
+    </html>
+  );
+}

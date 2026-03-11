@@ -42,7 +42,7 @@ export default function Hero() {
 
             {/* Main Headline */}
             <h1 className="font-plus-jakarta-sans font-bold text-[#111111] dark:text-white leading-[1.15] text-[32px] sm:text-4xl md:text-5xl lg:text-6xl px-2">
-              Razin, <span className="text-[#22C55E]">Without Boundaries.</span>
+              PBX, <span className="text-[#22C55E]">Without Boundaries.</span>
               <br />
               <span className="text-[#22C55E]">Without <span className="text-[#111111] dark:text-white">Phone</span> Numbers.</span>
             </h1>

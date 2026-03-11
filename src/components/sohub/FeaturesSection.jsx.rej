@@ -1,0 +1,8 @@
+--- src/components/sohub/FeaturesSection.jsx
++++ src/components/sohub/FeaturesSection.jsx
+@@ -1,4 +1,4 @@
+-import React from 'react';
++import React, { useEffect } from 'react';
+ import { MousePointerClick, Scan } from 'lucide-react';
+ 
+ const EYEBROW_BADGE_CLASS =

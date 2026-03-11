@@ -1,5 +1,5 @@
 "use client";
-import { Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useTheme } from "./ThemeProvider";
@@ -9,17 +9,6 @@ const SECTION_SCROLL_OFFSET = 108;
 const INITIATIVES_API_URL = 'https://sohub.netlify.app/api/initiatives.json';
 const INITIATIVES_BASE_URL = 'https://sohub.netlify.app';
 const DEFAULT_CONNECT_BASE_URL = 'https://connect-client.sohub.com.bd';
-
-const CONNECT_INITIATIVE = {
-  id: 'connect',
-  name: 'SOHUB CONNECT',
-  description: '',
-  href: `${DEFAULT_CONNECT_BASE_URL}/`,
-  logo: '/images/initiatives/sohub_connect.png',
-  order: 0,
-  isActive: true,
-};
-const FALLBACK_INITIATIVES = [];
 
 function resolveInitiativeLogo(logoPath, baseUrl) {
   if (!logoPath || typeof logoPath !== 'string') {
@@ -44,7 +33,7 @@ function resolveInitiativeLogo(logoPath, baseUrl) {
 function parseInitiativesResponse(data) {
   const items = Array.isArray(data) ? data : data?.initiatives || [];
   const baseUrl = typeof data?.baseUrl === 'string' ? data.baseUrl : INITIATIVES_BASE_URL;
-  const parsed = items
+  return items
     .map((item, index) => {
       const name = typeof item?.name === 'string' ? item.name : '';
       const hrefValue = typeof item?.href === 'string' ? item.href.trim() : '';
@@ -62,19 +51,13 @@ function parseInitiativesResponse(data) {
     })
     .filter((item) => item.isActive && item.name && item.logo)
     .sort((a, b) => a.order - b.order);
-
-  const hasConnect = parsed.some((item) => item.name.toLowerCase().includes('connect'));
-  if (!hasConnect) {
-    return [CONNECT_INITIATIVE, ...parsed];
-  }
-
-  return parsed;
 }
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [initiativesOpen, setInitiativesOpen] = useState(false);
   const [initiatives, setInitiatives] = useState([]);
+  const [initiativesLoading, setInitiativesLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const headerRef = useRef(null);
@@ -83,19 +66,46 @@ export default function Header() {
   const navigate = useNavigate();
   const currentPath = location.pathname;
   const registerUrl = `${DEFAULT_CONNECT_BASE_URL}/authentication/register`;
-  const { bgColor, toggleBgColor } = useTheme();
+  const { isLightMode, toggleBgColor } = useTheme();
   const ownedByLogoSrc =
-    bgColor === 'white' ? '/images/sohub.png' : '/images/sohub_white.png';
+    isLightMode ? '/images/sohub.png' : '/images/sohub_white.png';
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    fetch(INITIATIVES_API_URL, {
-      mode: 'cors',
-      headers: { 'Accept': 'application/json' }
-    })
-      .then(res => res.json())
-      .then(data => setInitiatives(Array.isArray(data) ? data : data.initiatives || []))
-      .catch(() => {});
+
+    let isActive = true;
+    const fetchInitiatives = async () => {
+      try {
+        const response = await fetch(INITIATIVES_API_URL, {
+          mode: 'cors',
+          headers: { Accept: 'application/json' },
+          cache: 'no-store',
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch initiatives: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (isActive) {
+          setInitiatives(parseInitiativesResponse(data));
+        }
+      } catch (error) {
+        if (isActive) {
+          console.error('Initiatives API fetch failed', error);
+          setInitiatives([]);
+        }
+      } finally {
+        if (isActive) {
+          setInitiativesLoading(false);
+        }
+      }
+    };
+
+    fetchInitiatives();
+    return () => {
+      isActive = false;
+    };
   }, []);
 
   const toggleInitiativesDrawer = () => {
@@ -216,18 +226,18 @@ export default function Header() {
 
   return (
     <header ref={headerRef} className={`w-full border-b sticky top-0 z-50 backdrop-blur-sm ${
-      bgColor === 'white' 
+      isLightMode
         ? 'bg-white/95 border-gray-200' 
         : 'bg-white dark:bg-[#121212] border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#121212]/95'
     }`}>
 
       <div
-        className={`transition-all duration-300 overflow-hidden border-b ${
+        className={`transition-all duration-300 border-b ${
           isScrolled
-            ? 'max-h-0 opacity-0'
-            : 'max-h-20 opacity-100'
+            ? 'max-h-0 opacity-0 overflow-hidden'
+            : 'max-h-20 opacity-100 overflow-visible'
         } ${
-          bgColor === 'white'
+          isLightMode
             ? 'bg-[#f3f4f6] border-gray-200'
             : 'bg-[#1a1a1a] border-gray-800'
         }`}
@@ -245,7 +255,7 @@ export default function Header() {
               className="h-6"
             />
             <p className={`text-[10px] md:text-xs ${
-                bgColor === 'white' ? 'text-[#6b7280]' : 'text-[#9ca3af]'
+                isLightMode ? 'text-[#6b7280]' : 'text-[#9ca3af]'
               }`}>
               <span className="hidden md:inline">Solution Hub Technologies(SOHUB) Owned & Operated</span>
               <span className="md:hidden">SOHUB owned & operated</span>
@@ -256,51 +266,57 @@ export default function Header() {
               type="button"
               onClick={toggleInitiativesDrawer}
               className={`text-xs gap-1 md:mr-0 -mr-4 px-2 py-1 rounded hover:bg-transparent transition-colors ${
-                bgColor === 'white' ? 'text-[#6b7280]' : 'text-[#9ca3af]'
+                isLightMode ? 'text-[#6b7280]' : 'text-[#9ca3af]'
               }`}
             >
-              <span className="hidden md:inline">Initiatives</span>
+              <span className="hidden md:inline">Our Initiatives</span>
               <span className="md:hidden">Our Initiatives</span>
               {initiativesOpen ? <ChevronUp className="w-3 h-3 inline ml-1" /> : <ChevronDown className="w-3 h-3 inline ml-1" />}
             </button>
 
-            {initiativesOpen && initiatives.length > 0 && (
+            {initiativesOpen && (
               <div className="absolute right-0 top-full z-[70] w-[320px] p-3">
-                <div className={`rounded-lg border p-3 shadow-2xl ${
-                  bgColor === 'white' ? 'bg-white border-gray-300' : 'bg-[#0f1115] border-gray-700'
-                }`}>
-                  <div className="grid grid-cols-3 gap-3">
-                    {initiatives.map((initiative) => {
-                      const isCurrentSite = initiative.id === 'connect' || initiative.name.toLowerCase().includes('connect');
-                      return initiative.href ? (
-                        <a
-                          key={initiative.id}
-                          href={initiative.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => setInitiativesOpen(false)}
-                          style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}
-                          className={`flex items-center justify-center p-4 rounded-lg border ${
-                            isCurrentSite
-                              ? 'border-[#22C55E] bg-[#22C55E]/10 ring-2 ring-[#22C55E]/30'
-                              : bgColor === 'white' ? 'border-gray-300' : 'border-gray-700'
-                          }`}
-                        >
-                          <img src={`${INITIATIVES_BASE_URL}${initiative.logo}`} alt={initiative.name} className="w-full h-full object-contain" />
-                        </a>
-                      ) : (
-                        <div
-                          key={initiative.id}
-                          className={`flex items-center justify-center p-4 rounded-lg border opacity-50 cursor-not-allowed ${
-                            bgColor === 'white' ? 'border-gray-300' : 'border-gray-700'
-                          }`}
-                        >
-                          <img src={`${INITIATIVES_BASE_URL}${initiative.logo}`} alt={initiative.name} className="w-full h-full object-contain" />
-                        </div>
-                      );
-                    })}
-                  </div>
+                <div className="rounded-lg border border-gray-300 bg-white p-3 shadow-2xl">
+                  {initiativesLoading ? (
+                    <p className="py-4 text-center text-xs text-gray-500">
+                      Loading initiatives...
+                    </p>
+                  ) : initiatives.length === 0 ? (
+                    <p className="py-4 text-center text-xs text-gray-500">
+                      No initiatives found
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-3">
+                      {initiatives.map((initiative) => {
+                        const isCurrentSite = initiative.id === 'connect' || initiative.name.toLowerCase().includes('connect');
+                        return initiative.href ? (
+                          <a
+                            key={initiative.id}
+                            href={initiative.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => setInitiativesOpen(false)}
+                            style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}
+                            className={`flex items-center justify-center p-4 rounded-lg border ${
+                              isCurrentSite
+                                ? 'border-[#22C55E] bg-[#22C55E]/10 ring-2 ring-[#22C55E]/30'
+                                : 'border-gray-300'
+                            }`}
+                          >
+                            <img src={initiative.logo} alt={initiative.name} className="w-full h-full object-contain" />
+                          </a>
+                        ) : (
+                          <div
+                            key={initiative.id}
+                            className="flex items-center justify-center rounded-lg border border-gray-300 p-4 opacity-50 cursor-not-allowed"
+                          >
+                            <img src={initiative.logo} alt={initiative.name} className="w-full h-full object-contain" />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -379,7 +395,7 @@ export default function Header() {
               title="Toggle theme"
               aria-label="Toggle theme"
             >
-              {bgColor === 'white' ? <Moon size={20} className="text-gray-600 dark:text-gray-400" /> : <Sun size={20} className="text-gray-600 dark:text-gray-400" />}
+              {isLightMode ? <Moon size={20} className="text-gray-600 dark:text-gray-400" /> : <Sun size={20} className="text-gray-600 dark:text-gray-400" />}
             </button>
             <a
               href={registerUrl}
@@ -399,7 +415,7 @@ export default function Header() {
               title="Toggle theme"
               aria-label="Toggle theme"
             >
-              {bgColor === 'white' ? <Moon size={18} className="text-gray-600 dark:text-gray-400" /> : <Sun size={18} className="text-gray-600 dark:text-gray-400" />}
+              {isLightMode ? <Moon size={18} className="text-gray-600 dark:text-gray-400" /> : <Sun size={18} className="text-gray-600 dark:text-gray-400" />}
             </button>
             <a
               href={registerUrl}
