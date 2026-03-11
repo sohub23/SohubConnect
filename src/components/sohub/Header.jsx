@@ -6,8 +6,8 @@ import { useTheme } from "./ThemeProvider";
 
 const HOME_PATHS = ['/', '/sohub'];
 const SECTION_SCROLL_OFFSET = 108;
-const INITIATIVES_API_URL = 'https://sohub.netlify.app/api/initiatives.json';
-const INITIATIVES_BASE_URL = 'https://sohub.netlify.app';
+const INITIATIVES_API_URL = 'https://sohub.com.bd/api/initiatives.json';
+const INITIATIVES_BASE_URL = 'https://sohub.com.bd';
 const DEFAULT_CONNECT_BASE_URL = 'https://connect-client.sohub.com.bd';
 
 function resolveInitiativeLogo(logoPath, baseUrl) {
