@@ -171,42 +171,40 @@ export default function Footer() {
                 
                 {/* QR Code Section */}
                 <div className="pt-4">
-                  <div 
-                    onClick={openQRModal}
-                    className="cursor-pointer group transition-all duration-200 hover:scale-105"
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openQRModal();
-                      }
-                    }}
-                    aria-label="Open QR code to call us"
-                  >
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3">
+                    <div 
+                      onClick={openQRModal}
+                      className="cursor-pointer group transition-all duration-200 hover:scale-105 flex-shrink-0"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          openQRModal();
+                        }
+                      }}
+                      aria-label="Open QR code to call us"
+                    >
                       <img
                         src="/images/connect_hotscan.png"
                         alt="Scan to Call Us QR Code"
                         className="w-21 h-21 object-contain border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-200"
                         style={{ width: '84px', height: '84px' }}
                       />
-                      <div className="flex flex-col">
-                        <span className="footer-strong font-inter text-xs font-semibold">
-                          Call with Hotscan
-                        </span>
-                        <span className="footer-muted font-inter text-xs opacity-75">
-                          Tap to enlarge
-                        </span>
-                        <div className="pt-2">
-                          <script
-                            src="https://connect-client.sohub.com.bd/widget-loader?id=widget_6951007e980a5_1766916222&position=inline"
-                            async
-                          ></script>
-                        </div>
-                      </div>
                     </div>
+                    <div className="flex flex-col gap-1 flex-shrink-0">
+                      <span className="footer-strong font-inter text-xs font-semibold">
+                        Call with Hotscan
+                      </span>
+                      <span className="footer-muted font-inter text-xs opacity-75">
+                        Tap to enlarge
+                      </span>
+                    </div>
+                 
                   </div>
+                     <div className="flex-shrink-0">
+                      <script src="https://connect-client.sohub.com.bd/widget-loader?id=widget_6951007e980a5_1766916222&position=inline" async></script>
+                    </div>
                 </div>
               </div>
             </div>
