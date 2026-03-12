@@ -1,11 +1,122 @@
 import { Facebook, Linkedin, Mail, Users, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const HOME_PATHS = ["/", "/sohub"];
 
 export default function Footer() {
   const year = new Date().getFullYear();
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const widgetContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !widgetContainerRef.current) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://connect-client.sohub.com.bd/widget-loader?id=widget_6951007e980a5_1766916222&position=inline';
+    script.async = true;
+    
+    script.onerror = () => {
+      console.error('Failed to load SOHUB Connect widget');
+    };
+    
+    script.onload = () => {
+      console.log('SOHUB Connect widget loaded successfully');
+    };
+    
+    widgetContainerRef.current.appendChild(script);
+
+    // Store current scroll position and prevent scroll on widget interaction
+    let scrollPosition = 0;
+    
+    // Prevent page reload/navigation
+    const preventReload = (e) => {
+      // Check if event is from widget
+      if (widgetContainerRef.current && widgetContainerRef.current.contains(e.target)) {
+        // Prevent default behavior that might cause reload
+        if (e.target.tagName === 'A' || e.target.closest('a')) {
+          const link = e.target.tagName === 'A' ? e.target : e.target.closest('a');
+          const href = link?.getAttribute('href');
+          // Only prevent if it's a hash link or javascript: link
+          if (href === '#' || href?.startsWith('javascript:') || !href) {
+            e.preventDefault();
+          }
+        }
+        // Prevent form submission that might reload
+        if (e.target.tagName === 'FORM' || e.target.closest('form')) {
+          e.preventDefault();
+        }
+      }
+    };
+    
+    const preventScrollBehavior = () => {
+      const observer = new MutationObserver(() => {
+        const widgetElements = widgetContainerRef.current?.querySelectorAll('*');
+        if (widgetElements) {
+          widgetElements.forEach(el => {
+            // Prevent page reload on click
+            el.addEventListener('click', preventReload, { capture: true });
+            
+            // Prevent scroll on mousedown
+            el.addEventListener('mousedown', (e) => {
+              scrollPosition = window.scrollY || window.pageYOffset;
+            }, { capture: true });
+            
+            // Prevent scroll on click
+            el.addEventListener('click', (e) => {
+              scrollPosition = window.scrollY || window.pageYOffset;
+              
+              // Override scroll functions temporarily
+              const originalScrollTo = window.scrollTo;
+              const originalScrollBy = window.scrollBy;
+              const originalScroll = window.scroll;
+              
+              window.scrollTo = function() { 
+                arguments[0] = scrollPosition;
+                return originalScrollTo.apply(this, [0, scrollPosition]);
+              };
+              window.scrollBy = function() { return; };
+              window.scroll = function() { 
+                return originalScroll.apply(this, [0, scrollPosition]);
+              };
+              
+              // Restore after widget processes the click
+              setTimeout(() => {
+                window.scrollTo = originalScrollTo;
+                window.scrollBy = originalScrollBy;
+                window.scroll = originalScroll;
+                window.scrollTo(0, scrollPosition);
+              }, 500);
+            }, { capture: true });
+            
+            // Also prevent on focus events
+            el.addEventListener('focus', (e) => {
+              e.preventDefault();
+              const currentScroll = window.scrollY || window.pageYOffset;
+              setTimeout(() => window.scrollTo(0, currentScroll), 0);
+            }, { capture: true });
+          });
+        }
+      });
+
+      if (widgetContainerRef.current) {
+        observer.observe(widgetContainerRef.current, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      return observer;
+    };
+
+    const observer = preventScrollBehavior();
+
+    return () => {
+      observer?.disconnect();
+      if (widgetContainerRef.current && script.parentNode === widgetContainerRef.current) {
+        widgetContainerRef.current.removeChild(script);
+      }
+    };
+  }, []);
 
   const handleScrollToSection = (e, sectionId) => {
     const isHomePage = HOME_PATHS.includes(window.location.pathname);
@@ -171,6 +282,7 @@ export default function Footer() {
                 
                 {/* QR Code Section */}
                 <div className="pt-4">
+                  {/* All in one row: QR Code + Text + Call Button */}
                   <div className="flex items-center gap-3">
                     <div 
                       onClick={openQRModal}
@@ -200,11 +312,8 @@ export default function Footer() {
                         Tap to enlarge
                       </span>
                     </div>
-                 
+                    <div ref={widgetContainerRef} className="inline-flex items-center flex-shrink-0" style={{ position: 'relative', zIndex: 1 }}></div>
                   </div>
-                     <div className="flex-shrink-0">
-                      <script src="https://connect-client.sohub.com.bd/widget-loader?id=widget_6951007e980a5_1766916222&position=inline" async></script>
-                    </div>
                 </div>
               </div>
             </div>
