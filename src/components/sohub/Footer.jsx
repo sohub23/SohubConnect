@@ -198,6 +198,12 @@ export default function Footer() {
                         <span className="footer-muted font-inter text-xs opacity-75">
                           Tap to enlarge
                         </span>
+                        <div className="pt-2">
+                          <script
+                            src="https://connect-client.sohub.com.bd/widget-loader?id=widget_6951007e980a5_1766916222&position=inline"
+                            async
+                          ></script>
+                        </div>
                       </div>
                     </div>
                   </div>
